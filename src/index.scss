@@ -1,4 +1,8 @@
 @use "./partials/colors"as*;
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'El Messiri', sans-serif;

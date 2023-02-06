@@ -7,6 +7,17 @@ export const dateInputConverter = (date) => {
 } 
 
 export const dateOutputConverter = (date) => {
-    const newDate = new Date(date*1000) 
-    return newDate.toLocaleString()
+    const newDate = new Date(date*1000)
+    const dateString = newDate.toLocaleString()
+    const finalDate = dateString.split(",")
+    const deconstructed = finalDate[0].split("/")
+    let month = deconstructed[0]
+    let day = deconstructed[1]
+    if(month.length<2){
+        month = `0${month}`
+    }
+    if(day.length<2) {
+        day = `0${day}`
+    }
+     return `${month}/${day}/${deconstructed[2]}`
 }

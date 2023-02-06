@@ -1,6 +1,6 @@
 @use "../../partials/colors"as*;
 .dashboard {
-    background-color: $beige;
+    background-color: $golden;
     min-height: 100vh;
     border-right: 4px solid $wine-red;
     padding: 0;
@@ -23,14 +23,16 @@
         cursor: pointer;
         border-bottom: 4px solid $wine-red;
         padding: 1rem 1.5rem;
-        min-width: 12rem;
+        min-width: 16rem;
         display: block;
         color: $wine-red;
         font-size: 1rem;
         font-weight: bold;
         &:hover {
-            background-color: $golden;
+            background-color: $beige;
             color: $wine-red;
+            scale: 1.1;
+            border: 4px solid $wine-red;
         }
     }
 
