@@ -1,0 +1,40 @@
+@use "../../partials/colors"as*;
+
+.weeklyAnnouncementUpload {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 1rem;
+    &__label {
+        margin: .5rem 0;
+    }
+    &__input {
+        padding: .5rem;
+        border: 1px solid $wine-red;
+        border-radius: 10px;
+    }
+    &__editor-box {
+        padding: 1rem;
+        border: 1px solid $wine-red;
+        border-radius: 10px;
+        height: 550px;
+        overflow: scroll;
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px $golden; 
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px $wine-red; 
+        }
+    }
+    &__editor {
+        min-height: 200px;
+    }
+}
+
+

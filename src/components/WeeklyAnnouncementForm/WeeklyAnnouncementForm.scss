@@ -1,0 +1,47 @@
+@use "../../partials/colors"as*;
+
+.weeklyAnnouncementForm {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    &__editors {
+        display: flex;
+        gap: 3rem;
+        min-height: 550px;
+        margin: 1rem auto;
+    }
+    &__common {
+        background-color: white;
+        padding: 1rem;
+    }
+    &__label {
+        margin-right: 1rem;
+    }
+    &__date {
+        width: 8rem;
+        text-align: center;
+        padding: .5rem;
+        border: 1px solid $wine-red;
+    }
+    &__submit {
+        margin: 1rem auto;
+        width: 10rem;
+        padding: .5rem .25rem;
+        background-color: $wine-red;
+        color: $beige;
+        border-radius: 4px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover {
+            color: $wine-red;
+            background-color: $beige;
+            border: 2px solid $wine-red;
+        }
+        &:active {
+            transition: .2s;
+            transform: scale(.90);
+        }
+    }
+}
