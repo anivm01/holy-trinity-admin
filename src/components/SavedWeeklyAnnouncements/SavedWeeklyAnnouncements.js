@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import API_URL from '../../utilities/api'
+import {API_URL} from '../../utilities/api'
 import { dateOutputConverter } from '../../utilities/dateConverter'
 import './SavedWeeklyAnnouncements.scss'
 
@@ -35,7 +35,7 @@ function SavedWeeklyAnnouncements( ) {
     <div className='saved-weekly-announcements'>
         {weeklyAnnouncements.map((announcement, index) => {
         return (
-            <Link className='saved-weekly-announcements__link' to={`weekly-announcements/${announcement.id}`} key={index}>
+            <Link className='saved-weekly-announcements__link' to={`${announcement.id}`} key={index}>
                 <span className='saved-weekly-announcements__date'>{dateOutputConverter(announcement.date)}</span>
                 <h2 className='saved-weekly-announcements__title'>{announcement.title}</h2>
             </Link>

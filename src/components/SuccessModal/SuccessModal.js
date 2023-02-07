@@ -9,7 +9,7 @@ function SuccessModal() {
             <img className='success-message__icon' src={success} alt="success icon"/>
             <h2 className='success-message__title'>Success!</h2>
             <p className='success-message__message'>Record saved sucessfully</p>
-            <Link to="/" className='success-message__button'>OK</Link>
+            <Link to="/weekly-announcements" className='success-message__button'>OK</Link>
         </div>
     </div>
   )

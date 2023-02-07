@@ -19,5 +19,6 @@ export const dateOutputConverter = (date) => {
     if(day.length<2) {
         day = `0${day}`
     }
-     return `${month}/${day}/${deconstructed[2]}`
+     return `${deconstructed[2]}-${month}-${day}`
 }
+
