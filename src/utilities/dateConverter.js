@@ -22,3 +22,9 @@ export const dateOutputConverter = (date) => {
      return `${deconstructed[2]}-${month}-${day}`
 }
 
+export const dateShorthandConverter = (date) => {
+    const timestamp = new Date(date*1000)
+    const convertedDate = timestamp.toDateString()
+    const dateArray = convertedDate.split(" ")
+    return dateArray[1]+" "+dateArray[2]
+}

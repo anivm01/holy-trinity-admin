@@ -5,7 +5,6 @@ import axios from 'axios'
 
 
 function ImagePreview ( {imageId} ) {
-    console.log(imageId)
     const [imageData, setImageData] = useState(null)
 
     useEffect(()=>{
@@ -29,7 +28,6 @@ function ImagePreview ( {imageId} ) {
   return (
     <div className='image-preview'>
         <img className='image-preview__image' src={`${API_URL}${imageData.url}`} alt={imageData.description}/>
-        <button type='button' className='image-preview__button'>Remove Image</button>
     </div>
   )
 }
