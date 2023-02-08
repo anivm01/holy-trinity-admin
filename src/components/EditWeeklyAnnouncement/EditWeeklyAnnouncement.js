@@ -5,10 +5,11 @@ import { API_URL, weeklyAnnouncementSlug } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import HeadingInput from "../HeadingInput/HeadingInput";
+import HeadingInput from "../OneLineInput/OneLineInput";
 import DateInput from "../DateInput/DateInput";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
+import OneLineInput from "../OneLineInput/OneLineInput";
 
 function EditWeeklyAnnouncement() {
   const [date, setDate] = useState("");
@@ -76,10 +77,6 @@ function EditWeeklyAnnouncement() {
           `${API_URL}${weeklyAnnouncementSlug}/en/${params.id}`,
           updatedAnnouncementEN
         );
-        // const newAnnouncementBGUpdated = {
-        //   ...newAnnouncementBG,
-        //   en_id: enResponse.data.new_announcement.id,
-        // };
         const bgResponse = await axios.put(
           `${API_URL}${weeklyAnnouncementSlug}/bg/${params.id}`,
           updatedAnnouncementBG
@@ -120,10 +117,10 @@ function EditWeeklyAnnouncement() {
       <div className="weekly-announcement__multilingual">
         <div className="weekly-announcement__language-specific">
           <h2 className="weekly-announcement__subtitle">English</h2>
-          <HeadingInput
-            titleLabel="Enter a title or a greeting"
-            title={enTitle}
-            setTitle={setEnTitle}
+          <OneLineInput
+            label="Enter a title or a greeting"
+            oneLine={enTitle}
+            setOneLine={setEnTitle}
           />
           <WysiwygEdit
             editorLabel="Enter the main content:"
@@ -133,11 +130,10 @@ function EditWeeklyAnnouncement() {
         </div>
         <div className="weekly-announcement__language-specific">
           <h2 className="weekly-announcement__subtitle">Български</h2>
-          <HeadingInput
-            titleLabel="Въведете заглавие или поздравление"
-            title={bgTitleToSend}
-            setTitle={setBgTitle}
-            
+          <OneLineInput
+            label="Въведете заглавие или поздравление"
+            oneLine={bgTitleToSend}
+            setOneLine={setBgTitle}
           />
           <WysiwygEdit
             editorLabel="Въведете основното съдържание:"

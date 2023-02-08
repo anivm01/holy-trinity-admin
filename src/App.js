@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import WeeklyAnnouncementsPage from './pages/WeeklyAnnouncementsPage/WeeklyAnnouncementsPage';
 import EditWeeklyAnnouncement from './components/EditWeeklyAnnouncement/EditWeeklyAnnouncement';
 import ImageUpload from './components/ImageUpload/ImageUpload';
+import AddNewWorshipOffice from './components/AddNewWorshipOffice/AddNewWorshipOffice';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route path="/weekly-announcements/add-new" element={<AddNewWeeklyAnnouncement />}/>
           <Route path="/weekly-announcements/:id" element={<EditWeeklyAnnouncement />}/>
           <Route path="/worship-offices" />
+          <Route path="/worship-offices/add-new" element={<AddNewWorshipOffice />} />
+          <Route path="/worship-offices/:id" />
           <Route path="/events" />
           <Route path="/community-news" />
           <Route path="/obituaries" />

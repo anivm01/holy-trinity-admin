@@ -1,0 +1,24 @@
+.add-image {
+    padding: 1rem;
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__label {
+        margin: 0 0 .5rem 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+    &__placeholder {
+        width: 25rem;
+        background-color: white;
+        cursor: pointer;
+    }
+    &__input {
+        width: 0;
+        height: 0;
+        &::-webkit-file-upload-button {
+            visibility: hidden;
+          }
+    }
+}

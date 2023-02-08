@@ -5,9 +5,10 @@ import { API_URL, weeklyAnnouncementSlug } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import { dateInputConverter } from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import HeadingInput from "../HeadingInput/HeadingInput";
+import HeadingInput from "../OneLineInput/OneLineInput";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import DateInput from "../DateInput/DateInput";
+import OneLineInput from "../OneLineInput/OneLineInput";
 
 function AddNewWeeklyAnnouncement() {
   const [date, setDate] = useState("");
@@ -96,10 +97,10 @@ function AddNewWeeklyAnnouncement() {
       <div className="weekly-announcement__multilingual">
         <div className="weekly-announcement__language-specific">
           <h2 className="weekly-announcement__subtitle">English</h2>
-          <HeadingInput
-            titleLabel="Enter a title or a greeting"
-            title={enTitleToSend}
-            setTitle={setEnTitleToSend}
+          <OneLineInput
+            label="Enter a title or a greeting"
+            oneLine={enTitleToSend}
+            setOneLine={setEnTitleToSend}
           />
           <Wysiwyg
             editorLabel="Enter the main content:"
@@ -108,10 +109,10 @@ function AddNewWeeklyAnnouncement() {
         </div>
         <div className="weekly-announcement__language-specific">
           <h2 className="weekly-announcement__subtitle">Български</h2>
-          <HeadingInput
-            titleLabel="Въведете заглавие или поздравление"
-            title={bgTitleToSend}
-            setTitle={setBgTitleToSend}
+          <OneLineInput
+            label="Въведете заглавие или поздравление"
+            oneLine={bgTitleToSend}
+            setOneLine={setBgTitleToSend}
           />
           <Wysiwyg
             editorLabel="Въведете основното съдържание:"
