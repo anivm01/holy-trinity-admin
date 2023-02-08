@@ -4,6 +4,7 @@ import AddNewWeeklyAnnouncement from './components/AddNewWeeklyAnnouncement/AddN
 import Dashboard from './components/Dashboard/Dashboard';
 import WeeklyAnnouncementsPage from './pages/WeeklyAnnouncementsPage/WeeklyAnnouncementsPage';
 import EditWeeklyAnnouncement from './components/EditWeeklyAnnouncement/EditWeeklyAnnouncement';
+import ImageUpload from './components/ImageUpload/ImageUpload';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       <Dashboard />
       <div className='app__main'>
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<ImageUpload />}/>
           <Route path="/weekly-announcements" element={<WeeklyAnnouncementsPage />}/>
           <Route path="/weekly-announcements/add-new" element={<AddNewWeeklyAnnouncement />}/>
           <Route path="/weekly-announcements/:id" element={<EditWeeklyAnnouncement />}/>

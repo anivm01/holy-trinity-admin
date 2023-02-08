@@ -1,0 +1,68 @@
+@use "../../partials/colors"as*;
+.image-upload {
+    display: flex;
+    background-color: white;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    gap: 2rem;
+    &__add-new {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+    }
+    &__preview {
+        height: 9rem;
+        width: 16rem;
+    }
+    &__input {
+        width: 0;
+        height: 0;
+        &::-webkit-file-upload-button {
+            visibility: hidden;
+          }
+    }
+    &__descriptions {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    &__description {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    &__text {
+        padding: .5rem;
+        border: 1px solid $wine-red;
+        border-radius: 10px;
+        &:focus {
+            outline: 2px solid $wine-red;        
+        }
+    }
+    &__submit {
+    margin: 2rem auto;
+    width: 10rem;
+    padding: .5rem .25rem;
+    background-color: $wine-red;
+    color: $beige;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+        color: $wine-red;
+        background-color: $golden;
+        border: 2px solid $wine-red;
+    }
+    &:active {
+        transition: .2s;
+        transform: scale(.90);
+    }
+}
+    &__saved {
+        aspect-ratio: 16/9;
+        max-width: 400px;
+    }
+}
