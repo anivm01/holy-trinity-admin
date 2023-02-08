@@ -3,6 +3,8 @@ import { useState } from "react"
 import { API_URL } from "../../utilities/api"
 import plus from "../../assets/plus.svg"
 import "./ImageUpload.scss"
+import ErrorModal from "../ErrorModal/ErrorModal"
+import SuccessModal from "../SuccessModal/SuccessModal"
 
 function ImageUpload() {
     const [file, setFile] = useState(null)
@@ -10,12 +12,20 @@ function ImageUpload() {
     const [descriptionBG, setDescriptionBG] = useState("")
     const [previewURL, setPreviewURL] = useState(plus)
     const [savedURL, setSavedURL] = useState("")
+
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [uploadError, setUploadError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
   
     const submit = async event => {
       event.preventDefault()
-  
-      // Send the file and description to the server
-  
+
+      if( !file || !description || !descriptionBG) {
+        setUploadError(true)
+        setErrorMessage("Make sure to fill out all the fields. You need to add an image file, a description in English and a description in Bulgarian.")
+        return
+      }
+   
       const formData = new FormData()
       formData.append("image", file)
       formData.append("description", description)
@@ -27,16 +37,27 @@ function ImageUpload() {
         setFile(null)
         setDescription("")
         setDescriptionBG("")
-        setPreviewURL(plus)        
+        setPreviewURL(plus)      
       }
       catch (error) {
-        console.log(error)
+        console.error(error);
+        setUploadError(true);
+        setErrorMessage(
+          "There was a problem with the connection. Please try again later."
+        );
       }      
     }
   
     return (
       <>
         <form onSubmit={submit} className="image-upload">
+          {uploadError && (
+            <ErrorModal
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+              setUploadError={setUploadError}
+            />
+          )}
           <label className="image-upload__add-new">
             Choose an image to add
             <img className="image-upload__preview" src={previewURL} alt="add an image here"/>
