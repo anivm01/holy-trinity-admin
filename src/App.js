@@ -14,7 +14,7 @@ function App() {
       <Dashboard />
       <div className='app__main'>
         <Routes>
-          <Route path="/" element={<ImageUpload />}/>
+          <Route path="/" />
           <Route path="/weekly-announcements" element={<WeeklyAnnouncementsPage />}/>
           <Route path="/weekly-announcements/add-new" element={<AddNewWeeklyAnnouncement />}/>
           <Route path="/weekly-announcements/:id" element={<EditWeeklyAnnouncement />}/>
