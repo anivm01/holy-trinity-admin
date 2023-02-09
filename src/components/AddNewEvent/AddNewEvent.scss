@@ -1,5 +1,6 @@
 @use "../../partials/colors"as*;
-.worship-office {
+
+.event {
     padding: 0 2rem;
     display: flex;
     flex-direction: column;
@@ -9,35 +10,22 @@
     color: $wine-red;
     background-color: $beige;
     margin: 0 3rem;
-    &__top {
-        width: 100%;
-    }
-    &__middle {
-        display: flex;
-        gap: 3rem;
-    }
-    &__youtube {
-        margin: 2rem 0 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 3rem;
-        &> :first-child {
-            flex-basis: 50%;
-        }
-    }
     &__title {
         border-bottom: 2px solid $wine-red;
         width: 100%;
     }
-    &__subtitle {
-        //margin: 1rem 0;
-        border-bottom: 2px solid $wine-red;
+    &__multilingual {
+        display: flex;
+        gap: 3rem;
     }
-    &__language {
+    &__language-specific {
         flex-basis: 50%;
         display: flex;
         flex-direction: column;
+    }
+    &__subtitle {
+        margin: 1rem 0;
+        border-bottom: 2px solid $wine-red;
     }
     &__submit {
         margin: 2rem auto;
@@ -46,17 +34,18 @@
         background-color: $wine-red;
         color: $beige;
         border-radius: 4px;
-        border: 2px solid $wine-red;
+        border: none;
         font-size: 1rem;
         font-weight: bold;
         cursor: pointer;
-    &:hover {
-        color: $wine-red;
-        background-color: $golden;
-    }
-    &:active {
-        transition: .2s;
-        transform: scale(.90);
-    }
+        &:hover {
+            color: $wine-red;
+            background-color: $golden;
+            border: 2px solid $wine-red;
+        }
+        &:active {
+            transition: .2s;
+            transform: scale(.90);
+        }
     }
 }

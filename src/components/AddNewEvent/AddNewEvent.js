@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "./AddNewWeeklyAnnouncement.scss";
+import "./AddNewEvent.scss";
 import axios from "axios";
-import { API_URL, weeklyAnnouncementSlug } from "../../utilities/api";
+import { API_URL, eventSlug } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import { dateInputConverter } from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
@@ -9,12 +9,12 @@ import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import DateInput from "../DateInput/DateInput";
 import OneLineInput from "../OneLineInput/OneLineInput";
 
-function AddNewWeeklyAnnouncement() {
+function AddNewEvent() {
   const [date, setDate] = useState("");
-  const [enTitleToSend, setEnTitleToSend] = useState("");
-  const [enContentToSend, setEnContentToSend] = useState("");
-  const [bgTitleToSend, setBgTitleToSend] = useState("");
-  const [bgContentToSend, setBgContentToSend] = useState("");
+  const [enTitle, setEnTitle] = useState("");
+  const [enContent, setEnContent] = useState("");
+  const [bgTitle, setBgTitle] = useState("");
+  const [bgContent, setBgContent] = useState("");
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
@@ -24,10 +24,10 @@ function AddNewWeeklyAnnouncement() {
     e.preventDefault();
 
     if (
-      !enTitleToSend ||
-      !enContentToSend ||
-      !bgTitleToSend ||
-      !bgContentToSend
+      !enTitle ||
+      !enContent ||
+      !bgTitle ||
+      !bgContent
     ) {
       setUploadError(true);
       setErrorMessage(
@@ -38,51 +38,54 @@ function AddNewWeeklyAnnouncement() {
     if (!date) {
       setUploadError(true);
       setErrorMessage(
-        "Make sure to add a date on which you want the announcement to be posted"
+        "Make sure to add a date on which you want the event to be posted"
       );
       return;
     }
 
-    const newAnnouncementEN = {
-      title: enTitleToSend,
-      announcement: enContentToSend,
+    const newEventEN = {
+      title: enTitle,
+      event_details: enContent,
       date: dateInputConverter(date),
     };
 
-    const newAnnouncementBG = {
-      title: bgTitleToSend,
-      announcement: bgContentToSend,
+    const newEventBG = {
+      title: bgTitle,
+      event_details: bgContent,
       date: dateInputConverter(date),
     };
 
-    const uploadWeeklyAnnouncement = async () => {
+    const uploadEvent = async () => {
       try {
         const enResponse = await axios.post(
-          `${API_URL}${weeklyAnnouncementSlug}/en`,
-          newAnnouncementEN
+          `${API_URL}${eventSlug}/en`,
+          newEventEN
         );
-        const newAnnouncementBGUpdated = {
-          ...newAnnouncementBG,
-          en_id: enResponse.data.new_announcement.id,
+        
+        const newEventBGUpdated = {
+          ...newEventBG,
+          en_id: enResponse.data.new_entry.id,
         };
+
         await axios.post(
-          `${API_URL}${weeklyAnnouncementSlug}/bg`,
-          newAnnouncementBGUpdated
+          `${API_URL}${eventSlug}/bg`,
+          newEventBGUpdated
         );
+
         setUploadSuccess(true);
       } catch (err) {
-        console.error(err);
+        console.error(err.response);
         setUploadError(true);
         setErrorMessage(
           "There was a problem with the connection. Please try again later."
         );
       }
     };
-    uploadWeeklyAnnouncement();
+    uploadEvent();
   };
 
   return (
-    <form onSubmit={onSubmit} className="weekly-announcement">
+    <form onSubmit={onSubmit} className="event">
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -91,37 +94,37 @@ function AddNewWeeklyAnnouncement() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      <h1 className="weekly-announcement__title">Add a New Weekly Announcement</h1>
+      <h1 className="event__title">Add a New Event</h1>
       <DateInput date={date} setDate={setDate}/>
-      <div className="weekly-announcement__multilingual">
-        <div className="weekly-announcement__language-specific">
-          <h2 className="weekly-announcement__subtitle">English</h2>
+      <div className="event__multilingual">
+        <div className="event__language-specific">
+          <h2 className="event__subtitle">English</h2>
           <OneLineInput
             label="Enter a title or a greeting"
-            oneLine={enTitleToSend}
-            setOneLine={setEnTitleToSend}
+            oneLine={enTitle}
+            setOneLine={setEnTitle}
           />
           <Wysiwyg
             editorLabel="Enter the main content:"
-            setContent={setEnContentToSend}
+            setContent={setEnContent}
           />
         </div>
-        <div className="weekly-announcement__language-specific">
-          <h2 className="weekly-announcement__subtitle">Български</h2>
+        <div className="event__language-specific">
+          <h2 className="event__subtitle">Български</h2>
           <OneLineInput
             label="Въведете заглавие или поздравление"
-            oneLine={bgTitleToSend}
-            setOneLine={setBgTitleToSend}
+            oneLine={bgTitle}
+            setOneLine={setBgTitle}
           />
           <Wysiwyg
             editorLabel="Въведете основното съдържание:"
-            setContent={setBgContentToSend}
+            setContent={setBgContent}
           />
         </div>
       </div>
-      <div className="weekly-announcement__bottom">
+      <div className="event__bottom">
         <input
-          className="weekly-announcement__submit"
+          className="event__submit"
           type="submit"
           value="Save "
         />
@@ -130,4 +133,4 @@ function AddNewWeeklyAnnouncement() {
   );
 }
 
-export default AddNewWeeklyAnnouncement;
+export default AddNewEvent;

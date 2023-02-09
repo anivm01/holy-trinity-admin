@@ -6,6 +6,8 @@ import WeeklyAnnouncementsPage from './pages/WeeklyAnnouncementsPage/WeeklyAnnou
 import EditWeeklyAnnouncement from './components/EditWeeklyAnnouncement/EditWeeklyAnnouncement';
 import AddNewWorshipOffice from './components/AddNewWorshipOffice/AddNewWorshipOffice';
 import WorshipOfficesPage from './pages/WorshipOfficesPage/WorshipOfficesPage';
+import EditWorshipOffice from './components/EditWorshipOffice/EditWorshipOffice';
+import AddNewEvent from './components/AddNewEvent/AddNewEvent';
 
 function App() {
   return (
@@ -20,8 +22,9 @@ function App() {
           <Route path="/weekly-announcements/:id" element={<EditWeeklyAnnouncement />}/>
           <Route path="/worship-offices" element={<WorshipOfficesPage />} />
           <Route path="/worship-offices/add-new" element={<AddNewWorshipOffice />} />
-          <Route path="/worship-offices/:id" />
+          <Route path="/worship-offices/:id" element={<EditWorshipOffice />} />
           <Route path="/events" />
+          <Route path="/events/add-new" element={<AddNewEvent/>} />
           <Route path="/community-news" />
           <Route path="/obituaries" />
         </Routes>

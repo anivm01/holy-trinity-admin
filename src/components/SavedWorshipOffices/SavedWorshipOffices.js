@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { API_URL, worshipOfficeSlug } from '../../utilities/api'
 import { dateShorthandConverter } from '../../utilities/dateConverter'
+import { sortNewestToOldest } from '../../utilities/sort'
 import ImagePreview from '../ImagePreview/ImagePreview'
 import './SavedWorshipOffices.scss'
 
@@ -12,11 +13,7 @@ function SavedWorshipOffices() {
     const getWorshipOffices = async () => {
         try{
             const response = await axios.get(`${API_URL}${worshipOfficeSlug}/en`)
-            const worshipOfficesArray = response.data
-            const sortedArray = worshipOfficesArray.sort( (a,b) => {
-                return new Date(b.date) - new Date(a.date);
-            })
-            setWorshipOffices(sortedArray)
+            setWorshipOffices(sortNewestToOldest(response.data))
         }
         catch (error) {
             console.error(error)
@@ -35,13 +32,13 @@ function SavedWorshipOffices() {
     <div className='saved-worship-office'>
         {worshipOffices.map((single, index)=> {
             return (
-                <div className='saved-worship-office__link' key={index}>
+                <Link to={`${single.id}`} className='saved-worship-office__link' key={index}>
                     <span className='saved-worship-office__date'>{dateShorthandConverter(single.date)}</span>
                     <ImagePreview imageId={single.thumbnail_id} />
                     <div className='saved-worship-office__bottom'>
                         <h2 className='saved-worship-office__title'>{single.title}</h2>
                     </div>
-                </div>
+                </Link>
             )
         })}
     </div>

@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import OneLineInput from "../OneLineInput/OneLineInput";
-import "./AddNewWorshipOffice.scss"; 
+import "./EditWorshipOffice.scss"; 
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import { API_URL, worshipOfficeSlug } from "../../utilities/api";
 import axios from "axios";
-import { dateInputConverter } from "../../utilities/dateConverter";
+import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
+import { useParams } from "react-router-dom";
+import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 
-function AddNewWorshipOffice() {
+function EditWorshipOffice() {
+    
   const [youtubeId, setYoutubeId] = useState("");
   const [thumbnailId, setThumbnailId] = useState("");
   const [date, setDate] = useState("");
@@ -24,12 +27,35 @@ function AddNewWorshipOffice() {
   const [epistleBg, setEpistleBg] = useState("");
   const [oldTestamentEn, setOldTestamentEn] = useState("");
   const [oldTestamentBg, setOldTestamentBg] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(false)
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const params = useParams()
+
+  useEffect(()=>{
+    const fetchContent = async () => {
+        const enData = await axios.get(`${API_URL}${worshipOfficeSlug}/en/${params.id}`)
+        setDate(dateOutputConverter(enData.data.date))
+        setThumbnailId(enData.data.thumbnail_id)
+        setYoutubeId(enData.data.youtube_video_id)
+        setTitleEn(enData.data.title)
+        setGospelEn(enData.data.gospel)
+        setEpistleEn(enData.data.epistle)
+        setOldTestamentEn(enData.data.old_testament)
+        const bgData = await axios.get(`${API_URL}${worshipOfficeSlug}/bg/${params.id}`)
+        setTitleBg(bgData.data.title)
+        setGospelBg(bgData.data.gospel)
+        setEpistleBg(bgData.data.epistle)
+        setOldTestamentBg(bgData.data.old_testament)
+        setDataLoaded(true)
+    }
+    fetchContent()
+  },[params.id])
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -91,20 +117,17 @@ function AddNewWorshipOffice() {
         youtube_video_id: youtubeId,
         date: dateInputConverter(date)
     };
-    console.log(`${API_URL}${worshipOfficeSlug}/en`)
+    
     const uploadWorshipOffice = async () => {
       try {
-        const enResponse = await axios.post(
+        await axios.put(
           `${API_URL}${worshipOfficeSlug}/en`,
           WorshipOfficeEN
         );
-        const WorshipOfficeBGUpdated = {
-          ...WorshipOfficeBG,
-          en_id: enResponse.data.new_entry.id,
-        };
-        await axios.post(
+        
+        await axios.put(
           `${API_URL}${worshipOfficeSlug}/bg`,
-          WorshipOfficeBGUpdated
+          WorshipOfficeBG
         );
         setUploadSuccess(true);
       } catch (err) {
@@ -117,6 +140,10 @@ function AddNewWorshipOffice() {
     };
     uploadWorshipOffice();
   };
+
+  if(!dataLoaded) {
+    return <p>Loading</p>
+  }
 
 
   return (
@@ -136,7 +163,7 @@ function AddNewWorshipOffice() {
       )}
       {uploadSuccess && <SuccessModal />}
       <form onSubmit={onSubmit} className="worship-office">
-        <h1 className="worship-office__title">Add New Worship Office Entry</h1>
+        <h1 className="worship-office__title">Edit Worship Office Entry</h1>
         <div className="worship-office__top">
             <DateInput date={date} setDate={setDate}/>
             <div className="worship-office__youtube">
@@ -156,33 +183,39 @@ function AddNewWorshipOffice() {
             <div className="worship-office__language">
             <h2 className="worship-office__subtitle">English</h2>
                 <OneLineInput label="Enter the headline/title" oneLine={titleEn} setOneLine={setTitleEn} />
-                <Wysiwyg
+                <WysiwygEdit
                     editorLabel="Enter relevant Gospel reading:"
                     setContent={setGospelEn}
+                    content={gospelEn}
                 />
-                <Wysiwyg
+                <WysiwygEdit
                     editorLabel="Enter relevant Epsitle reading:"
                     setContent={setEpistleEn}
+                    content={epistleEn}
                 />
-                <Wysiwyg
+                <WysiwygEdit
                     editorLabel="Enter relevant reading from the Old Testament:"
                     setContent={setOldTestamentEn}
+                    content={oldTestamentEn}
                 />
             </div>
             <div className="worship-office__language">
             <h2 className="worship-office__subtitle">Български</h2>
                 <OneLineInput label="Въведете заглавието" oneLine={titleBg} setOneLine={setTitleBg} />
-                <Wysiwyg
+                <WysiwygEdit
                     editorLabel="Въведете съответното Евангелско четиво:"
                     setContent={setGospelBg}
+                    content={gospelBg}
                 />
-                <Wysiwyg
+                <WysiwygEdit
                     editorLabel="Въведете съответното Апостолско четиво:"
                     setContent={setEpistleBg}
+                    content={epistleBg}
                 />
-                <Wysiwyg
+                <WysiwygEdit
                     editorLabel="Въведете подходящото четиво от Стария Завет"
                     setContent={setOldTestamentBg}
+                    content={oldTestamentBg}
                 />
             </div>
         </div>
@@ -201,4 +234,4 @@ function AddNewWorshipOffice() {
   );
 }
 
-export default AddNewWorshipOffice;
+export default EditWorshipOffice;
