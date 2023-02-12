@@ -42,10 +42,7 @@
         flex-direction: column;
     }
     &__preview {
-        max-height: 18rem;
-        max-width: 32rem;
-        min-height: 12rem;
-        min-width: 20rem;
+        width: 20rem;
         background-color: white;
         cursor: pointer;
     }

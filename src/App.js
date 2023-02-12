@@ -12,6 +12,7 @@ import EventsPage from './pages/EventsPage/EventsPage';
 import EditEvent from './components/EditEvent/EditEvent';
 import CommunityNewsPage from './pages/CommunityNewsPage/CommunityNewsPage';
 import AddNewCommunityNews from './components/AddNewCommunityNews/AddNewCommunityNews';
+import EditCommunityNews from './components/EditCommunityNews/EditCommunityNews';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
           <Route path="/events/:id" element={<EditEvent/>} />
           <Route path="/community-news" element={<CommunityNewsPage/>} />
           <Route path="/community-news/add-new" element={<AddNewCommunityNews/>} />
-          <Route path="/community-news/:id" />
+          <Route path="/community-news/:id" element={<EditCommunityNews />} />
           <Route path="/obituaries" />
         </Routes>
       </div>

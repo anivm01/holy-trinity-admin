@@ -18,9 +18,10 @@
             border-bottom: 4px solid $wine-red;
         }
         &:hover {
-            background-color: $golden;
             transition: .2s;
-            transform: translateY(.5rem);
+            scale: 1.01;
+            background-color: $golden;
+            border-bottom: 4px solid $wine-red;
         }
     }
     &__date {
