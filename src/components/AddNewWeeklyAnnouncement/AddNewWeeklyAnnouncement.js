@@ -82,7 +82,7 @@ function AddNewWeeklyAnnouncement() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="weekly-announcement">
+    <>
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -91,42 +91,44 @@ function AddNewWeeklyAnnouncement() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      <h1 className="weekly-announcement__title">Add a New Weekly Announcement</h1>
-      <DateInput date={date} setDate={setDate}/>
-      <div className="weekly-announcement__multilingual">
-        <div className="weekly-announcement__language-specific">
-          <h2 className="weekly-announcement__subtitle">English</h2>
-          <OneLineInput
-            label="Enter a title or a greeting"
-            oneLine={enTitleToSend}
-            setOneLine={setEnTitleToSend}
-          />
-          <Wysiwyg
-            editorLabel="Enter the main content:"
-            setContent={setEnContentToSend}
+      <form onSubmit={onSubmit} className="weekly-announcement">
+        <h1 className="weekly-announcement__title">Add a New Weekly Announcement</h1>
+        <DateInput date={date} setDate={setDate}/>
+        <div className="weekly-announcement__multilingual">
+          <div className="weekly-announcement__language-specific">
+            <h2 className="weekly-announcement__subtitle">English</h2>
+            <OneLineInput
+              label="Enter a title or a greeting"
+              oneLine={enTitleToSend}
+              setOneLine={setEnTitleToSend}
+            />
+            <Wysiwyg
+              editorLabel="Enter the main content:"
+              setContent={setEnContentToSend}
+            />
+          </div>
+          <div className="weekly-announcement__language-specific">
+            <h2 className="weekly-announcement__subtitle">Български</h2>
+            <OneLineInput
+              label="Въведете заглавие или поздравление"
+              oneLine={bgTitleToSend}
+              setOneLine={setBgTitleToSend}
+            />
+            <Wysiwyg
+              editorLabel="Въведете основното съдържание:"
+              setContent={setBgContentToSend}
+            />
+          </div>
+        </div>
+        <div className="weekly-announcement__bottom">
+          <input
+            className="weekly-announcement__submit"
+            type="submit"
+            value="Save "
           />
         </div>
-        <div className="weekly-announcement__language-specific">
-          <h2 className="weekly-announcement__subtitle">Български</h2>
-          <OneLineInput
-            label="Въведете заглавие или поздравление"
-            oneLine={bgTitleToSend}
-            setOneLine={setBgTitleToSend}
-          />
-          <Wysiwyg
-            editorLabel="Въведете основното съдържание:"
-            setContent={setBgContentToSend}
-          />
-        </div>
-      </div>
-      <div className="weekly-announcement__bottom">
-        <input
-          className="weekly-announcement__submit"
-          type="submit"
-          value="Save "
-        />
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

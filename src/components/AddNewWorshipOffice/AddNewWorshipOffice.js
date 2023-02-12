@@ -67,7 +67,7 @@ function AddNewWorshipOffice() {
     if (!date) {
       setUploadError(true);
       setErrorMessage(
-        "Make sure to add a date on which you want the announcement to be posted"
+        "Make sure to add a date on which you want the entry to be posted"
       );
       return;
     }
@@ -91,7 +91,7 @@ function AddNewWorshipOffice() {
         youtube_video_id: youtubeId,
         date: dateInputConverter(date)
     };
-    console.log(`${API_URL}${worshipOfficeSlug}/en`)
+    
     const uploadWorshipOffice = async () => {
       try {
         const enResponse = await axios.post(

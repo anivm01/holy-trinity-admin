@@ -12,12 +12,11 @@
         display: flex;
         flex-direction: column;
         cursor: pointer;
-        border: 2px solid $wine-red;
+        border: 4px solid $wine-red;
         text-decoration: none;
         color: $wine-red;
         align-items: center;
         &:hover {
-            border: 2px solid $wine-red;
             transition: .2s;
             transform: translateY(.5rem);
             background-color: $wine-red;

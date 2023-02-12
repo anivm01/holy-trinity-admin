@@ -8,6 +8,10 @@ import AddNewWorshipOffice from './components/AddNewWorshipOffice/AddNewWorshipO
 import WorshipOfficesPage from './pages/WorshipOfficesPage/WorshipOfficesPage';
 import EditWorshipOffice from './components/EditWorshipOffice/EditWorshipOffice';
 import AddNewEvent from './components/AddNewEvent/AddNewEvent';
+import EventsPage from './pages/EventsPage/EventsPage';
+import EditEvent from './components/EditEvent/EditEvent';
+import CommunityNewsPage from './pages/CommunityNewsPage/CommunityNewsPage';
+import AddNewCommunityNews from './components/AddNewCommunityNews/AddNewCommunityNews';
 
 function App() {
   return (
@@ -23,9 +27,12 @@ function App() {
           <Route path="/worship-offices" element={<WorshipOfficesPage />} />
           <Route path="/worship-offices/add-new" element={<AddNewWorshipOffice />} />
           <Route path="/worship-offices/:id" element={<EditWorshipOffice />} />
-          <Route path="/events" />
+          <Route path="/events" element={<EventsPage/>} />
           <Route path="/events/add-new" element={<AddNewEvent/>} />
-          <Route path="/community-news" />
+          <Route path="/events/:id" element={<EditEvent/>} />
+          <Route path="/community-news" element={<CommunityNewsPage/>} />
+          <Route path="/community-news/add-new" element={<AddNewCommunityNews/>} />
+          <Route path="/community-news/:id" />
           <Route path="/obituaries" />
         </Routes>
       </div>

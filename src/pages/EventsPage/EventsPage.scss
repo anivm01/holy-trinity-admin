@@ -1,9 +1,10 @@
 @use "../../partials/colors"as*;
-.weekly-announcements-page {
+.events-page {
 margin-top: 2rem;
 width: 100%;
 display: flex;
 flex-direction: column;
+
 &__link {
     text-decoration: none;
     text-align: center;

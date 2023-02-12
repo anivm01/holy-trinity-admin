@@ -23,12 +23,7 @@ function AddNewEvent() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      !enTitle ||
-      !enContent ||
-      !bgTitle ||
-      !bgContent
-    ) {
+    if (!enTitle || !enContent || !bgTitle || !bgContent) {
       setUploadError(true);
       setErrorMessage(
         "Make sure that you have filled out all the fields in both English and Bulgarian. If you wish to return and edit the content later leave some default content such as 'TBD' or 'update coming soon'"
@@ -56,21 +51,19 @@ function AddNewEvent() {
     };
 
     const uploadEvent = async () => {
+      console.log(newEventEN);
       try {
         const enResponse = await axios.post(
           `${API_URL}${eventSlug}/en`,
           newEventEN
         );
-        
+
         const newEventBGUpdated = {
           ...newEventBG,
           en_id: enResponse.data.new_entry.id,
         };
 
-        await axios.post(
-          `${API_URL}${eventSlug}/bg`,
-          newEventBGUpdated
-        );
+        await axios.post(`${API_URL}${eventSlug}/bg`, newEventBGUpdated);
 
         setUploadSuccess(true);
       } catch (err) {
@@ -85,7 +78,7 @@ function AddNewEvent() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="event">
+    <>
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -94,42 +87,40 @@ function AddNewEvent() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      <h1 className="event__title">Add a New Event</h1>
-      <DateInput date={date} setDate={setDate}/>
-      <div className="event__multilingual">
-        <div className="event__language-specific">
-          <h2 className="event__subtitle">English</h2>
-          <OneLineInput
-            label="Enter a title or a greeting"
-            oneLine={enTitle}
-            setOneLine={setEnTitle}
-          />
-          <Wysiwyg
-            editorLabel="Enter the main content:"
-            setContent={setEnContent}
-          />
+      <form onSubmit={onSubmit} className="event">
+        <h1 className="event__title">Add a New Event</h1>
+        <DateInput date={date} setDate={setDate} />
+        <div className="event__multilingual">
+          <div className="event__language-specific">
+            <h2 className="event__subtitle">English</h2>
+            <OneLineInput
+              label="Enter a title or a greeting"
+              oneLine={enTitle}
+              setOneLine={setEnTitle}
+            />
+            <Wysiwyg
+              editorLabel="Enter the main content:"
+              setContent={setEnContent}
+            />
+          </div>
+          <div className="event__language-specific">
+            <h2 className="event__subtitle">Български</h2>
+            <OneLineInput
+              label="Въведете заглавие или поздравление"
+              oneLine={bgTitle}
+              setOneLine={setBgTitle}
+            />
+            <Wysiwyg
+              editorLabel="Въведете основното съдържание:"
+              setContent={setBgContent}
+            />
+          </div>
         </div>
-        <div className="event__language-specific">
-          <h2 className="event__subtitle">Български</h2>
-          <OneLineInput
-            label="Въведете заглавие или поздравление"
-            oneLine={bgTitle}
-            setOneLine={setBgTitle}
-          />
-          <Wysiwyg
-            editorLabel="Въведете основното съдържание:"
-            setContent={setBgContent}
-          />
+        <div className="event__bottom">
+          <input className="event__submit" type="submit" value="Save " />
         </div>
-      </div>
-      <div className="event__bottom">
-        <input
-          className="event__submit"
-          type="submit"
-          value="Save "
-        />
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 
