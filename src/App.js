@@ -13,6 +13,9 @@ import EditEvent from './components/EditEvent/EditEvent';
 import CommunityNewsPage from './pages/CommunityNewsPage/CommunityNewsPage';
 import AddNewCommunityNews from './components/AddNewCommunityNews/AddNewCommunityNews';
 import EditCommunityNews from './components/EditCommunityNews/EditCommunityNews';
+import AddNewObituary from './components/AddNewObituary/AddNewObituary';
+import ObituariesPage from './pages/ObituariesPage/ObituariesPage';
+import EditObituary from './components/EditObituary/EditObituary';
 
 function App() {
   return (
@@ -34,7 +37,9 @@ function App() {
           <Route path="/community-news" element={<CommunityNewsPage/>} />
           <Route path="/community-news/add-new" element={<AddNewCommunityNews/>} />
           <Route path="/community-news/:id" element={<EditCommunityNews />} />
-          <Route path="/obituaries" />
+          <Route path="/obituaries" element={<ObituariesPage />} />
+          <Route path="/obituaries/add-new" element={<AddNewObituary />} />
+          <Route path="/obituaries/:id" element={<EditObituary />} />
         </Routes>
       </div>
     </div>

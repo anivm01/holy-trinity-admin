@@ -1,8 +1,9 @@
 @use "../../partials/colors"as*;
 
-.image-preview {
+.obituary-image {
     flex-basis: 50%;
     &__image {
-        width: 18rem; 
+        width: 12rem; 
+        
     }
 }
