@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import OneLineInput from "../OneLineInput/OneLineInput";
-import "./EditWorshipOffice.scss"; 
+import "./EditWorshipOffice.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import { API_URL, worshipOfficeSlug } from "../../utilities/api";
 import axios from "axios";
-import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import {
+  dateInputConverter,
+  dateOutputConverter,
+} from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 
 function EditWorshipOffice() {
-    
   const [youtubeId, setYoutubeId] = useState("");
   const [thumbnailId, setThumbnailId] = useState("");
   const [date, setDate] = useState("");
@@ -27,35 +29,40 @@ function EditWorshipOffice() {
   const [epistleBg, setEpistleBg] = useState("");
   const [oldTestamentEn, setOldTestamentEn] = useState("");
   const [oldTestamentBg, setOldTestamentBg] = useState("");
-  const [dataLoaded, setDataLoaded] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
+  const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const params = useParams()
+  const params = useParams();
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchContent = async () => {
-        const enData = await axios.get(`${API_URL}${worshipOfficeSlug}/en/${params.id}`)
-        setDate(dateOutputConverter(enData.data.date))
-        setThumbnailId(enData.data.thumbnail_id)
-        setYoutubeId(enData.data.youtube_video_id)
-        setTitleEn(enData.data.title)
-        setGospelEn(enData.data.gospel)
-        setEpistleEn(enData.data.epistle)
-        setOldTestamentEn(enData.data.old_testament)
-        const bgData = await axios.get(`${API_URL}${worshipOfficeSlug}/bg/${params.id}`)
-        setTitleBg(bgData.data.title)
-        setGospelBg(bgData.data.gospel)
-        setEpistleBg(bgData.data.epistle)
-        setOldTestamentBg(bgData.data.old_testament)
-        setDataLoaded(true)
-    }
-    fetchContent()
-  },[params.id])
+      const enData = await axios.get(
+        `${API_URL}${worshipOfficeSlug}/en/${params.id}`
+      );
+      setDate(dateOutputConverter(enData.data.date));
+      setThumbnailId(enData.data.thumbnail_id);
+      setYoutubeId(enData.data.youtube_video_id);
+      setTitleEn(enData.data.title);
+      setGospelEn(enData.data.gospel);
+      setEpistleEn(enData.data.epistle);
+      setOldTestamentEn(enData.data.old_testament);
+      const bgData = await axios.get(
+        `${API_URL}${worshipOfficeSlug}/bg/${params.id}`
+      );
+      setTitleBg(bgData.data.title);
+      setGospelBg(bgData.data.gospel);
+      setEpistleBg(bgData.data.epistle);
+      setOldTestamentBg(bgData.data.old_testament);
+      setDataLoaded(true);
+    };
+    fetchContent();
+  }, [params.id]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -78,17 +85,13 @@ function EditWorshipOffice() {
     }
     if (!youtubeId) {
       setUploadError(true);
-      setErrorMessage(
-        "Make sure to add a youtube video id"      
-        );
+      setErrorMessage("Make sure to add a youtube video id");
       return;
     }
-    if (!thumbnailId){
-        setUploadError(true);
-        setErrorMessage(
-            "Make sure to upload a thumbnail image"
-        );
-        return;
+    if (!thumbnailId) {
+      setUploadError(true);
+      setErrorMessage("Make sure to upload a thumbnail image");
+      return;
     }
     if (!date) {
       setUploadError(true);
@@ -105,28 +108,29 @@ function EditWorshipOffice() {
       old_testament: oldTestamentEn,
       thumbnail_id: thumbnailId,
       youtube_video_id: youtubeId,
-      date: dateInputConverter(date)
+      date: dateInputConverter(date),
     };
 
     const WorshipOfficeBG = {
-        title: titleBg,
-        gospel: gospelBg,
-        epistle: epistleBg,
-        old_testament: oldTestamentBg,
-        thumbnail_id: thumbnailId,
-        youtube_video_id: youtubeId,
-        date: dateInputConverter(date)
+      title: titleBg,
+      gospel: gospelBg,
+      epistle: epistleBg,
+      old_testament: oldTestamentBg,
+      thumbnail_id: thumbnailId,
+      youtube_video_id: youtubeId,
+      date: dateInputConverter(date),
     };
-    
+
     const uploadWorshipOffice = async () => {
+      console.log(WorshipOfficeEN);
       try {
         await axios.put(
-          `${API_URL}${worshipOfficeSlug}/en`,
+          `${API_URL}${worshipOfficeSlug}/en/${params.id}`,
           WorshipOfficeEN
         );
-        
+
         await axios.put(
-          `${API_URL}${worshipOfficeSlug}/bg`,
+          `${API_URL}${worshipOfficeSlug}/bg/${params.id}`,
           WorshipOfficeBG
         );
         setUploadSuccess(true);
@@ -141,10 +145,9 @@ function EditWorshipOffice() {
     uploadWorshipOffice();
   };
 
-  if(!dataLoaded) {
-    return <p>Loading</p>
+  if (!dataLoaded) {
+    return <p>Loading</p>;
   }
-
 
   return (
     <>
@@ -152,6 +155,12 @@ function EditWorshipOffice() {
         <ImageUpload
           setImageId={setThumbnailId}
           setVisible={setImageUploadVisible}
+        />
+      )}
+      {imageReplaceVisible && (
+        <ImageUpload
+          setImageId={setThumbnailId}
+          setVisible={setImageReplaceVisible}
         />
       )}
       {uploadError && (
@@ -165,70 +174,90 @@ function EditWorshipOffice() {
       <form onSubmit={onSubmit} className="worship-office">
         <h1 className="worship-office__title">Edit Worship Office Entry</h1>
         <div className="worship-office__top">
-            <DateInput date={date} setDate={setDate}/>
-            <div className="worship-office__youtube">
+          <DateInput date={date} setDate={setDate} />
+          <div className="worship-office__youtube">
             <OneLineInput
-                label="Paste in the id of the youtube video you've created"
-                oneLine={youtubeId}
-                setOneLine={setYoutubeId}
+              label="Paste in the id of the youtube video you've created"
+              oneLine={youtubeId}
+              setOneLine={setYoutubeId}
             />
             {thumbnailId ? (
-                <ImagePreview imageId={thumbnailId} setVisible={setImageUploadVisible} />
+              <div>
+                <div className="worship-office__image-preview">   
+                  <ImagePreview
+                    imageId={thumbnailId}
+                    setReplaceVisible={setImageReplaceVisible}
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="worship-office__button"
+                  onClick={() => setImageReplaceVisible(true)}
+                >
+                  Replace
+                </button>
+              </div>
             ) : (
-                <AddImage setImageUploadVisible={setImageUploadVisible} />
+              <AddImage setImageUploadVisible={setImageUploadVisible} />
             )}
-            </div>
+          </div>
         </div>
         <div className="worship-office__middle">
-            <div className="worship-office__language">
+          <div className="worship-office__language">
             <h2 className="worship-office__subtitle">English</h2>
-                <OneLineInput label="Enter the headline/title" oneLine={titleEn} setOneLine={setTitleEn} />
-                <WysiwygEdit
-                    editorLabel="Enter relevant Gospel reading:"
-                    setContent={setGospelEn}
-                    content={gospelEn}
-                />
-                <WysiwygEdit
-                    editorLabel="Enter relevant Epsitle reading:"
-                    setContent={setEpistleEn}
-                    content={epistleEn}
-                />
-                <WysiwygEdit
-                    editorLabel="Enter relevant reading from the Old Testament:"
-                    setContent={setOldTestamentEn}
-                    content={oldTestamentEn}
-                />
-            </div>
-            <div className="worship-office__language">
+            <OneLineInput
+              label="Enter the headline/title"
+              oneLine={titleEn}
+              setOneLine={setTitleEn}
+            />
+            <WysiwygEdit
+              editorLabel="Enter relevant Gospel reading:"
+              setContent={setGospelEn}
+              content={gospelEn}
+            />
+            <WysiwygEdit
+              editorLabel="Enter relevant Epsitle reading:"
+              setContent={setEpistleEn}
+              content={epistleEn}
+            />
+            <WysiwygEdit
+              editorLabel="Enter relevant reading from the Old Testament:"
+              setContent={setOldTestamentEn}
+              content={oldTestamentEn}
+            />
+          </div>
+          <div className="worship-office__language">
             <h2 className="worship-office__subtitle">Български</h2>
-                <OneLineInput label="Въведете заглавието" oneLine={titleBg} setOneLine={setTitleBg} />
-                <WysiwygEdit
-                    editorLabel="Въведете съответното Евангелско четиво:"
-                    setContent={setGospelBg}
-                    content={gospelBg}
-                />
-                <WysiwygEdit
-                    editorLabel="Въведете съответното Апостолско четиво:"
-                    setContent={setEpistleBg}
-                    content={epistleBg}
-                />
-                <WysiwygEdit
-                    editorLabel="Въведете подходящото четиво от Стария Завет"
-                    setContent={setOldTestamentBg}
-                    content={oldTestamentBg}
-                />
-            </div>
+            <OneLineInput
+              label="Въведете заглавието"
+              oneLine={titleBg}
+              setOneLine={setTitleBg}
+            />
+            <WysiwygEdit
+              editorLabel="Въведете съответното Евангелско четиво:"
+              setContent={setGospelBg}
+              content={gospelBg}
+            />
+            <WysiwygEdit
+              editorLabel="Въведете съответното Апостолско четиво:"
+              setContent={setEpistleBg}
+              content={epistleBg}
+            />
+            <WysiwygEdit
+              editorLabel="Въведете подходящото четиво от Стария Завет"
+              setContent={setOldTestamentBg}
+              content={oldTestamentBg}
+            />
+          </div>
         </div>
 
-
-        
         <div className="worship-office__bottom">
-        <input
-          className="worship-office__submit"
-          type="submit"
-          value="Save "
-        />
-      </div>
+          <input
+            className="worship-office__button"
+            type="submit"
+            value="Save "
+          />
+        </div>
       </form>
     </>
   );

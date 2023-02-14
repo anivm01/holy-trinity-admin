@@ -16,6 +16,10 @@
         flex-direction: column;
         gap: 2rem;
     }
+    &__image-preview {
+        margin: 0 auto;
+        width: 40%;
+    }
     &__middle {
         display: flex;
         gap: 3rem;
@@ -32,7 +36,7 @@
         display: flex;
         flex-direction: column;
     }
-    &__submit {
+    &__button {
         margin: 2rem auto;
         width: 10rem;
         padding: .5rem .25rem;

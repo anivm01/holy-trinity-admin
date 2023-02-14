@@ -26,6 +26,7 @@ function AddNewWorshipOffice() {
   const [oldTestamentBg, setOldTestamentBg] = useState("");
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
+  const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
@@ -127,6 +128,12 @@ function AddNewWorshipOffice() {
           setVisible={setImageUploadVisible}
         />
       )}
+      {imageReplaceVisible && (
+        <ImageUpload
+          setImageId={setThumbnailId}
+          setVisible={setImageReplaceVisible}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -146,7 +153,16 @@ function AddNewWorshipOffice() {
                 setOneLine={setYoutubeId}
             />
             {thumbnailId ? (
+              <div className="worship-office__image-preview">
                 <ImagePreview imageId={thumbnailId} setVisible={setImageUploadVisible} />
+                <button
+                  type="button"
+                  className="worship-office__button"
+                  onClick={() => setImageReplaceVisible(true)}
+                >
+                  Replace
+                </button>
+              </div>
             ) : (
                 <AddImage setImageUploadVisible={setImageUploadVisible} />
             )}
@@ -191,7 +207,7 @@ function AddNewWorshipOffice() {
         
         <div className="worship-office__bottom">
         <input
-          className="worship-office__submit"
+          className="worship-office__button"
           type="submit"
           value="Save "
         />

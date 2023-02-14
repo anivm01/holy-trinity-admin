@@ -23,6 +23,7 @@ function EditObituary() {
   const [obituaryBg, setObituaryBg] = useState("");
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
+  const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
@@ -119,6 +120,12 @@ function EditObituary() {
           setVisible={setImageUploadVisible}
         />
       )}
+      {imageReplaceVisible && (
+        <ImageUpload
+          setImageId={setImageId}
+          setVisible={setImageReplaceVisible}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -131,7 +138,16 @@ function EditObituary() {
         <h1 className="obituary__title">Edit Obituary</h1>
         <div className="obituary__top">
             {imageId ? (
+              <div className="obituary__image-preview">
                 <ImagePreview imageId={imageId} setVisible={setImageUploadVisible} />
+                <button
+                  type="button"
+                  className="obituary__button"
+                  onClick={() => setImageReplaceVisible(true)}
+                >
+                  Replace
+                </button>
+              </div>
             ) : (
                 <AddImage setImageUploadVisible={setImageUploadVisible} />
             )}

@@ -1,8 +1,6 @@
 @use "../../partials/colors"as*;
 
 .image-preview {
-    flex-basis: 50%;
-    &__image {
-        width: 18rem; 
-    }
+    width: 100%;
+    object-fit: contain;
 }

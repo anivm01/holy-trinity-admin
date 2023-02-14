@@ -12,6 +12,9 @@
     &__top {
         width: 100%;
     }
+    &__image-preview {
+        width: 20rem;
+    }
     &__middle {
         display: flex;
         gap: 3rem;
@@ -39,7 +42,7 @@
         display: flex;
         flex-direction: column;
     }
-    &__submit {
+    &__button {
         margin: 2rem auto;
         width: 10rem;
         padding: .5rem .25rem;

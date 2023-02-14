@@ -21,6 +21,7 @@ function AddNewCommunityNews() {
   const [contentBg, setContentBg] = useState("");
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
+  const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
@@ -105,6 +106,12 @@ function AddNewCommunityNews() {
           setVisible={setImageUploadVisible}
         />
       )}
+      {imageReplaceVisible && (
+        <ImageUpload
+          setImageId={setFeaturedImgId}
+          setVisible={setImageReplaceVisible}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -118,7 +125,16 @@ function AddNewCommunityNews() {
         <div className="community-news__top">
             <DateInput date={date} setDate={setDate}/>
             {featuredImgId ? (
+              <div className="community-news__image-preview">
                 <ImagePreview imageId={featuredImgId} setVisible={setImageUploadVisible} />
+                <button
+                  type="button"
+                  className="community-news__button"
+                  onClick={() => setImageReplaceVisible(true)}
+                >
+                  Replace
+                </button>
+              </div>
             ) : (
                 <AddImage setImageUploadVisible={setImageUploadVisible} />
             )}
@@ -144,7 +160,7 @@ function AddNewCommunityNews() {
         </div>
         <div className="community-news__bottom">
         <input
-          className="community-news__submit"
+          className="community-news__button"
           type="submit"
           value="Save "
         />
