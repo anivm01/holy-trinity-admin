@@ -3,26 +3,26 @@
 .saved-weekly-announcements {
     padding: 0 2rem;
 
-    &__link {
+    &__single {
         padding: 1rem;
         gap: 1rem;
         display: flex;
-        flex-direction: column;
-        cursor: pointer;
+        // flex-direction: column;
         border: 4px solid $wine-red;
         border-bottom: none;
         text-decoration: none;
         color: $wine-red;
         align-items: flex-start;
+        position: relative;
         &:last-child {
             border-bottom: 4px solid $wine-red;
         }
-        &:hover {
-            transition: .2s;
-            scale: 1.01;
-            background-color: $golden;
-            border-bottom: 4px solid $wine-red;
-        }
+        // &:hover {
+        //     transition: .2s;
+        //     scale: 1.01;
+        //     background-color: $golden;
+        //     border-bottom: 4px solid $wine-red;
+        // }
     }
     &__date {
         font-weight: 600;
@@ -31,16 +31,52 @@
         font-size: 1.25rem;
         background-color: $golden;
     }
+    &__text {
+        flex-basis: 60%;
+        text-decoration: none;
+        &:hover {
+            transition: .2s;
+            scale: 1.02;
+            transform: translateX(1rem);
+        }
+    }
     &__title {
         padding: 0;
         margin: 0;
         text-decoration: none;
         font-size: 1.25rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
     &__content {
         overflow: hidden;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+    }
+    &__delete {
+        background-color: $golden;
+        border: none;  
+        padding: .5rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        &:hover {
+            scale: 1.05;
+            background-color: $beige;
+        }
+        &:active {
+            scale: .95;
+        }
+    }
+    &__icon {
+        width: 1.5rem;
+    }
+    &__text {
+        color: $wine-red;
+        padding-right: .5rem;
     }
 }

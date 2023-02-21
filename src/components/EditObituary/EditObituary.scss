@@ -14,8 +14,11 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
-        margin-bottom: 2rem;
+        margin: 2rem 0;
+    }
+    &__container {
+        width: 18rem;
+        overflow: hidden;
     }
     &__middle {
         display: flex;
@@ -33,8 +36,12 @@
         display: flex;
         flex-direction: column;
     }
+    &__bottom {
+        display: flex;
+        flex-direction: column;
+    }
     &__submit {
-        margin: 2rem auto;
+        margin: 1rem auto;
         width: 10rem;
         padding: .5rem .25rem;
         background-color: $wine-red;

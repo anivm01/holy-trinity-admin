@@ -1,10 +1,23 @@
-@use "../../partials/colors"as*;
-.obituaries-page {
+@use "../../partials/colors" as*;
+
+.image-gallery-page {
     margin-top: 2rem;
+    padding: 0 3rem;
     width: 100%;
     display: flex;
     flex-direction: column;
-    &__link {
+    &__caution {
+        background-color: $golden;
+        color: $wine-red;
+        width: 30%;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    &__heading {
+        font-size: 1.25rem;
+    }
+    &__button {
+        transform: translateX(-2rem);
         text-decoration: none;
         text-align: center;
         margin: 1rem auto 2rem auto;
@@ -21,4 +34,4 @@
             background-color: $golden;
         }
     }
-    }
+}

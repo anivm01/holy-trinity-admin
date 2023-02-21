@@ -20,6 +20,9 @@ function Dashboard() {
             <li className='dashboard__item'>
                 <NavLink className='dashboard__link' to="/obituaries">Obituaries</NavLink>
             </li>
+            <li className='dashboard__item'>
+                <NavLink className='dashboard__link' to="/image-gallery">Image Gallery</NavLink>
+            </li>
         </ul>
     </section>
   )

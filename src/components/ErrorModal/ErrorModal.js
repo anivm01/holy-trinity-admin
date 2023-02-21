@@ -1,7 +1,7 @@
 import './ErrorModal.scss'
 import error from '../../assets/error.svg'
 
-function ErrorModal( {errorMessage, setErrorMessage, setUploadError } ) {
+function ErrorModal( {errorMessage, setUploadError } ) {
   return (
     <div className='error-message'>
         <div className='error-message__box'>

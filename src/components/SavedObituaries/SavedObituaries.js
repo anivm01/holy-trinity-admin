@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom'
 import { API_URL, obituarySlug } from '../../utilities/api'
 import { createMarkup } from '../../utilities/createMarkup'
 import { sortNewestToOldest } from '../../utilities/sort'
-import ImagePreview from '../ImagePreview/ImagePreview'
-import ObituaryImage from '../ObituaryImage/ObituaryImage'
+import cross from '../../assets/cross.svg'
 import './SavedObituaries.scss'
 
 function SavedObituaries() {
@@ -34,7 +33,7 @@ function SavedObituaries() {
         {obituaries.map((single, index)=> {
             return (
                 <Link to={`${single.id}`} className='saved-obituaries__link' key={index}>
-                    <ObituaryImage imageId={single.image_id} />
+                    <img className='saved-obituaries__icon' src={cross} alt='cross' />
                     <h2 className='saved-obituaries__title'>{single.name}</h2>
                     <h2 className='saved-obituaries__title'>{single.years}</h2>
                     <div className='saved-obituaries__content' dangerouslySetInnerHTML={createMarkup(single.obituary)}></div>

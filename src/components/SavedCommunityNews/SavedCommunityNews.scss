@@ -5,37 +5,39 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    &__single {
+        position: relative;
+        border: 4px solid $wine-red;
+        border-bottom: none;
+        &:last-child {
+            border-bottom: 4px solid $wine-red;
+        }
+    }
     &__link {
         padding: 1rem;
         width: 100%;
         text-align: center;
         display: flex;
         align-items: flex-start;
-        cursor: pointer;
-        border: 4px solid $wine-red;
-        border-bottom: none;
+        cursor: pointer; 
         text-decoration: none;
         color: $wine-red;
-        &:last-child {
-            border-bottom: 4px solid $wine-red;
-        }
         &:hover {
-            transition: .2s;
-            scale: 1.01;
             background-color: $golden;
-            border-bottom: 4px solid $wine-red;
         }
     }
     &__left {
-        flex-basis: 20%;
+        width: 21rem;
+        height: 12rem;
+        overflow: hidden;
     }
     &__text {
-        flex-basis: 70%;
+        flex-basis: 60%;
         margin: 0 auto;
     }
     &__title {
         padding: 0;
-        margin: 0;
+        margin: 0 0 1rem 0;
         text-decoration: none;
         background-color: $golden;
         padding: 1rem;
@@ -50,5 +52,24 @@
         display: -webkit-box;
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
+    }
+    &__delete {
+        background-color: $golden;
+        border: none;  
+        padding: .5rem;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        &:hover {
+            scale: 1.2;
+            background-color: $beige;
+        }
+        &:active {
+            scale: .95;
+        }
+    }
+    &__icon {
+        width: 1.5rem;
     }
 }

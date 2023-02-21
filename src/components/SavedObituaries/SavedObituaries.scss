@@ -1,27 +1,31 @@
 @use "../../partials/colors"as*;
 
 .saved-obituaries {
-    padding: 2rem;
+    padding: 2rem 4rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    justify-content: space-between;
+    gap: 3rem;
+    &__icon {
+        height: 3rem;
+        
+    }
     &__link {
         padding: 2rem;
-        width: 33%;
+        width: 30%;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
-        border: 4px solid $wine-red;
+        border: 4px solid black;
         text-decoration: none;
         color: $wine-red;
         align-items: center;
         background-color: white;
         &:hover {
             transition: .2s;
-            scale: 1.01;
-            background-color: $golden;
+            scale: 1.05;
         }
     }
     &__title {
@@ -29,6 +33,7 @@
         margin: 0;
         text-decoration: none;
         font-size: 1.25rem;
+        color: black;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 1;
@@ -36,6 +41,7 @@
     }
     &__content {
         overflow: hidden;
+        color: black;
         display: -webkit-box;
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;

@@ -12,7 +12,7 @@ import { dateInputConverter } from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditObituary() {
   const [imageId, setImageId] = useState("");
@@ -31,6 +31,7 @@ function EditObituary() {
 
   const params = useParams()
   const [dataLoaded, setDataLoaded] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(()=>{
     const fetchContent = async () => {
@@ -107,6 +108,15 @@ function EditObituary() {
     updateObituary();
   };
 
+  const deleteItem = async (id) => {
+    try {
+      await axios.delete(`${API_URL}${obituarySlug}/en/${id}`);
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if(!dataLoaded) {
     return <p>Loading</p>
   }
@@ -139,7 +149,9 @@ function EditObituary() {
         <div className="obituary__top">
             {imageId ? (
               <div className="obituary__image-preview">
-                <ImagePreview imageId={imageId} setVisible={setImageUploadVisible} />
+                <div className="obituary__container">
+                  <ImagePreview imageId={imageId} setVisible={setImageUploadVisible} />
+                </div>
                 <button
                   type="button"
                   className="obituary__button"
@@ -179,6 +191,15 @@ function EditObituary() {
           type="submit"
           value="Save "
         />
+        <button
+              className="obituary__submit"
+              onClick={() => {
+                deleteItem(params.id);
+              }}
+              type="button"
+            >
+              Delete
+            </button>
       </div>
       </form>
     </>

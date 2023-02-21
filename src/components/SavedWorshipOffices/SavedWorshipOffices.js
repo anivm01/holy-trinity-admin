@@ -1,18 +1,23 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { API_URL, worshipOfficeSlug } from '../../utilities/api'
 import { dateShorthandConverter } from '../../utilities/dateConverter'
 import { sortNewestToOldest } from '../../utilities/sort'
 import ImagePreview from '../ImagePreview/ImagePreview'
 import './SavedWorshipOffices.scss'
+import deleteIcon from "../../assets/delete.svg"
+
 
 function SavedWorshipOffices() {
     const [worshipOffices, setWorshipOffices] = useState([])
 
+    const navigate = useNavigate()
+
     const getWorshipOffices = async () => {
         try{
             const response = await axios.get(`${API_URL}${worshipOfficeSlug}/en`)
+            console.log(response.data)
             setWorshipOffices(sortNewestToOldest(response.data))
         }
         catch (error) {
@@ -20,6 +25,16 @@ function SavedWorshipOffices() {
         }
     }
     
+    const deleteItem = async (id) => {
+        try {
+            await axios.delete(`${API_URL}${worshipOfficeSlug}/en/${id}`);
+            navigate(0)            
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(()=> {
         getWorshipOffices()
     }, [])
@@ -30,15 +45,17 @@ function SavedWorshipOffices() {
     }
   return (
     <div className='saved-worship-office'>
-        {worshipOffices.map((single, index)=> {
+        {worshipOffices.map((single, index) => {
             return (
-                <Link to={`${single.id}`} className='saved-worship-office__link' key={index}>
+                <div className='saved-worship-office__single' key={index}>
+                    <Link to={`${single.id}`} className='saved-worship-office__link'>
+                        <ImagePreview imageId={single.thumbnail_id} />
+                    </Link>
                     <span className='saved-worship-office__date'>{dateShorthandConverter(single.date)}</span>
-                    <ImagePreview imageId={single.thumbnail_id} />
-                    <div className='saved-worship-office__bottom'>
-                        <h2 className='saved-worship-office__title'>{single.title}</h2>
-                    </div>
-                </Link>
+                    <button className='saved-worship-office__delete' onClick={()=>{deleteItem(single.id)}} type='button'>
+                        <img className='saved-worship-office__icon' src={deleteIcon} alt="delete" />
+                    </button>
+                </div>
             )
         })}
     </div>

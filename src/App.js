@@ -16,6 +16,7 @@ import EditCommunityNews from './components/EditCommunityNews/EditCommunityNews'
 import AddNewObituary from './components/AddNewObituary/AddNewObituary';
 import ObituariesPage from './pages/ObituariesPage/ObituariesPage';
 import EditObituary from './components/EditObituary/EditObituary';
+import ImageGalleryPage from './pages/ImageGalleryPage/ImageGalleryPage';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/obituaries" element={<ObituariesPage />} />
           <Route path="/obituaries/add-new" element={<AddNewObituary />} />
           <Route path="/obituaries/:id" element={<EditObituary />} />
+          <Route path='/image-gallery' element={<ImageGalleryPage/>} />
         </Routes>
       </div>
     </div>

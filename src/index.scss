@@ -1,6 +1,8 @@
 @use "./partials/colors"as*;
 *, *::after, *::before {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -8,6 +10,24 @@ body {
   font-family: 'El Messiri', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+input, textarea, span, button {
+  font-family: 'El Messiri', sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.75rem;
+}
+h3, h4, h5 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1rem;
 }
 
 code {
