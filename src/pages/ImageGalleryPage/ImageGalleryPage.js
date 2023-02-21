@@ -15,11 +15,13 @@ function ImageGalleryPage() {
           setVisible={setImageUploadVisible}
         />
       )}
+      <div className='image-gallery-page__top'>
         <button onClick={()=>{setImageUploadVisible(true)}} type='button' className='image-gallery-page__button'>Add New</button>
         <div className='image-gallery-page__caution'>
           <h2 className='image-gallery-page__heading'>Caution:</h2>
           <p>Deleting an image from this gallery will result in deleting any post where this image appears.</p>
         </div>
+      </div>
         <SavedImages />
     </section>
   )

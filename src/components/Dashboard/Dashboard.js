@@ -1,9 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import './Dashboard.scss'
+import logo from '../../assets/church-logo.png'
 
 function Dashboard() {
   return (
     <section className='dashboard'>
+        <NavLink className='dashboard__home' to="/">
+            <img className='dashboard__logo' src={logo} alt="logo" />
+        </NavLink>
         <ul className='dashboard__list'>
             <li className='dashboard__item'>
                 <NavLink className='dashboard__link' to="/weekly-announcements">Weekly Announcements</NavLink>

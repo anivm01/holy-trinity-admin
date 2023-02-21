@@ -6,6 +6,7 @@ import { dateShorthandConverter } from "../../utilities/dateConverter";
 import { sortNewestToOldest } from "../../utilities/sort";
 import "./SavedEvents.scss";
 import deleteIcon from "../../assets/delete-beige.svg";
+import { ThreeDots } from "react-loader-spinner";
 
 function SavedEvents() {
   const [events, setEvents] = useState([]);
@@ -33,7 +34,16 @@ function SavedEvents() {
   }, []);
 
   if (events.length === 0) {
-    return <p>Loading...</p>;
+    return <ThreeDots
+    height="80" 
+    width="80" 
+    radius="9"
+    color="#6F0B20" 
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{justifyContent: "center"}}
+    wrapperClassName=""
+    visible={true}
+     />;
   }
   return (
     <div className="saved-events">

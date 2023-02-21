@@ -6,6 +6,7 @@ import { createMarkup } from '../../utilities/createMarkup'
 import { sortNewestToOldest } from '../../utilities/sort'
 import cross from '../../assets/cross.svg'
 import './SavedObituaries.scss'
+import { ThreeDots } from 'react-loader-spinner'
 
 function SavedObituaries() {
     const [obituaries, setObituaries] = useState([])
@@ -26,7 +27,16 @@ function SavedObituaries() {
 
 
     if(obituaries.length === 0) {
-        return <p>Loading...</p>
+        return <ThreeDots 
+        height="80" 
+        width="80" 
+        radius="9"
+        color="#6F0B20" 
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{justifyContent: "center"}}
+        wrapperClassName=""
+        visible={true}
+         />
     }
   return (
     <div className='saved-obituaries'>

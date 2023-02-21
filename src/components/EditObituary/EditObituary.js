@@ -13,6 +13,7 @@ import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { useNavigate, useParams } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 function EditObituary() {
   const [imageId, setImageId] = useState("");
@@ -118,7 +119,16 @@ function EditObituary() {
   };
 
   if(!dataLoaded) {
-    return <p>Loading</p>
+    return <ThreeDots
+    height="80" 
+    width="80" 
+    radius="9"
+    color="#6F0B20" 
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{justifyContent: "center"}}
+    wrapperClassName=""
+    visible={true}
+     />;
   }
 
 

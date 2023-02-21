@@ -10,6 +10,7 @@ import DateInput from "../DateInput/DateInput";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import OneLineInput from "../OneLineInput/OneLineInput";
+import { ThreeDots } from "react-loader-spinner";
 
 function EditWeeklyAnnouncement() {
   const [date, setDate] = useState("");
@@ -99,7 +100,16 @@ function EditWeeklyAnnouncement() {
     !bgContent ||
     !date
   ) {
-    return <p>Loading...</p>
+    return <ThreeDots
+    height="80" 
+    width="80" 
+    radius="9"
+    color="#6F0B20" 
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{justifyContent: "center"}}
+    wrapperClassName=""
+    visible={true}
+     />;
   }
 
   return (

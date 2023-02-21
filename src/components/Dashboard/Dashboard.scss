@@ -2,14 +2,19 @@
 .dashboard {
     background-color: $golden;
     min-height: 100vh;
-    border-right: 4px solid $wine-red;
     padding: 0;
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    &__home {
+        background-color: $wine-red;
+    }
     &__list {
         list-style: none;
-        padding: 0;
+        padding:  0;
         display: flex;
         flex-direction: column;
         margin: 0;
@@ -17,25 +22,34 @@
     &__item {
         padding: 0;
         margin: 0;
+        &:last-child {
+            border-bottom: 4px solid $wine-red;
+        }
     }
     &__link {
         text-decoration: none;
         cursor: pointer;
-        border-bottom: 4px solid $wine-red;
+        border: 4px solid $wine-red;
+        border-bottom: none;
+        border-left: none;
         padding: 1rem 1.5rem;
         min-width: 16rem;
         display: block;
         color: $wine-red;
         font-size: 1rem;
         font-weight: bold;
+        background-color: $golden;
         &:hover {
             background-color: $beige;
             color: $wine-red;
             scale: 1.1;
-            border: 4px solid $wine-red;
+            border-bottom: 4px solid $wine-red;
         }
     }
-
+    &__logo {
+        background-color: $golden;
+        width: 16rem;
+    }
 }
 .active {
     color: $beige;

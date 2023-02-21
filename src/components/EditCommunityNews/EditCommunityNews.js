@@ -12,6 +12,7 @@ import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
+import { ThreeDots } from "react-loader-spinner";
 
 function EditCommunityNews() {
   const [featuredImgId, setFeaturedImgId] = useState("");
@@ -113,7 +114,16 @@ function EditCommunityNews() {
   };
 
   if(!dataLoaded) {
-    return <p>Loading</p>
+    return <ThreeDots
+    height="80" 
+    width="80" 
+    radius="9"
+    color="#6F0B20" 
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{justifyContent: "center"}}
+    wrapperClassName=""
+    visible={true}
+     />;
   }
 
   return (
