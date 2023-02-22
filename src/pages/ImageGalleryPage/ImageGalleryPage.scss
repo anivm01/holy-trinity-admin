@@ -8,8 +8,8 @@
     flex-direction: column;
     &__top {
         display: flex;
-        align-items: center;
-        justify-content: flex-end;
+        align-items: flex-start;
+        justify-content: space-around;
         margin-bottom: 2rem;
     }
     &__caution {

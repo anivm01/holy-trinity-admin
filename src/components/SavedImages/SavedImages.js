@@ -6,6 +6,7 @@ import Masonry from "react-responsive-masonry"
 import './SavedImages.scss';
 import deleteIcon from "../../assets/delete.svg"
 import { ThreeDots } from 'react-loader-spinner'
+import { sortNewestToOldest } from '../../utilities/sort'
 
 
 function SavedImages() {
@@ -15,7 +16,10 @@ function SavedImages() {
     const getImages = async () => {
         try{
             const response = await axios.get(`${API_URL}/images/en`)
-            setImages(response.data)
+            const sortedArray = response.data.sort( (a,b) => {
+                return b.id - a.id;
+            })
+            setImages(sortedArray)
         }
         catch (error) {
             console.error(error)
