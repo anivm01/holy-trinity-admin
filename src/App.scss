@@ -3,8 +3,9 @@
   display: flex;
   position: relative;
   &__main {
-    padding-left: 16rem;
+    padding-left: 22rem;
     padding-top: 2rem;
+    width: 60vw;
     flex-grow: 1;
     background-color: $beige;
     min-height: 100vh;

@@ -17,6 +17,7 @@ import AddNewObituary from './components/AddNewObituary/AddNewObituary';
 import ObituariesPage from './pages/ObituariesPage/ObituariesPage';
 import EditObituary from './components/EditObituary/EditObituary';
 import ImageGalleryPage from './pages/ImageGalleryPage/ImageGalleryPage';
+import QuickNav from './components/QuickNav/QuickNav';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
       <Dashboard />
       <div className='app__main'>
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<QuickNav/>} />
           <Route path="/weekly-announcements" element={<WeeklyAnnouncementsPage />}/>
           <Route path="/weekly-announcements/add-new" element={<AddNewWeeklyAnnouncement />}/>
           <Route path="/weekly-announcements/:id" element={<EditWeeklyAnnouncement />}/>

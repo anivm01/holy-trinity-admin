@@ -8,9 +8,10 @@
     flex-direction: column;
     &__top {
         display: flex;
-        align-items: flex-start;
+        align-items: flex-end;
         justify-content: space-around;
         margin-bottom: 2rem;
+        border-bottom: 4px solid $wine-red;
     }
     &__caution {
         background-color: $golden;
