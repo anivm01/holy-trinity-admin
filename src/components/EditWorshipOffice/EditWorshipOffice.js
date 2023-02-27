@@ -5,7 +5,6 @@ import "./EditWorshipOffice.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
-import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import { API_URL, worshipOfficeSlug } from "../../utilities/api";
 import axios from "axios";
 import {
@@ -35,6 +34,10 @@ function EditWorshipOffice() {
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
+  const [thumbnailIdBg, setThumbnailIdBg] = useState("")
+  const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
+  const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
+
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -61,6 +64,10 @@ function EditWorshipOffice() {
       setEpistleBg(bgData.data.epistle);
       setOldTestamentBg(bgData.data.old_testament);
       setDataLoaded(true);
+
+      if(enData.data.thumbnail_id !== bgData.data.thumbnail_id) {
+        setThumbnailIdBg(bgData.data.thumbnail_id)
+      }
     };
     fetchContent();
   }, [params.id]);
@@ -112,7 +119,7 @@ function EditWorshipOffice() {
       date: dateInputConverter(date),
     };
 
-    const WorshipOfficeBG = {
+    let WorshipOfficeBG = {
       title: titleBg,
       gospel: gospelBg,
       epistle: epistleBg,
@@ -121,6 +128,12 @@ function EditWorshipOffice() {
       youtube_video_id: youtubeId,
       date: dateInputConverter(date),
     };
+    if(thumbnailIdBg){
+      WorshipOfficeBG = {
+        ...WorshipOfficeBG,
+        thumbnail_id: thumbnailIdBg
+      }
+    }
 
     const uploadWorshipOffice = async () => {
       console.log(WorshipOfficeEN);
@@ -173,6 +186,18 @@ function EditWorshipOffice() {
           setVisible={setImageReplaceVisible}
         />
       )}
+      {imageUploadVisibleBg && (
+        <ImageUpload
+          setImageId={setThumbnailIdBg}
+          setVisible={setImageUploadVisibleBg}
+        />
+      )}
+      {imageReplaceVisibleBg && (
+        <ImageUpload
+          setImageId={setThumbnailIdBg}
+          setVisible={setImageReplaceVisibleBg}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -192,13 +217,9 @@ function EditWorshipOffice() {
               setOneLine={setYoutubeId}
             />
             {thumbnailId ? (
-              <div>
-                <div className="worship-office__image-preview">   
-                  <ImagePreview
-                    imageId={thumbnailId}
-                    setReplaceVisible={setImageReplaceVisible}
-                  />
-                </div>
+              <div className="worship-office__images">
+              <div className="worship-office__image-preview">
+                <ImagePreview imageId={thumbnailId} setVisible={setImageUploadVisible} />
                 <button
                   type="button"
                   className="worship-office__button"
@@ -206,6 +227,34 @@ function EditWorshipOffice() {
                 >
                   Replace
                 </button>
+                {!thumbnailIdBg && <button
+                  type="button"
+                  className="worship-office__special-button"
+                  onClick={() => {setImageReplaceVisibleBg(true)}}
+                >
+                  Special BG Image
+                </button>}
+                </div>
+                {thumbnailIdBg && (
+                  <div className="worship-office__image-preview">
+                    <ImagePreview imageId={thumbnailIdBg} setVisible={setImageUploadVisibleBg} />
+                  <button
+                    type="button"
+                    className="worship-office__button"
+                    onClick={() => setImageReplaceVisibleBg(true)}
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    className="worship-office__special-button"
+                    onClick={() => {setThumbnailIdBg("")}}
+                  >
+                    Remove Special BG Image
+                  </button>
+
+                  </div>
+                )}
               </div>
             ) : (
               <AddImage setImageUploadVisible={setImageUploadVisible} />

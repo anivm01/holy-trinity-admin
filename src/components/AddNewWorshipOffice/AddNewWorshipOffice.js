@@ -25,9 +25,16 @@ function AddNewWorshipOffice() {
   const [oldTestamentEn, setOldTestamentEn] = useState("");
   const [oldTestamentBg, setOldTestamentBg] = useState("");
 
+  //states responsible for image upload popup
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
+  //states responsible for the option to add a different image on the bulgarian version of the site
+  const [thumbnailIdBg, setThumbnailIdBg] = useState("")
+  const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
+  const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
+
+  //error and success states
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -83,7 +90,8 @@ function AddNewWorshipOffice() {
       date: dateInputConverter(date)
     };
 
-    const WorshipOfficeBG = {
+   
+    let WorshipOfficeBG = {
         title: titleBg,
         gospel: gospelBg,
         epistle: epistleBg,
@@ -92,6 +100,13 @@ function AddNewWorshipOffice() {
         youtube_video_id: youtubeId,
         date: dateInputConverter(date)
     };
+
+    if(thumbnailIdBg){
+      WorshipOfficeBG = {
+        ...WorshipOfficeBG,
+        thumbnail_id: thumbnailIdBg
+      }
+    }
     
     const uploadWorshipOffice = async () => {
       try {
@@ -134,6 +149,18 @@ function AddNewWorshipOffice() {
           setVisible={setImageReplaceVisible}
         />
       )}
+      {imageUploadVisibleBg && (
+        <ImageUpload
+          setImageId={setThumbnailIdBg}
+          setVisible={setImageUploadVisibleBg}
+        />
+      )}
+      {imageReplaceVisibleBg && (
+        <ImageUpload
+          setImageId={setThumbnailIdBg}
+          setVisible={setImageReplaceVisibleBg}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -153,6 +180,7 @@ function AddNewWorshipOffice() {
                 setOneLine={setYoutubeId}
             />
             {thumbnailId ? (
+              <div className="worship-office__images">
               <div className="worship-office__image-preview">
                 <ImagePreview imageId={thumbnailId} setVisible={setImageUploadVisible} />
                 <button
@@ -162,6 +190,34 @@ function AddNewWorshipOffice() {
                 >
                   Replace
                 </button>
+                {!thumbnailIdBg && <button
+                  type="button"
+                  className="worship-office__special-button"
+                  onClick={() => {setImageReplaceVisibleBg(true)}}
+                >
+                  Special BG Image
+                </button>}
+                </div>
+                {thumbnailIdBg && (
+                  <div className="worship-office__image-preview">
+                    <ImagePreview imageId={thumbnailIdBg} setVisible={setImageUploadVisibleBg} />
+                  <button
+                    type="button"
+                    className="worship-office__button"
+                    onClick={() => setImageReplaceVisibleBg(true)}
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    className="worship-office__special-button"
+                    onClick={() => {setThumbnailIdBg("")}}
+                  >
+                    Remove Special BG Image
+                  </button>
+
+                  </div>
+                )}
               </div>
             ) : (
                 <AddImage setImageUploadVisible={setImageUploadVisible} />

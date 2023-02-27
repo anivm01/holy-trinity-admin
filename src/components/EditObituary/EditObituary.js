@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import OneLineInput from "../OneLineInput/OneLineInput";
-import "./EditObituary.scss"; 
+import "./EditObituary.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
-import DateInput from "../DateInput/DateInput";
-import Wysiwyg from "../Wysiwyg/Wysiwyg";
-import { API_URL, communityNewsSlug, obituarySlug } from "../../utilities/api";
+import { API_URL, obituarySlug } from "../../utilities/api";
 import axios from "axios";
-import { dateInputConverter } from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
@@ -26,51 +23,56 @@ function EditObituary() {
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
+  //states responsible for the option to add a different image on the bulgarian version of the site
+  const [imageIdBg, setImageIdBg] = useState("");
+  const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
+  const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
+
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const params = useParams()
-  const [dataLoaded, setDataLoaded] = useState(false)
-  const navigate = useNavigate()
+  const params = useParams();
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchContent = async () => {
-        const enData = await axios.get(`${API_URL}${obituarySlug}/en/${params.id}`)
-        setImageId(enData.data.image_id)
-        setYears(enData.data.years)
-        setNameEn(enData.data.name)
-        setObituaryEn(enData.data.obituary)
-        const bgData = await axios.get(`${API_URL}${obituarySlug}/bg/${params.id}`)
-        setNameBg(bgData.data.name)
-        setObituaryBg(bgData.data.obituary)
-        setDataLoaded(true)
-    }
-    fetchContent()
-  },[params.id])
+      const enData = await axios.get(
+        `${API_URL}${obituarySlug}/en/${params.id}`
+      );
+      setImageId(enData.data.image_id);
+      setYears(enData.data.years);
+      setNameEn(enData.data.name);
+      setObituaryEn(enData.data.obituary);
+      const bgData = await axios.get(
+        `${API_URL}${obituarySlug}/bg/${params.id}`
+      );
+      setNameBg(bgData.data.name);
+      setObituaryBg(bgData.data.obituary);
+      setDataLoaded(true);
+
+      if (enData.data.image_id !== bgData.data.image_id) {
+        setImageIdBg(bgData.data.image_id);
+      }
+    };
+    fetchContent();
+  }, [params.id]);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      !nameEn ||
-      !nameBg ||
-      !obituaryEn ||
-      !obituaryBg ||
-      !years
-    ) {
+    if (!nameEn || !nameBg || !obituaryEn || !obituaryBg || !years) {
       setUploadError(true);
       setErrorMessage(
         "Make sure that you have filled out all the fields in both English and Bulgarian. If you wish to return and edit the content later leave some default content such as 'TBD' or 'update coming soon'"
       );
       return;
     }
-    if (!imageId){
-        setUploadError(true);
-        setErrorMessage(
-            "Make sure to upload an image"
-        );
-        return;
+    if (!imageId) {
+      setUploadError(true);
+      setErrorMessage("Make sure to upload an image");
+      return;
     }
 
     const newObituaryEN = {
@@ -80,16 +82,23 @@ function EditObituary() {
       image_id: imageId,
     };
 
-    const newObituaryBG = {
-        name: nameBg,
-        obituary: obituaryBg,
-        years: years,
-        image_id: imageId,
+    let newObituaryBG = {
+      name: nameBg,
+      obituary: obituaryBg,
+      years: years,
+      image_id: imageId,
     };
+
+    if (imageIdBg) {
+      newObituaryBG = {
+        ...newObituaryBG,
+        image_id: imageIdBg,
+      };
+    }
 
     const updateObituary = async () => {
       try {
-        const enResponse = await axios.put(
+        await axios.put(
           `${API_URL}${obituarySlug}/en/${params.id}`,
           newObituaryEN
         );
@@ -118,19 +127,20 @@ function EditObituary() {
     }
   };
 
-  if(!dataLoaded) {
-    return <ThreeDots
-    height="80" 
-    width="80" 
-    radius="9"
-    color="#6F0B20" 
-    ariaLabel="three-dots-loading"
-    wrapperStyle={{justifyContent: "center"}}
-    wrapperClassName=""
-    visible={true}
-     />;
+  if (!dataLoaded) {
+    return (
+      <ThreeDots
+        height="80"
+        width="80"
+        radius="9"
+        color="#6F0B20"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{ justifyContent: "center" }}
+        wrapperClassName=""
+        visible={true}
+      />
+    );
   }
-
 
   return (
     <>
@@ -146,6 +156,18 @@ function EditObituary() {
           setVisible={setImageReplaceVisible}
         />
       )}
+      {imageUploadVisibleBg && (
+        <ImageUpload
+          setImageId={setImageIdBg}
+          setVisible={setImageUploadVisibleBg}
+        />
+      )}
+      {imageReplaceVisibleBg && (
+        <ImageUpload
+          setImageId={setImageIdBg}
+          setVisible={setImageReplaceVisibleBg}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -153,15 +175,17 @@ function EditObituary() {
           setUploadError={setUploadError}
         />
       )}
-      {uploadSuccess && <SuccessModal/>}
+      {uploadSuccess && <SuccessModal />}
       <form onSubmit={onSubmit} className="obituary">
         <h1 className="obituary__title">Edit Obituary</h1>
         <div className="obituary__top">
-            {imageId ? (
+          {imageId ? (
+            <div className="obituary__images">
               <div className="obituary__image-preview">
-                <div className="obituary__container">
-                  <ImagePreview imageId={imageId} setVisible={setImageUploadVisible} />
-                </div>
+                <ImagePreview
+                  imageId={imageId}
+                  setVisible={setImageUploadVisible}
+                />
                 <button
                   type="button"
                   className="obituary__button"
@@ -169,48 +193,92 @@ function EditObituary() {
                 >
                   Replace
                 </button>
+                {!imageIdBg && (
+                  <button
+                    type="button"
+                    className="obituary__special-button"
+                    onClick={() => {
+                      setImageReplaceVisibleBg(true);
+                    }}
+                  >
+                    Special BG Image
+                  </button>
+                )}
               </div>
-            ) : (
-                <AddImage setImageUploadVisible={setImageUploadVisible} />
-            )}
-            <OneLineInput label="Enter the years of birth and death" oneLine={years} setOneLine={setYears} />
+              {imageIdBg && (
+                <div className="obituary__image-preview">
+                  <ImagePreview
+                    imageId={imageIdBg}
+                    setVisible={setImageUploadVisibleBg}
+                  />
+                  <button
+                    type="button"
+                    className="obituary__button"
+                    onClick={() => setImageReplaceVisibleBg(true)}
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    className="obituary__special-button"
+                    onClick={() => {
+                      setImageIdBg("");
+                    }}
+                  >
+                    Remove Special BG Image
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <AddImage setImageUploadVisible={setImageUploadVisible} />
+          )}
+          <OneLineInput
+            label="Enter the years of birth and death"
+            oneLine={years}
+            setOneLine={setYears}
+          />
         </div>
         <div className="obituary__middle">
-            <div className="obituary__language">
+          <div className="obituary__language">
             <h2 className="obituary__subtitle">English</h2>
-                <OneLineInput label="Enter the name" oneLine={nameEn} setOneLine={setNameEn} />
-                <WysiwygEdit
-                    editorLabel="Enter the main content:"
-                    setContent={setObituaryEn}
-                    content={obituaryEn}
-                />
-            </div>
-            <div className="obituary__language">
+            <OneLineInput
+              label="Enter the name"
+              oneLine={nameEn}
+              setOneLine={setNameEn}
+            />
+            <WysiwygEdit
+              editorLabel="Enter the main content:"
+              setContent={setObituaryEn}
+              content={obituaryEn}
+            />
+          </div>
+          <div className="obituary__language">
             <h2 className="obituary__subtitle">Български</h2>
-                <OneLineInput label="Въведете името" oneLine={nameBg} setOneLine={setNameBg} />
-                <WysiwygEdit
-                    editorLabel="Въведете главното съдържание:"
-                    setContent={setObituaryBg}
-                    content={obituaryBg}
-                />
-            </div>
+            <OneLineInput
+              label="Въведете името"
+              oneLine={nameBg}
+              setOneLine={setNameBg}
+            />
+            <WysiwygEdit
+              editorLabel="Въведете главното съдържание:"
+              setContent={setObituaryBg}
+              content={obituaryBg}
+            />
+          </div>
         </div>
         <div className="obituary__bottom">
-        <input
-          className="obituary__submit"
-          type="submit"
-          value="Save "
-        />
-        <button
-              className="obituary__submit"
-              onClick={() => {
-                deleteItem(params.id);
-              }}
-              type="button"
-            >
-              Delete
-            </button>
-      </div>
+          <input className="obituary__submit" type="submit" value="Save " />
+          <button
+            className="obituary__submit"
+            onClick={() => {
+              deleteItem(params.id);
+            }}
+            type="button"
+          >
+            Delete
+          </button>
+        </div>
       </form>
     </>
   );

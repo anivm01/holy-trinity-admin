@@ -20,6 +20,17 @@
         width: 18rem;
         overflow: hidden;
     }
+    &__images{
+        display: flex;
+        gap: 2rem;
+        margin: 1rem 0;
+    }
+    &__image-preview {
+        margin: 0 auto;
+        width: 18rem;
+        display: flex;
+        flex-direction: column;
+    }
     &__middle {
         display: flex;
         gap: 3rem;
@@ -54,6 +65,25 @@
     &:hover {
         color: $wine-red;
         background-color: $golden;
+    }
+    &:active {
+        transition: .2s;
+        transform: scale(.90);
+    }
+    }
+    &__special-button {
+        margin: 0 auto;
+        padding: .5rem 1rem;
+        background-color: $golden;
+        color: $wine-red;
+        border-radius: 4px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+    &:hover {
+        color: $beige;
+        background-color: $wine-red;
     }
     &:active {
         transition: .2s;

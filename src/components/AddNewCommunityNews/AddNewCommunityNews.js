@@ -23,6 +23,11 @@ function AddNewCommunityNews() {
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
+  //states responsible for the option to add a different image on the bulgarian version of the site
+  const [featuredImgIdBg, setFeaturedImgIdBg] = useState("")
+  const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
+  const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
+
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -64,12 +69,19 @@ function AddNewCommunityNews() {
       date_posted: dateInputConverter(date)
     };
 
-    const articleBG = {
+    let articleBG = {
         title: titleBg,
         content: contentBg,
         featured_img_id: featuredImgId,
         date_posted: dateInputConverter(date)
     };
+
+    if(featuredImgIdBg){
+      articleBG = {
+        ...articleBG,
+        featured_img_id: featuredImgId
+      }
+    }
 
     const uploadCommunityNews = async () => {
       try {
@@ -112,6 +124,18 @@ function AddNewCommunityNews() {
           setVisible={setImageReplaceVisible}
         />
       )}
+      {imageUploadVisibleBg && (
+        <ImageUpload
+          setImageId={setFeaturedImgIdBg}
+          setVisible={setImageUploadVisibleBg}
+        />
+      )}
+      {imageReplaceVisibleBg && (
+        <ImageUpload
+          setImageId={setFeaturedImgIdBg}
+          setVisible={setImageReplaceVisibleBg}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -125,15 +149,41 @@ function AddNewCommunityNews() {
         <div className="community-news__top">
             <DateInput date={date} setDate={setDate}/>
             {featuredImgId ? (
-              <div className="community-news__image-preview">
-                <ImagePreview imageId={featuredImgId} setVisible={setImageUploadVisible} />
-                <button
+              <div className="community-news__images">
+                <div className="community-news__image-preview">
+                  <ImagePreview imageId={featuredImgId} setVisible={setImageUploadVisible} />
+                  <button
+                    type="button"
+                    className="community-news__button"
+                    onClick={() => setImageReplaceVisible(true)}
+                  >
+                    Replace
+                  </button>
+                {!featuredImgIdBg && <button
                   type="button"
-                  className="community-news__button"
-                  onClick={() => setImageReplaceVisible(true)}
+                  className="community-news__special-button"
+                  onClick={() => {setImageReplaceVisibleBg(true)}}
                 >
-                  Replace
+                  Special BG Image
+                </button>}
+                </div>
+                {featuredImgIdBg && <div className="community-news__image-preview">
+                  <ImagePreview imageId={featuredImgIdBg} setVisible={setImageUploadVisibleBg} />
+                  <button
+                    type="button"
+                    className="community-news__button"
+                    onClick={() => setImageReplaceVisibleBg(true)}
+                  >
+                    Replace
+                  </button>
+                  <button
+                  type="button"
+                  className="community-news__special-button"
+                  onClick={() => {setFeaturedImgIdBg("")}}
+                >
+                  Remove Special BG Image
                 </button>
+                </div>}
               </div>
             ) : (
                 <AddImage setImageUploadVisible={setImageUploadVisible} />

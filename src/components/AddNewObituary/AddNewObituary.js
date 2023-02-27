@@ -4,11 +4,9 @@ import OneLineInput from "../OneLineInput/OneLineInput";
 import "./AddNewObituary.scss"; 
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
-import DateInput from "../DateInput/DateInput";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
-import { API_URL, communityNewsSlug, obituarySlug } from "../../utilities/api";
+import { API_URL, obituarySlug } from "../../utilities/api";
 import axios from "axios";
-import { dateInputConverter } from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 
@@ -23,6 +21,10 @@ function AddNewObituary() {
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
+    //states responsible for the option to add a different image on the bulgarian version of the site
+    const [imageIdBg, setImageIdBg] = useState("")
+    const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
+    const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
@@ -59,12 +61,19 @@ function AddNewObituary() {
       image_id: imageId,
     };
 
-    const newObituaryBG = {
+    let newObituaryBG = {
         name: nameBg,
         obituary: obituaryBg,
         years: years,
         image_id: imageId,
     };
+
+    if(imageIdBg){
+      newObituaryBG = {
+        ...newObituaryBG,
+        image_id: imageIdBg
+      }
+    }
 
     const uploadObituary = async () => {
       try {
@@ -107,6 +116,18 @@ function AddNewObituary() {
           setVisible={setImageReplaceVisible}
         />
       )}
+      {imageUploadVisibleBg && (
+        <ImageUpload
+          setImageId={setImageIdBg}
+          setVisible={setImageUploadVisibleBg}
+        />
+      )}
+      {imageReplaceVisibleBg && (
+        <ImageUpload
+          setImageId={setImageIdBg}
+          setVisible={setImageReplaceVisibleBg}
+        />
+      )}
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -119,6 +140,7 @@ function AddNewObituary() {
         <h1 className="obituary__title">Add New Obituary</h1>
         <div className="obituary__top">
             {imageId ? (
+              <div className="obituary__images">
               <div className="obituary__image-preview">
                 <ImagePreview imageId={imageId} setVisible={setImageUploadVisible} />
                 <button
@@ -128,6 +150,31 @@ function AddNewObituary() {
                 >
                   Replace
                 </button>
+                {!imageIdBg && <button
+                  type="button"
+                  className="obituary__special-button"
+                  onClick={() => {setImageReplaceVisibleBg(true)}}
+                >
+                  Special BG Image
+                </button>}
+              </div>
+              {imageIdBg && <div className="obituary__image-preview">
+                  <ImagePreview imageId={imageIdBg} setVisible={setImageUploadVisibleBg} />
+                  <button
+                    type="button"
+                    className="obituary__button"
+                    onClick={() => setImageReplaceVisibleBg(true)}
+                  >
+                    Replace
+                  </button>
+                  <button
+                  type="button"
+                  className="obituary__special-button"
+                  onClick={() => {setImageIdBg("")}}
+                >
+                  Remove Special BG Image
+                </button>
+                </div>}
               </div>
             ) : (
                 <AddImage setImageUploadVisible={setImageUploadVisible} />
