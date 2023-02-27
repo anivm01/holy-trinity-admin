@@ -12,7 +12,7 @@
     }
     &__link {
         padding: 2rem;
-        width: 30%;
+        width: 22%;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -43,7 +43,7 @@
         overflow: hidden;
         color: black;
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
     }
 }

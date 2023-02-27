@@ -6,9 +6,9 @@
     gap: 2rem;
     &__single {
         position: relative;
+        flex-basis: 22%;
     }
     &__link {
-        flex-basis: 30%;
         text-align: center;
         display: flex;
         flex-direction: column;
