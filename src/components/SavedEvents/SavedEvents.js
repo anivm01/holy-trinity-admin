@@ -7,10 +7,15 @@ import { sortNewestToOldest } from "../../utilities/sort";
 import "./SavedEvents.scss";
 import deleteIcon from "../../assets/delete-beige.svg";
 import { ThreeDots } from "react-loader-spinner";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 function SavedEvents() {
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
+
+  //delete associated states
+  const [deleteVisible, setDeleteVisible] = useState(false)
+  const [deleteId, setDeleteId] = useState("")
 
   const getEnvents = async () => {
     try {
@@ -47,6 +52,7 @@ function SavedEvents() {
   }
   return (
     <div className="saved-events">
+      {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
       {events.map((single, index) => {
         return (
           <div className="saved-events__box" key={index}>
@@ -57,7 +63,8 @@ function SavedEvents() {
               <button
                 className="saved-events__delete"
                 onClick={() => {
-                  deleteItem(single.id);
+                  setDeleteId(single.id)
+                  setDeleteVisible(true)
                 }}
                 type="button"
               >

@@ -8,11 +8,17 @@ import ImagePreview from "../ImagePreview/ImagePreview";
 import "./SavedCommunityNews.scss";
 import deleteIcon from "../../assets/delete.svg";
 import { ThreeDots } from "react-loader-spinner";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 
 function SavedCommuityNews() {
   const [articles, setArticles] = useState([]);
+
   const navigate = useNavigate();
+
+  //delete associated states
+  const [deleteVisible, setDeleteVisible] = useState(false)
+  const [deleteId, setDeleteId] = useState("")
 
   const getArticles = async () => {
     try {
@@ -50,6 +56,7 @@ function SavedCommuityNews() {
   }
   return (
     <div className="saved-community-news">
+      {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
       {articles.map((single, index) => {
         return (
           <div className="saved-community-news__single" key={index}>
@@ -68,7 +75,8 @@ function SavedCommuityNews() {
             <button
               className="saved-community-news__delete"
               onClick={() => {
-                deleteItem(single.id);
+                setDeleteId(single.id)
+                setDeleteVisible(true)
               }}
               type="button"
             >

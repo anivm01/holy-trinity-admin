@@ -79,7 +79,7 @@ function AddNewCommunityNews() {
     if(featuredImgIdBg){
       articleBG = {
         ...articleBG,
-        featured_img_id: featuredImgId
+        featured_img_id: featuredImgIdBg
       }
     }
 

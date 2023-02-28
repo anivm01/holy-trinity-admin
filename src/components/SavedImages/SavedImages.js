@@ -7,11 +7,15 @@ import './SavedImages.scss';
 import deleteIcon from "../../assets/delete.svg"
 import { ThreeDots } from 'react-loader-spinner'
 import { sortNewestToOldest } from '../../utilities/sort'
+import DeleteImageModal from '../DeleteImageModal/DeleteImageModal'
 
 
 function SavedImages() {
     const [images, setImages] = useState([])
     const navigate = useNavigate()
+
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false)
+    const [idToBeDeleted, setIdToBeDeleted] = useState('')
 
     const getImages = async () => {
         try{
@@ -27,7 +31,7 @@ function SavedImages() {
     }
     const deleteItem = async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}/images/en/${id}`);
+            await axios.delete(`${API_URL}/images/en/${id}`);
             navigate(0)
             
         }
@@ -55,11 +59,12 @@ function SavedImages() {
     }
   return (
     <div className='saved-images'>
+        {deleteModalVisible && <DeleteImageModal imageId={idToBeDeleted} setVisible={setDeleteModalVisible} /> }
         <Masonry columnsCount={4} gutter="2rem">
         {images.map((image) => { return (
         <div className='saved-images__box' key={image.id}>
             <img className='saved-images__img' src={`http://localhost:8080${image.url}`} alt={image.description} />
-            <button className='saved-images__delete' onClick={()=>{deleteItem(image.id)}} type='button'>
+            <button className='saved-images__delete' onClick={()=>{setIdToBeDeleted(image.id); setDeleteModalVisible(true)}} type='button'>
                 <img className='saved-images__icon' src={deleteIcon} alt="delete" />
             </button>
         </div>

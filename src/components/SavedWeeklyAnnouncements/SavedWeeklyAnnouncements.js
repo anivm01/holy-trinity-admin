@@ -3,18 +3,20 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../utilities/api";
 import { createMarkup } from "../../utilities/createMarkup";
-import {
-  dateOutputConverter,
-  dateShorthandConverter,
-} from "../../utilities/dateConverter";
+import { dateShorthandConverter } from "../../utilities/dateConverter";
 import deleteIcon from "../../assets/delete.svg";
 
 import "./SavedWeeklyAnnouncements.scss";
 import { ThreeDots } from "react-loader-spinner";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 function SavedWeeklyAnnouncements() {
   const [weeklyAnnouncements, setWeeklyAnnouncements] = useState([]);
   const navigate = useNavigate();
+
+    //delete associated states
+    const [deleteVisible, setDeleteVisible] = useState(false)
+    const [deleteId, setDeleteId] = useState("")
 
   const getAnnouncements = async () => {
     try {
@@ -44,19 +46,22 @@ function SavedWeeklyAnnouncements() {
   }, []);
 
   if (weeklyAnnouncements.length === 0) {
-    return <ThreeDots 
-    height="80" 
-    width="80" 
-    radius="9"
-    color="#6F0B20" 
-    ariaLabel="three-dots-loading"
-    wrapperStyle={{justifyContent: "center"}}
-    wrapperClassName=""
-    visible={true}
-     />;
+    return (
+      <ThreeDots
+        height="80"
+        width="80"
+        radius="9"
+        color="#6F0B20"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{ justifyContent: "center" }}
+        wrapperClassName=""
+        visible={true}
+      />
+    );
   }
   return (
     <div className="saved-weekly-announcements">
+      {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
       {weeklyAnnouncements.map((announcement, index) => {
         return (
           <div
@@ -67,7 +72,8 @@ function SavedWeeklyAnnouncements() {
             <button
               className="saved-weekly-announcements__delete"
               onClick={() => {
-                deleteItem(announcement.id);
+                setDeleteId(announcement.id)
+                  setDeleteVisible(true);
               }}
               type="button"
             >

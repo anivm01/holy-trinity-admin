@@ -11,6 +11,7 @@ import SuccessModal from "../SuccessModal/SuccessModal";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 function EditObituary() {
   const [imageId, setImageId] = useState("");
@@ -31,6 +32,10 @@ function EditObituary() {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  //delete associated states
+  const [deleteVisible, setDeleteVisible] = useState(false)
+  const [deleteId, setDeleteId] = useState("")
 
   const params = useParams();
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -176,6 +181,7 @@ function EditObituary() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
+      {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
       <form onSubmit={onSubmit} className="obituary">
         <h1 className="obituary__title">Edit Obituary</h1>
         <div className="obituary__top">
@@ -272,7 +278,8 @@ function EditObituary() {
           <button
             className="obituary__submit"
             onClick={() => {
-              deleteItem(params.id);
+              setDeleteId(params.id)
+                  setDeleteVisible(true)
             }}
             type="button"
           >
