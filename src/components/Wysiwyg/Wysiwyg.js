@@ -11,7 +11,6 @@ function Wysiwyg({editorLabel, setContent }) {
   );
 
   const updateTextDescription = async (state) => {
-    //await 
     setEditorState(state);
     await
     setContent(convertToHTML(editorState.getCurrentContent()))
@@ -28,6 +27,7 @@ function Wysiwyg({editorLabel, setContent }) {
           onEditorStateChange={updateTextDescription}
           toolbar={{
             fontFamily: {options: ['El Messiri', 'Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana']},
+            blockType:{options: ['Normal', 'H4', 'H5', 'H6', 'Blockquote', 'Code']}
           }}
         />
       </div>

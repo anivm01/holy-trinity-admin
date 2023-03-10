@@ -9,6 +9,7 @@
         position: relative;
         border: 4px solid $wine-red;
         border-bottom: none;
+        width: 100%;
         &:last-child {
             border-bottom: 4px solid $wine-red;
         }
@@ -38,6 +39,7 @@
     &__title {
         padding: 0;
         margin: 0 0 1rem 0;
+        width: 100%;
         text-decoration: none;
         background-color: $golden;
         padding: 1rem;

@@ -20,10 +20,10 @@ function SavedWeeklyAnnouncements() {
 
   const getAnnouncements = async () => {
     try {
-      const announcementsData = await axios.get(
+      const response = await axios.get(
         `${API_URL}/weekly-announcement/en`
       );
-      const announcements = announcementsData.data;
+      const announcements = response.data;
       const sortedAnnouncements = announcements.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
       });

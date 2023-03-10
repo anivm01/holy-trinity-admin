@@ -16,6 +16,8 @@ import SuccessModal from "../SuccessModal/SuccessModal";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { ThreeDots } from "react-loader-spinner";
+import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
+import { updateItem } from "../../utilities/send";
 
 function EditWorshipOffice() {
   const [youtubeId, setYoutubeId] = useState("");
@@ -30,6 +32,8 @@ function EditWorshipOffice() {
   const [oldTestamentEn, setOldTestamentEn] = useState("");
   const [oldTestamentBg, setOldTestamentBg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [bgVersion, setBgVersion] = useState("yes");
+  const [isDraft, setIsDraft] = useState(true);
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
@@ -56,6 +60,7 @@ function EditWorshipOffice() {
       setGospelEn(enData.data.gospel);
       setEpistleEn(enData.data.epistle);
       setOldTestamentEn(enData.data.old_testament);
+      setIsDraft(enData.data.is_draft)
       const bgData = await axios.get(
         `${API_URL}${worshipOfficeSlug}/bg/${params.id}`
       );
@@ -63,6 +68,7 @@ function EditWorshipOffice() {
       setGospelBg(bgData.data.gospel);
       setEpistleBg(bgData.data.epistle);
       setOldTestamentBg(bgData.data.old_testament);
+      setBgVersion(bgData.data.bg_version ? "yes" : "no");
       setDataLoaded(true);
 
       if(enData.data.thumbnail_id !== bgData.data.thumbnail_id) {
@@ -72,43 +78,8 @@ function EditWorshipOffice() {
     fetchContent();
   }, [params.id]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
 
-    if (
-      !titleEn ||
-      !titleBg ||
-      !gospelEn ||
-      !gospelBg ||
-      !epistleEn ||
-      !epistleBg ||
-      !oldTestamentEn ||
-      !oldTestamentBg
-    ) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure that you have filled out all the fields in both English and Bulgarian. If you wish to return and edit the content later leave some default content such as 'TBD' or 'update coming soon'"
-      );
-      return;
-    }
-    if (!youtubeId) {
-      setUploadError(true);
-      setErrorMessage("Make sure to add a youtube video id");
-      return;
-    }
-    if (!thumbnailId) {
-      setUploadError(true);
-      setErrorMessage("Make sure to upload a thumbnail image");
-      return;
-    }
-    if (!date) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to add a date on which you want the announcement to be posted"
-      );
-      return;
-    }
-
+  const createPosts = (draft) => {
     const WorshipOfficeEN = {
       title: titleEn,
       gospel: gospelEn,
@@ -117,46 +88,119 @@ function EditWorshipOffice() {
       thumbnail_id: thumbnailId,
       youtube_video_id: youtubeId,
       date: dateInputConverter(date),
+      is_draft: draft
     };
 
     let WorshipOfficeBG = {
-      title: titleBg,
-      gospel: gospelBg,
-      epistle: epistleBg,
-      old_testament: oldTestamentBg,
-      thumbnail_id: thumbnailId,
-      youtube_video_id: youtubeId,
-      date: dateInputConverter(date),
+        title: titleBg,
+        gospel: gospelBg,
+        epistle: epistleBg,
+        old_testament: oldTestamentBg,
+        thumbnail_id: thumbnailId,
+        youtube_video_id: youtubeId,
+        date: dateInputConverter(date),
+        bg_version: bgVersion === "yes" ? true : false
     };
+
     if(thumbnailIdBg){
       WorshipOfficeBG = {
         ...WorshipOfficeBG,
         thumbnail_id: thumbnailIdBg
       }
     }
+    return { en: WorshipOfficeEN, bg: WorshipOfficeBG };
+  };
 
-    const uploadWorshipOffice = async () => {
-      console.log(WorshipOfficeEN);
-      try {
-        await axios.put(
-          `${API_URL}${worshipOfficeSlug}/en/${params.id}`,
-          WorshipOfficeEN
-        );
+  const onSave = (e) => {
+    e.preventDefault();
 
-        await axios.put(
-          `${API_URL}${worshipOfficeSlug}/bg/${params.id}`,
-          WorshipOfficeBG
-        );
-        setUploadSuccess(true);
-      } catch (err) {
-        console.log(err.response);
-        setUploadError(true);
-        setErrorMessage(
-          "There was a problem with the connection. Please try again later."
-        );
-      }
-    };
-    uploadWorshipOffice();
+    if (!thumbnailId) {
+      setUploadError(true);
+      setErrorMessage("An image is required to save this post. You can change the image later but please select a placeholder image in the mean time");
+      return;
+    }
+
+    //save draft
+    const posts = createPosts(true);
+    const response = updateItem(posts, `${API_URL}/worship-office`, params.id);
+    setUploadSuccess(response);
+    if (response === false) {
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
+    }
+  };
+
+  const onPublish = (e) => {
+    e.preventDefault();
+
+    //validate content before publishing
+    if (!titleEn || gospelEn.length < 8 || epistleEn.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to provide the title, gospel reading and epistle reading in English before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
+      );
+      return;
+    }
+    if (!youtubeId) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to provide the id of the youtube video before publishing this item to the live site"
+      );
+      return;
+    }
+    if (!date) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to add a date on which you want this item to be posted"
+      );
+      return;
+    }
+    if (!thumbnailId) {
+      setUploadError(true);
+      setErrorMessage("Make sure to upload an image before publishing this item.");
+      return;
+    }
+    if (bgVersion === "yes" && !titleBg && gospelBg.length < 8 && epistleBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && !titleBg) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && gospelBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but the Bulgarian translation of the Gospel reading is empty. Please fill out the content in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && epistleBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but the Bulgarian translation of the Epistle reading is empty. Please fill out the content in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+
+    //publish
+    const posts = createPosts(false);
+    const response = updateItem(posts, `${API_URL}/worship-office`, params.id);
+    setUploadSuccess(response);
+    if (response === false) {
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
+    }
   };
 
   if (!dataLoaded) {
@@ -171,6 +215,7 @@ function EditWorshipOffice() {
     visible={true}
      />;
   }
+  console.log(epistleEn)
 
   return (
     <>
@@ -206,10 +251,14 @@ function EditWorshipOffice() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      <form onSubmit={onSubmit} className="worship-office">
+      <form className="worship-office">
         <h1 className="worship-office__title">Edit Worship Office Entry</h1>
+        {isDraft ? (
+          <p>This item is currently saved as a draft</p>
+        ) : (
+          <p>This item is published to the live site.</p>
+        )}
         <div className="worship-office__top">
-          <DateInput date={date} setDate={setDate} />
           <div className="worship-office__youtube">
             <OneLineInput
               label="Paste in the id of the youtube video you've created"
@@ -309,12 +358,23 @@ function EditWorshipOffice() {
             />
           </div>
         </div>
-
+        <input
+            className="worship-office__button"
+            type="submit"
+            value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
+          onClick={onSave}
+          />
+        <DateInput date={date} setDate={setDate} />
+        <BgVersionConfirmation
+          bgVersion={bgVersion}
+          setBgVersion={setBgVersion}
+        />
         <div className="worship-office__bottom">
           <input
             className="worship-office__button"
             type="submit"
-            value="Save "
+            value={isDraft ? "Publish" : "Update Live Content"}
+            onClick={onPublish}
           />
         </div>
       </form>

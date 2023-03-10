@@ -12,6 +12,10 @@ import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import DateInput from "../DateInput/DateInput";
+import { updateItem } from "../../utilities/send";
+import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
 function EditObituary() {
   const [imageId, setImageId] = useState("");
@@ -20,6 +24,11 @@ function EditObituary() {
   const [nameBg, setNameBg] = useState("");
   const [obituaryEn, setObituaryEn] = useState("");
   const [obituaryBg, setObituaryBg] = useState("");
+  const [date, setDate] = useState("");
+  const [bgVersion, setBgVersion] = useState("yes");
+  const [isDraft, setIsDraft] = useState(true);
+
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
@@ -38,7 +47,6 @@ function EditObituary() {
   const [deleteId, setDeleteId] = useState("")
 
   const params = useParams();
-  const [dataLoaded, setDataLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,11 +58,14 @@ function EditObituary() {
       setYears(enData.data.years);
       setNameEn(enData.data.name);
       setObituaryEn(enData.data.obituary);
+      setDate(dateOutputConverter(enData.data.date))
+      setIsDraft(enData.data.is_draft)
       const bgData = await axios.get(
         `${API_URL}${obituarySlug}/bg/${params.id}`
       );
       setNameBg(bgData.data.name);
       setObituaryBg(bgData.data.obituary);
+      setBgVersion(bgData.data.bg_version ? "yes" : "no");
       setDataLoaded(true);
 
       if (enData.data.image_id !== bgData.data.image_id) {
@@ -64,34 +75,23 @@ function EditObituary() {
     fetchContent();
   }, [params.id]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (!nameEn || !nameBg || !obituaryEn || !obituaryBg || !years) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure that you have filled out all the fields in both English and Bulgarian. If you wish to return and edit the content later leave some default content such as 'TBD' or 'update coming soon'"
-      );
-      return;
-    }
-    if (!imageId) {
-      setUploadError(true);
-      setErrorMessage("Make sure to upload an image");
-      return;
-    }
-
+  const createPosts = (draft) => {
     const newObituaryEN = {
       name: nameEn,
       obituary: obituaryEn,
       years: years,
+      date: dateInputConverter(date),
       image_id: imageId,
+      is_draft: draft
     };
 
     let newObituaryBG = {
       name: nameBg,
       obituary: obituaryBg,
       years: years,
+      date: dateInputConverter(date),
       image_id: imageId,
+      bg_version: bgVersion === "yes" ? true : false
     };
 
     if (imageIdBg) {
@@ -100,27 +100,79 @@ function EditObituary() {
         image_id: imageIdBg,
       };
     }
+    return { en: newObituaryEN, bg: newObituaryBG };
+  };
 
-    const updateObituary = async () => {
-      try {
-        await axios.put(
-          `${API_URL}${obituarySlug}/en/${params.id}`,
-          newObituaryEN
-        );
-        await axios.put(
-          `${API_URL}${obituarySlug}/bg/${params.id}`,
-          newObituaryBG
-        );
-        setUploadSuccess(true);
-      } catch (err) {
-        console.log(err.response);
-        setUploadError(true);
-        setErrorMessage(
-          "There was a problem with the connection. Please try again later."
-        );
-      }
-    };
-    updateObituary();
+  const onSave = (e) => {
+    e.preventDefault();
+
+    //save draft
+    const posts = createPosts(true);
+    const response = updateItem(posts, `${API_URL}/obituary`, params.id);
+    setUploadSuccess(response);
+    if (response === false) {
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
+    }
+  };
+
+  const onPublish = (e) => {
+    e.preventDefault();
+
+    //validate content before publishing
+    if (!nameEn || obituaryEn.length < 8 || !years) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to provide the date of the event, the event title, and the event description before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
+      );
+      return;
+    }
+    if (!date) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to add a date on which you want the entry to be posted"
+      );
+      return;
+    }
+    if (!imageId) {
+      setUploadError(true);
+      setErrorMessage("Make sure to upload an image before publishing this item.");
+      return;
+    }
+    if (bgVersion === "yes" && !nameBg && obituaryBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && !nameBg) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && obituaryBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but the obituary content is empty. Please fill out the obituary content in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+
+    //publish
+    const posts = createPosts(false);
+    const response = updateItem(posts, `${API_URL}/obituary`, params.id);
+    setUploadSuccess(response);
+    if (response === false) {
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
+    }
   };
 
   const deleteItem = async (id) => {
@@ -182,8 +234,13 @@ function EditObituary() {
       )}
       {uploadSuccess && <SuccessModal />}
       {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
-      <form onSubmit={onSubmit} className="obituary">
+      <form className="obituary">
         <h1 className="obituary__title">Edit Obituary</h1>
+        {isDraft ? (
+          <p>This item is currently saved as a draft</p>
+        ) : (
+          <p>This item is published to the live site.</p>
+        )}
         <div className="obituary__top">
           {imageId ? (
             <div className="obituary__images">
@@ -273,8 +330,24 @@ function EditObituary() {
             />
           </div>
         </div>
+        <input
+          className="obituary__submit"
+          type="submit"
+          value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
+          onClick={onSave}
+        />
+        <DateInput date={date} setDate={setDate}/>
+        <BgVersionConfirmation
+          bgVersion={bgVersion}
+          setBgVersion={setBgVersion}
+        />
         <div className="obituary__bottom">
-          <input className="obituary__submit" type="submit" value="Save " />
+          <input
+            className="obituary__submit"
+            type="submit"
+            value={isDraft ? "Publish" : "Update Live Content"}
+            onClick={onPublish}
+          />
           <button
             className="obituary__submit"
             onClick={() => {

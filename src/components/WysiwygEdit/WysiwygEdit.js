@@ -29,6 +29,7 @@ function WysiwygEdit({editorLabel, setContent, content }) {
           onEditorStateChange={updateTextDescription}
           toolbar={{
             fontFamily: {options: ['El Messiri', 'Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana']},
+            blockType:{options: ['Normal', 'H4', 'H5', 'H6', 'Blockquote', 'Code']}
           }}
         />
       </div>

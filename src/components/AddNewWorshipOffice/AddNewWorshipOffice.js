@@ -8,14 +8,17 @@ import DateInput from "../DateInput/DateInput";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import { API_URL, worshipOfficeSlug } from "../../utilities/api";
 import axios from "axios";
-import { dateInputConverter } from "../../utilities/dateConverter";
+import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
+import { uploadItem } from "../../utilities/send";
+import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
 function AddNewWorshipOffice() {
+  const currentDate = Math.floor(Date.now() / 1000);
   const [youtubeId, setYoutubeId] = useState("");
   const [thumbnailId, setThumbnailId] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(dateOutputConverter(currentDate));
   const [titleEn, setTitleEn] = useState("");
   const [titleBg, setTitleBg] = useState("");
   const [gospelEn, setGospelEn] = useState("");
@@ -24,6 +27,8 @@ function AddNewWorshipOffice() {
   const [epistleBg, setEpistleBg] = useState("");
   const [oldTestamentEn, setOldTestamentEn] = useState("");
   const [oldTestamentBg, setOldTestamentBg] = useState("");
+  const [bgVersion, setBgVersion] = useState("yes");
+
 
   //states responsible for image upload popup
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
@@ -39,47 +44,7 @@ function AddNewWorshipOffice() {
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (
-      !titleEn ||
-      !titleBg ||
-      !gospelEn ||
-      !gospelBg ||
-      !epistleEn ||
-      !epistleBg ||
-      !oldTestamentEn ||
-      !oldTestamentBg
-    ) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure that you have filled out all the fields in both English and Bulgarian. If you wish to return and edit the content later leave some default content such as 'TBD' or 'update coming soon'"
-      );
-      return;
-    }
-    if (!youtubeId) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to add a youtube video id"      
-        );
-      return;
-    }
-    if (!thumbnailId){
-        setUploadError(true);
-        setErrorMessage(
-            "Make sure to upload a thumbnail image"
-        );
-        return;
-    }
-    if (!date) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to add a date on which you want the entry to be posted"
-      );
-      return;
-    }
-
+  const createPosts = (draft) => {
     const WorshipOfficeEN = {
       title: titleEn,
       gospel: gospelEn,
@@ -87,10 +52,10 @@ function AddNewWorshipOffice() {
       old_testament: oldTestamentEn,
       thumbnail_id: thumbnailId,
       youtube_video_id: youtubeId,
-      date: dateInputConverter(date)
+      date: dateInputConverter(date),
+      is_draft: draft
     };
 
-   
     let WorshipOfficeBG = {
         title: titleBg,
         gospel: gospelBg,
@@ -98,7 +63,8 @@ function AddNewWorshipOffice() {
         old_testament: oldTestamentBg,
         thumbnail_id: thumbnailId,
         youtube_video_id: youtubeId,
-        date: dateInputConverter(date)
+        date: dateInputConverter(date),
+        bg_version: bgVersion === "yes" ? true : false
     };
 
     if(thumbnailIdBg){
@@ -107,31 +73,99 @@ function AddNewWorshipOffice() {
         thumbnail_id: thumbnailIdBg
       }
     }
-    
-    const uploadWorshipOffice = async () => {
-      try {
-        const enResponse = await axios.post(
-          `${API_URL}${worshipOfficeSlug}/en`,
-          WorshipOfficeEN
-        );
-        const WorshipOfficeBGUpdated = {
-          ...WorshipOfficeBG,
-          en_id: enResponse.data.new_entry.id,
-        };
-        await axios.post(
-          `${API_URL}${worshipOfficeSlug}/bg`,
-          WorshipOfficeBGUpdated
-        );
-        setUploadSuccess(true);
-      } catch (err) {
-        console.log(err.response);
-        setUploadError(true);
-        setErrorMessage(
-          "There was a problem with the connection. Please try again later."
-        );
-      }
-    };
-    uploadWorshipOffice();
+    return { en: WorshipOfficeEN, bg: WorshipOfficeBG };
+  };
+
+  const onSave = (e) => {
+    e.preventDefault();
+
+    if (!thumbnailId) {
+      setUploadError(true);
+      setErrorMessage("An image is required to save this post. You can change the image later but please select a placeholder image in the mean time");
+      return;
+    }
+
+    //save draft
+    const posts = createPosts(true);
+    const response = uploadItem(posts, `${API_URL}/worship-office`);
+    setUploadSuccess(response);
+    if (response === false) {
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
+    }
+  };
+
+  const onPublish = (e) => {
+    e.preventDefault();
+
+    //validate content before publishing
+    if (!titleEn || gospelEn.length < 8 || epistleEn.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to provide the title, gospel reading and epistle reading in English before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
+      );
+      return;
+    }
+    if (!youtubeId) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to provide the id of the youtube video before publishing this item to the live site"
+      );
+      return;
+    }
+    if (!date) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to add a date on which you want this item to be posted"
+      );
+      return;
+    }
+    if (!thumbnailId) {
+      setUploadError(true);
+      setErrorMessage("Make sure to upload an image before publishing this item.");
+      return;
+    }
+    if (bgVersion === "yes" && !titleBg && gospelBg.length < 8 && epistleBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && !titleBg) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && gospelBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but the Bulgarian translation of the Gospel reading is empty. Please fill out the content in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+    if (bgVersion === "yes" && epistleBg.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "You've requested to make the Bulgarian version of this item public but the Bulgarian translation of the Epistle reading is empty. Please fill out the content in Bulgarian or choose the option not to display the Bulgarian version."
+      );
+      return;
+    }
+
+    //publish
+    const posts = createPosts(false);
+    const response = uploadItem(posts, `${API_URL}/worship-office`);
+    setUploadSuccess(response);
+    if (response === false) {
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
+    }
   };
 
 
@@ -169,10 +203,9 @@ function AddNewWorshipOffice() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      <form onSubmit={onSubmit} className="worship-office">
+      <form className="worship-office">
         <h1 className="worship-office__title">Add New Worship Office Entry</h1>
         <div className="worship-office__top">
-            <DateInput date={date} setDate={setDate}/>
             <div className="worship-office__youtube">
             <OneLineInput
                 label="Paste in the id of the youtube video you've created"
@@ -258,14 +291,23 @@ function AddNewWorshipOffice() {
                 />
             </div>
         </div>
-
-
-        
+        <input
+          className="worship-office__button"
+          type="submit"
+          value="Save as Draft"
+          onClick={onSave}
+        />
+        <DateInput date={date} setDate={setDate}/>
+        <BgVersionConfirmation
+          bgVersion={bgVersion}
+          setBgVersion={setBgVersion}
+        />
         <div className="worship-office__bottom">
         <input
           className="worship-office__button"
           type="submit"
-          value="Save "
+          value="Publish"
+          onClick={onPublish}
         />
       </div>
       </form>
