@@ -62,7 +62,6 @@ function SavedCommuityNews() {
           <div className="saved-community-news__single" key={index}>
             <Link to={`${single.id}`} className="saved-community-news__link">
               <div className="saved-community-news__left">
-                <ImagePreview imageId={single.featured_img_id} />
               </div>
               <div className="saved-community-news__text">
                 <h2 className="saved-community-news__title">{single.title}</h2>

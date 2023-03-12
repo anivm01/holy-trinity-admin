@@ -79,12 +79,6 @@ function AddNewWorshipOffice() {
   const onSave = (e) => {
     e.preventDefault();
 
-    if (!thumbnailId) {
-      setUploadError(true);
-      setErrorMessage("An image is required to save this post. You can change the image later but please select a placeholder image in the mean time");
-      return;
-    }
-
     //save draft
     const posts = createPosts(true);
     const response = uploadItem(posts, `${API_URL}/worship-office`);

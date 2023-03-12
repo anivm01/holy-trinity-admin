@@ -54,7 +54,7 @@ function EditObituary() {
       const enData = await axios.get(
         `${API_URL}${obituarySlug}/en/${params.id}`
       );
-      setImageId(enData.data.image_id);
+      
       setYears(enData.data.years);
       setNameEn(enData.data.name);
       setObituaryEn(enData.data.obituary);
@@ -66,11 +66,20 @@ function EditObituary() {
       setNameBg(bgData.data.name);
       setObituaryBg(bgData.data.obituary);
       setBgVersion(bgData.data.bg_version ? "yes" : "no");
-      setDataLoaded(true);
-
-      if (enData.data.image_id !== bgData.data.image_id) {
-        setImageIdBg(bgData.data.image_id);
+      
+      const enImage = await axios.get(
+        `${API_URL}/deceased/en/${params.id}`
+      );
+      const bgImage = await axios.get(
+        `${API_URL}/deceased/bg/${params.id}`
+      );
+      setImageId(enImage.data.image_id);
+      
+      if (enImage.data.image_id !== bgImage.data.image_id) {
+        setImageIdBg(bgImage.data.image_id);
       }
+
+      setDataLoaded(true);
     };
     fetchContent();
   }, [params.id]);

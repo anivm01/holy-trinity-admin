@@ -52,25 +52,35 @@ function EditCommunityNews() {
 
   useEffect(() => {
     const fetchContent = async () => {
+      //shared content and english content
       const enData = await axios.get(
-        `${API_URL}${communityNewsSlug}/en/${params.id}`
+        `${API_URL}/article/en/${params.id}`
       );
       setDate(dateOutputConverter(enData.data.date));
-      setFeaturedImgId(enData.data.featured_img_id);
       setTitleEn(enData.data.title);
       setAuthorEn(enData.data.author);
       setContentEn(enData.data.content);
       setIsDraft(enData.data.is_draft);
+
+      //bulgarian specific content
       const bgData = await axios.get(
-        `${API_URL}${communityNewsSlug}/bg/${params.id}`
+        `${API_URL}/article/bg/${params.id}`
       );
       setTitleBg(bgData.data.title);
       setAuthorBg(bgData.data.author);
       setContentBg(bgData.data.content);
       setBgVersion(bgData.data.bg_version ? "yes" : "no");
-      
-      if (enData.data.featured_img_id !== bgData.data.featured_img_id) {
-        setFeaturedImgIdBg(bgData.data.featured_img_id);
+
+      //image
+      const enImage = await axios.get(
+        `${API_URL}/featured-image/en/${params.id}`
+      );
+      const bgImage = await axios.get(
+        `${API_URL}/featured-image/bg/${params.id}`
+      );
+      setFeaturedImgId(enImage.data.image_id);
+      if (enImage.data.image_id !== bgImage.data.image_id) {
+        setFeaturedImgIdBg(bgImage.data.image_id);
       }
       setDataLoaded(true);
     };

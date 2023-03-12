@@ -30,7 +30,6 @@ function ImageUpload({ setImageId, setVisible }) {
     setImageId(id);
     setChosenId(id);
   };
-  console.log(images);
 
   return (
     <div className="image-upload">

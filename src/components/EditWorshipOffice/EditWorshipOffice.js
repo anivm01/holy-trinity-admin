@@ -50,17 +50,21 @@ function EditWorshipOffice() {
 
   useEffect(() => {
     const fetchContent = async () => {
+
+      //commont content and English content
       const enData = await axios.get(
         `${API_URL}${worshipOfficeSlug}/en/${params.id}`
       );
       setDate(dateOutputConverter(enData.data.date));
-      setThumbnailId(enData.data.thumbnail_id);
+      
       setYoutubeId(enData.data.youtube_video_id);
       setTitleEn(enData.data.title);
       setGospelEn(enData.data.gospel);
       setEpistleEn(enData.data.epistle);
       setOldTestamentEn(enData.data.old_testament);
       setIsDraft(enData.data.is_draft)
+
+      //bg content
       const bgData = await axios.get(
         `${API_URL}${worshipOfficeSlug}/bg/${params.id}`
       );
@@ -69,11 +73,22 @@ function EditWorshipOffice() {
       setEpistleBg(bgData.data.epistle);
       setOldTestamentBg(bgData.data.old_testament);
       setBgVersion(bgData.data.bg_version ? "yes" : "no");
-      setDataLoaded(true);
+      
 
-      if(enData.data.thumbnail_id !== bgData.data.thumbnail_id) {
-        setThumbnailIdBg(bgData.data.thumbnail_id)
+      //image
+      const enImage = await axios.get(
+        `${API_URL}/thumbnail/en/${params.id}`
+      );
+      const bgImage = await axios.get(
+        `${API_URL}/thumbnail/bg/${params.id}`
+      );
+      setThumbnailId(enImage.data.image_id);
+      
+      if (enImage.data.image_id !== bgImage.data.image_id) {
+        setThumbnailIdBg(bgImage.data.image_id);
       }
+
+      setDataLoaded(true);
     };
     fetchContent();
   }, [params.id]);
