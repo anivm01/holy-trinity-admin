@@ -9,87 +9,50 @@ import "./SavedCommunityNews.scss";
 import deleteIcon from "../../assets/delete.svg";
 import { ThreeDots } from "react-loader-spinner";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import SingleArticle from "../SingleArticle/SingleArticle";
+import useFetch from "../../utilities/useFetch";
+import NoData from "../NoData/NoData";
 
 
-function SavedCommuityNews() {
-  const [articles, setArticles] = useState([]);
+function SavedCommuityNews({url}) {
 
-  const navigate = useNavigate();
-
-  //delete associated states
-  const [deleteVisible, setDeleteVisible] = useState(false)
-  const [deleteId, setDeleteId] = useState("")
-
-  const getArticles = async () => {
-    try {
-      const response = await axios.get(`${API_URL}${communityNewsSlug}/en`);
-      setArticles(sortNewestToOldest(response.data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteItem = async (id) => {
-    try {
-      await axios.delete(`${API_URL}${communityNewsSlug}/en/${id}`);
-      navigate(0);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getArticles();
-  }, []);
-
-  if (articles.length === 0) {
-    return <ThreeDots 
-    height="80" 
-    width="80" 
-    radius="9"
-    color="#6F0B20" 
-    ariaLabel="three-dots-loading"
-    wrapperStyle={{justifyContent: "center"}}
-    wrapperClassName=""
-    visible={true}
-     />
+  const { data, error, loading } = useFetch(
+    url
+  );
+ 
+  if (loading) {
+    return (
+      <ThreeDots
+        height="80"
+        width="80"
+        radius="9"
+        color="#6F0B20"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{ justifyContent: "center" }}
+        wrapperClassName=""
+        visible={true}
+      />
+    );
   }
-  return (
-    <div className="saved-community-news">
-      {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
-      {articles.map((single, index) => {
+  if (error) {
+    return <NoData/>;
+  }
+  if (data) {
+    return (
+      <div className="saved-community-news">
+      {data.map((single, index) => {
         return (
-          <div className="saved-community-news__single" key={index}>
-            <Link to={`${single.id}`} className="saved-community-news__link">
-              <div className="saved-community-news__left">
-              </div>
-              <div className="saved-community-news__text">
-                <h2 className="saved-community-news__title">{single.title}</h2>
-                <div
-                  className="saved-community-news__content"
-                  dangerouslySetInnerHTML={createMarkup(single.content)}
-                ></div>
-              </div>
-            </Link>
-            <button
-              className="saved-community-news__delete"
-              onClick={() => {
-                setDeleteId(single.id)
-                setDeleteVisible(true)
-              }}
-              type="button"
-            >
-              <img
-                className="saved-community-news__icon"
-                src={deleteIcon}
-                alt="delete"
-              />
-            </button>
-          </div>
+          <SingleArticle key={index} article={single} />
         );
       })}
     </div>
-  );
+    );
+  }
+  return (
+    <NoData/>
+  )
+
+  
 }
 
 export default SavedCommuityNews;

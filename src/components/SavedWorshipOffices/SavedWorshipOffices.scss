@@ -1,55 +1,8 @@
 @use "../../partials/colors"as*;
 
-.saved-worship-office {
-    display: flex;
-    flex-wrap: wrap;
+.saved-worship-offices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 2rem;
-    &__single {
-        position: relative;
-        flex-basis: 22%;
-    }
-    &__link {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        text-decoration: none;
-        color: $wine-red;
-        align-items: center;
-        &:hover {
-            transition: .2s;
-            scale: .95;
-        }
-    }
-    &__delete {
-        background-color: $golden;
-        border: none;  
-        padding: .5rem;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        cursor: pointer;
-        &:hover {
-            scale: 1.05;
-            background-color: $beige;
-        }
-        &:active {
-            scale: .95;
-        }
-    }
-    &__icon {
-        width: 1.5rem;
-    }
-   
-    &__date {
-        font-weight: 600;
-        align-self: flex-start;
-        background-color: $golden;
-        color: $wine-red;
-        padding: .5rem 1.5rem .5rem 1rem;
-        border-right: 4px solid $wine-red;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+    padding: 0 2rem;
 }

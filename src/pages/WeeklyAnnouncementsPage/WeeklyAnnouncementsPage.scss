@@ -7,15 +7,4 @@ flex-direction: column;
 &__link {
     @extend .button
 }
-&__title {
-    text-align: center;
-    background-color: $wine-red;
-    color: $beige;
-}
-&__navigation {
-    display: flex;
-    align-items: baseline;
-    background-color: $golden;
-    margin-bottom: 2rem;
-}
 }

@@ -1,0 +1,35 @@
+@use "../../partials/colors" as*;
+.single-worship-office {
+    position: relative;
+    &__link {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        text-decoration: none;
+        color: $wine-red;
+        align-items: center;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        &:hover {
+            transition: .2s;
+            scale: .95;
+        }
+    }
+    &__date {
+        text-decoration: none;
+        font-weight: 600;
+        align-self: flex-start;
+        background-color: $golden;
+        color: $wine-red;
+        padding: .5rem 1.5rem .5rem 1rem;
+        border-right: 4px solid $wine-red;
+        position: absolute;
+        top: 0;
+        left: 0;
+        &:hover {
+            background-color: $wine-red;
+            color: $beige;
+        }
+    }
+}

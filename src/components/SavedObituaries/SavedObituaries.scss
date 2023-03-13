@@ -2,48 +2,7 @@
 
 .saved-obituaries {
     padding: 2rem 4rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 3rem;
-    &__icon {
-        height: 3rem;
-        
-    }
-    &__link {
-        padding: 2rem;
-        width: 22%;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        cursor: pointer;
-        border: 4px solid black;
-        text-decoration: none;
-        color: $wine-red;
-        align-items: center;
-        background-color: white;
-        &:hover {
-            transition: .2s;
-            scale: 1.05;
-        }
-    }
-    &__title {
-        padding: 0;
-        margin: 0;
-        text-decoration: none;
-        font-size: 1.25rem;
-        color: black;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-    &__content {
-        overflow: hidden;
-        color: black;
-        display: -webkit-box;
-        -webkit-line-clamp: 6;
-        -webkit-box-orient: vertical;
-    }
 }

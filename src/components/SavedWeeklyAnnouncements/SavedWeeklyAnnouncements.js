@@ -2,6 +2,7 @@ import "./SavedWeeklyAnnouncements.scss";
 import { ThreeDots } from "react-loader-spinner";
 import SingleWeeklyAnnouncement from "../SingleWeeklyAnnounement/SingleWeeklyAnnouncement";
 import useFetch from "../../utilities/useFetch";
+import NoData from "../NoData/NoData";
 
 function SavedWeeklyAnnouncements({url}) {
 
@@ -24,10 +25,9 @@ function SavedWeeklyAnnouncements({url}) {
     );
   }
   if (error) {
-    return <p>No data found</p>;
+    return <NoData/>;
   }
   if (data) {
-    
     return (
       <div className="saved-weekly-announcements">
         {data.map((single, index) => {
