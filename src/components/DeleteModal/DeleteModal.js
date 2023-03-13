@@ -1,7 +1,10 @@
 import "./DeleteModal.scss";
 import deleteIcon from "../../assets/delete.svg";
+import useDelete from "../../utilities/useDelete";
+import { useNavigate } from "react-router-dom";
 
-function DeleteModal({ imageId, setVisible, deleteFunction }) {
+function DeleteModal({ setVisible, url }) {
+const {deleteItem} = useDelete(url)
 
   return (
     <div className="delete-message">
@@ -17,7 +20,7 @@ function DeleteModal({ imageId, setVisible, deleteFunction }) {
           </h2>
           <button
             onClick={() => {
-              deleteFunction(imageId);
+              deleteItem();
             }}
             className="delete-message__button"
           >

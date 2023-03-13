@@ -1,0 +1,21 @@
+@use "../../partials/colors"as*;
+
+.delete-button {
+    background-color: $golden;
+    border: none;  
+    padding: .5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    &:hover {
+        scale: 1.05;
+        background-color: $beige;
+    }
+    &:active {
+        scale: .95;
+    }
+    &__icon{
+        width: 1.5rem;
+    }
+}

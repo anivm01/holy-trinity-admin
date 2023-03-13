@@ -2,6 +2,7 @@
 .dashboard {
     background-color: $golden;
     min-height: 100vh;
+    max-width: 17rem;
     padding: 0;
     position: fixed;
     top: 0;
@@ -27,7 +28,6 @@
         text-decoration: none;
         cursor: pointer;
         padding-left: 1rem;
-        min-width: 16rem;
         display: flex;
         align-items: center;
         color: $wine-red;
@@ -48,13 +48,13 @@
     }
     &__text {
         background-color: $golden;
-        padding: 1rem 2rem;
+        padding: 1rem;
         flex-grow: 1;
     }
     &__logo {
         background-color: $golden;
-        width: 100%;
         padding: 1rem 0;
+        width: 100%;
     }
 }
 .active > span {

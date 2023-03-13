@@ -7,7 +7,6 @@ export const uploadItem = async (posts, url) => {
       );
       const bgPostUpdated = { ...posts.bg, en_id: enResponse.data.new_entry.id };
       const bgResponse = await axios.post(`${url}/bg`, bgPostUpdated);
-      console.log([enResponse, bgResponse])
       return true
     } catch (err) {
       console.log(err.response);
