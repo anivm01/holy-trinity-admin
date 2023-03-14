@@ -21,10 +21,6 @@ function ImageGalleryPage() {
     <section className='image-gallery-page'>
       <div className='image-gallery-page__top'>
         <NewImageForm setImageId={setNewImage} setVisible={setNoNewImage} />
-        <div className='image-gallery-page__caution'>
-          <h2 className='image-gallery-page__heading'>Caution:</h2>
-          <p>Deleting an image from this gallery will result in deleting any post where this image appears.</p>
-        </div>
       </div>
         <SavedImages />
     </section>

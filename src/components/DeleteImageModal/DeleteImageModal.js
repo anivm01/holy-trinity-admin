@@ -100,8 +100,7 @@ function DeleteImageModal({ imageId, setVisible }) {
           <div>
             <p className="delete-message__message">
               You can replace the image by clicking on the link(s) below to go
-              to the edit page. Otherwise those posts will be automatically
-              deleted along with this image.
+              to the edit page.
             </p>
             <ul className="delete-message__list">
               {postsList.map((single, index) => {

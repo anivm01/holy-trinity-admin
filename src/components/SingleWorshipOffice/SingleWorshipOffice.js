@@ -13,7 +13,7 @@ function SingleWorshipOffice({ worshipOffice }) {
   return (
     <div className="single-worship-office">
       <Link to={`${worshipOffice.id}`} className="single-worship-office__link">
-        <SavedImage url={`${API_URL}/featured-image/en/${worshipOffice.id}`} />
+        <SavedImage url={`${API_URL}/thumbnail/en/${worshipOffice.id}`} />
       </Link>
       <Link to={`${worshipOffice.id}`} className="single-worship-office__date">
         {dateShorthandConverter(worshipOffice.date)}

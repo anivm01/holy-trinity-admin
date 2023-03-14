@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import OneLineInput from "../OneLineInput/OneLineInput";
 import "./EditWorshipOffice.scss";
+import SavedImage from "../SavedImage/SavedImage";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
@@ -224,7 +225,6 @@ function EditWorshipOffice() {
     visible={true}
      />;
   }
-  console.log(epistleEn)
 
   return (
     <>
@@ -277,7 +277,7 @@ function EditWorshipOffice() {
             {thumbnailId ? (
               <div className="worship-office__images">
               <div className="worship-office__image-preview">
-                <ImagePreview imageId={thumbnailId} setVisible={setImageUploadVisible} />
+                <ImagePreview imageId={thumbnailId} />
                 <button
                   type="button"
                   className="worship-office__button"
