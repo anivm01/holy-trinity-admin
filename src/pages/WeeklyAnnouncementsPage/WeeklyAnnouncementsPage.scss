@@ -1,0 +1,10 @@
+@use "../../partials/colors"as*;
+@use "../../partials/button";
+.weekly-announcements-page {
+width: 100%;
+display: flex;
+flex-direction: column;
+&__link {
+    @extend .button
+}
+}

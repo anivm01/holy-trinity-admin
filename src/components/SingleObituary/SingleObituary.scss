@@ -1,0 +1,41 @@
+@use "../../partials/colors"as*;
+.single-obituary {
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 4px solid black;
+    text-decoration: none;
+    color: $wine-red;
+    align-items: center;
+    background-color: white;
+    min-height: 20rem;
+    &:hover {
+        transition: .2s;
+        scale: 1.05;
+    }
+
+&__icon {
+    height: 3rem;  
+}
+&__title {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    font-size: 1.25rem;
+    color: black;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+&__content {
+    overflow: hidden;
+    color: black;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+}

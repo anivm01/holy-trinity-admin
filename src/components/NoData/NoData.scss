@@ -1,0 +1,11 @@
+.no-data {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    &__image {
+        margin-top: 3rem;
+        opacity: .5;
+        width: 30vw;
+    }
+}

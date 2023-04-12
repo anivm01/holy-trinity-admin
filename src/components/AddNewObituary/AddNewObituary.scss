@@ -1,0 +1,86 @@
+@use "../../partials/colors"as*;
+
+.obituary {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: $wine-red;
+    background-color: $beige;
+    margin: 0 3rem;
+    &__top {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    &__images{
+        display: flex;
+        gap: 2rem;
+        margin: 1rem 0;
+    }
+    &__image-preview {
+        margin: 0 auto;
+        width: 18rem;
+        display: flex;
+        flex-direction: column;
+    }
+    &__middle {
+        display: flex;
+        gap: 3rem;
+    }
+    &__title {
+        border-bottom: 2px solid $wine-red;
+        width: 100%;
+    }
+    &__subtitle {
+        border-bottom: 2px solid $wine-red;
+    }
+    &__language {
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+    &__button {
+        margin: 2rem auto;
+        width: 10rem;
+        padding: .5rem .25rem;
+        background-color: $wine-red;
+        color: $beige;
+        border-radius: 4px;
+        border: 2px solid $wine-red;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+    &:hover {
+        color: $wine-red;
+        background-color: $golden;
+    }
+    &:active {
+        transition: .2s;
+        transform: scale(.90);
+    }
+    }
+    &__special-button {
+        margin: 0 auto;
+        padding: .5rem 1rem;
+        background-color: $golden;
+        color: $wine-red;
+        border-radius: 4px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+    &:hover {
+        color: $beige;
+        background-color: $wine-red;
+    }
+    &:active {
+        transition: .2s;
+        transform: scale(.90);
+    }
+    }
+}

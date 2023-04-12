@@ -1,0 +1,14 @@
+@use "../../partials/colors"as*;
+
+.page-header{
+    &__title {
+        text-align: center;
+        background-color: $wine-red;
+        color: $beige;
+    }
+    &__navigation {
+        padding: 1rem 0;
+        display: flex;
+        align-items: center;
+    }
+}

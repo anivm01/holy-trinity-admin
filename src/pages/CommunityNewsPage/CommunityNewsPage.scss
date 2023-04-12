@@ -1,0 +1,11 @@
+@use "../../partials/colors"as*;
+@use "../../partials/button"as*;
+.community-news-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    &__link {
+        @extend .button;
+    }
+    }

@@ -1,0 +1,13 @@
+@use "./partials/colors"as*;
+.app {
+  display: flex;
+  position: relative;
+  &__main {
+    padding-left: 17rem;
+    flex-grow: 1;
+    background-color: $beige;
+    min-height: 100vh;
+  }
+}
+
+

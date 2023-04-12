@@ -1,0 +1,67 @@
+@use "../../partials/colors"as*;
+.dashboard {
+    background-color: $golden;
+    min-height: 100vh;
+    max-width: 17rem;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-shadow: rgba(111, 11, 32, 0.3) 0px 10px 20px -1px, rgba(111, 11, 32, 0.1) 0px 0px 0px 2px;
+    &__list {
+        list-style: none;
+        padding:  0;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        border: 4px solid $wine-red;
+    }
+    &__item {
+        padding: 0;
+        margin: 0;
+        background-color: $wine-red;
+    }
+    &__link {
+        text-decoration: none;
+        cursor: pointer;
+        padding-left: 1rem;
+        display: flex;
+        align-items: center;
+        color: $wine-red;
+        font-size: 1rem;
+        font-weight: bold;
+        background-color: $wine-red;
+        border: 1px solid $wine-red;
+        &:hover {
+            color: $wine-red;
+            transform: translateX(1rem);
+        }
+    }
+    &__icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        object-fit: contain;
+        margin-right: 1rem;
+    }
+    &__text {
+        background-color: $golden;
+        padding: 1rem;
+        flex-grow: 1;
+    }
+    &__logo {
+        background-color: $golden;
+        padding: 1rem 0;
+        width: 100%;
+    }
+}
+.active > span {
+    color: $beige;
+    background-color: $wine-red;
+    &:hover {
+        color: $beige;
+        background-color: $wine-red; 
+    }
+  }

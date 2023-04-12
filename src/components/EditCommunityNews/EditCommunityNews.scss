@@ -1,0 +1,53 @@
+@use "../../partials/colors" as*;
+
+.community-news {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: $wine-red;
+    background-color: $beige;
+    margin: 0 3rem;
+
+    &__top {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    &__image-preview {
+        margin: 0 auto;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    &__middle {
+        display: flex;
+        gap: 3rem;
+        margin: 2rem 0;
+    }
+
+    &__title {
+        border-bottom: 2px solid $wine-red;
+        width: 100%;
+    }
+
+    &__subtitle {
+        border-bottom: 2px solid $wine-red;
+    }
+
+    &__language {
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__bottom {
+        padding: 2rem 0;
+    }
+}

@@ -1,0 +1,31 @@
+@use "../../partials/colors"as*;
+.saved-images {
+    &__img {
+        width: 100%;
+    }
+    &__box {
+        position: relative;
+    }
+    &__delete {
+        background-color: $golden;
+        border: none;  
+        padding: .5rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        &:hover {
+            scale: 1.05;
+        }
+        &:active {
+            scale: .95;
+        }
+    }
+    &__icon {
+        width: 1rem;
+    }
+    &__text {
+        color: $wine-red;
+        padding-right: .5rem;
+    }
+}

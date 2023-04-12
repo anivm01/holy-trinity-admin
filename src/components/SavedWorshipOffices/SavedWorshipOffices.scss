@@ -1,0 +1,8 @@
+@use "../../partials/colors"as*;
+
+.saved-worship-offices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding: 0 2rem;
+}

@@ -1,0 +1,12 @@
+@use "../../partials/colors" as*;
+@use "../../partials/button" as*;
+
+.worship-offices-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__link {
+       @extend .button;
+    }
+}
