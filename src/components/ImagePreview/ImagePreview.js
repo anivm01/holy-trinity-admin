@@ -1,25 +1,12 @@
-import { useEffect, useState } from "react";
 import { API_URL } from "../../utilities/api";
 import "./ImagePreview.scss";
-import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import useFetch from "../../utilities/useFetch";
 
 function ImagePreview( { imageId } ) {
-  const [imageData, setImageData] = useState(null);
+  const {data, loading, error} = useFetch(`${API_URL}/images/en/${imageId}`)
 
-  useEffect(() => {
-    try {
-      const getImageData = async () => {
-        const response = await axios.get(`${API_URL}/images/en/${imageId}`);
-        setImageData(response.data);
-      };
-      getImageData();
-    } catch (error) {
-      console.error(error);
-    }
-  }, [imageId]);
-
-  if (!imageData) {
+  if (loading) {
     return <ThreeDots
     height="80" 
     width="80" 
@@ -31,14 +18,20 @@ function ImagePreview( { imageId } ) {
     visible={true}
      />;
   }
-
-  return (
-      <img
-        className="image-preview"
-        src={`${API_URL}${imageData.url}`}
-        alt={imageData.description}
-      />
-  );
+  if (error) {
+    return <p>NO Data</p>
+  }
+    if(data) {
+      return (
+        <img
+          className="image-preview"
+          src={data.src}
+          alt={data.description}
+        />
+    );
+    }
+return <p>NO Data</p>
+  
 }
 
 export default ImagePreview;

@@ -86,25 +86,7 @@ function AddNewCommunityNews() {
     e.preventDefault()
 
     //validate content before publishing
-    if (!titleEn || !contentEn || !authorEn) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide a title, author and main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
-    if(contentEn.length < 8) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-        );
-      return
-    }
-    if (!featuredImgId) {
-      setUploadError(true);
-      setErrorMessage("Make sure to upload a featured image");
-      return;
-    }
+
     if (!date) {
       setUploadError(true);
       setErrorMessage(
@@ -112,12 +94,19 @@ function AddNewCommunityNews() {
       );
       return;
     }
-    if (bgVersion === "yes" && !titleBg && !contentBg && !authorBg) {
+    if (bgVersion === "no" && !titleEn) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+        "Make sure to fill out the title in English"
       );
       return;
+    }
+    if(bgVersion === "no" && contentEn.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
+        );
+      return
     }
     if (bgVersion === "yes" && !titleBg) {
       setUploadError(true);
@@ -130,13 +119,6 @@ function AddNewCommunityNews() {
       setUploadError(true);
       setErrorMessage(
         "You've requested to make the Bulgarian version of this item public but the main content is empty. Please fill out the main content in Bulgarian or choose the option not to display the Bulgarian version."
-      );
-      return;
-    }
-    if (bgVersion === "yes" && !authorBg) {
-      setUploadError(true);
-      setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but you have not provided the author's name in Bulgarian. Please fill out the main content in Bulgarian or choose the option not to display the Bulgarian version."
       );
       return;
     }

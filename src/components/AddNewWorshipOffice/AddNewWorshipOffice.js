@@ -6,18 +6,16 @@ import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
-import { API_URL, worshipOfficeSlug } from "../../utilities/api";
-import axios from "axios";
+import { API_URL } from "../../utilities/api";
 import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { uploadItem } from "../../utilities/send";
-import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
 function AddNewWorshipOffice() {
   const currentDate = Math.floor(Date.now() / 1000);
   const [youtubeId, setYoutubeId] = useState("");
-  const [thumbnailId, setThumbnailId] = useState("");
+
   const [date, setDate] = useState(dateOutputConverter(currentDate));
   const [titleEn, setTitleEn] = useState("");
   const [titleBg, setTitleBg] = useState("");
@@ -27,7 +25,6 @@ function AddNewWorshipOffice() {
   const [epistleBg, setEpistleBg] = useState("");
   const [oldTestamentEn, setOldTestamentEn] = useState("");
   const [oldTestamentBg, setOldTestamentBg] = useState("");
-  const [bgVersion, setBgVersion] = useState("yes");
 
 
   //states responsible for image upload popup
@@ -35,6 +32,7 @@ function AddNewWorshipOffice() {
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
   //states responsible for the option to add a different image on the bulgarian version of the site
+  const [thumbnailId, setThumbnailId] = useState("");
   const [thumbnailIdBg, setThumbnailIdBg] = useState("")
   const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
   const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
@@ -63,8 +61,7 @@ function AddNewWorshipOffice() {
         old_testament: oldTestamentBg,
         thumbnail_id: thumbnailId,
         youtube_video_id: youtubeId,
-        date: dateInputConverter(date),
-        bg_version: bgVersion === "yes" ? true : false
+        date: dateInputConverter(date)
     };
 
     if(thumbnailIdBg){
@@ -94,62 +91,35 @@ function AddNewWorshipOffice() {
   const onPublish = (e) => {
     e.preventDefault();
 
-    //validate content before publishing
-    if (!titleEn || gospelEn.length < 8 || epistleEn.length < 8) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide the title, gospel reading and epistle reading in English before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
-    if (!youtubeId) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide the id of the youtube video before publishing this item to the live site"
-      );
-      return;
-    }
-    if (!date) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to add a date on which you want this item to be posted"
-      );
-      return;
-    }
-    if (!thumbnailId) {
-      setUploadError(true);
-      setErrorMessage("Make sure to upload an image before publishing this item.");
-      return;
-    }
-    if (bgVersion === "yes" && !titleBg && gospelBg.length < 8 && epistleBg.length < 8) {
-      setUploadError(true);
-      setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
-      );
-      return;
-    }
-    if (bgVersion === "yes" && !titleBg) {
-      setUploadError(true);
-      setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
-      );
-      return;
-    }
-    if (bgVersion === "yes" && gospelBg.length < 8) {
-      setUploadError(true);
-      setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but the Bulgarian translation of the Gospel reading is empty. Please fill out the content in Bulgarian or choose the option not to display the Bulgarian version."
-      );
-      return;
-    }
-    if (bgVersion === "yes" && epistleBg.length < 8) {
-      setUploadError(true);
-      setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but the Bulgarian translation of the Epistle reading is empty. Please fill out the content in Bulgarian or choose the option not to display the Bulgarian version."
-      );
-      return;
-    }
-
+   //validate content before publishing
+   if (!date) {
+    setUploadError(true);
+    setErrorMessage(
+      "Make sure to add a date on which you want the entry to be posted"
+    );
+    return;
+  }
+  if (!youtubeId) {
+    setUploadError(true);
+    setErrorMessage(
+      "Make sure to add the id of the youtube video before publishing. If you wish to wait and do it later, save this item as a draft"
+    );
+    return;
+  }
+  if(!titleEn) {
+    setUploadError(true);
+    setErrorMessage(
+      "Please fill out the title in English"
+    );
+    return;
+  }
+  if(!titleBg) {
+    setUploadError(true);
+    setErrorMessage(
+      "Please fill out the title in Bulgarian"
+    );
+    return;
+  }
     //publish
     const posts = createPosts(false);
     const response = uploadItem(posts, `${API_URL}/worship-office`);
@@ -161,8 +131,6 @@ function AddNewWorshipOffice() {
       );
     }
   };
-
-
   return (
     <>
       {imageUploadVisible && (
@@ -292,10 +260,6 @@ function AddNewWorshipOffice() {
           onClick={onSave}
         />
         <DateInput date={date} setDate={setDate}/>
-        <BgVersionConfirmation
-          bgVersion={bgVersion}
-          setBgVersion={setBgVersion}
-        />
         <div className="worship-office__bottom">
         <input
           className="worship-office__button"

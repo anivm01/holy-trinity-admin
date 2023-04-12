@@ -21,7 +21,7 @@ function SingleEvent({ event }) {
         <DeleteButton setDeleteVisible={setDeleteVisible} />
         <Link to={`${event.id}`} className="single-event__link">
           <span className="single-event__date">
-            {dateShorthandConverter(event.date)}
+            {dateShorthandConverter(event.event_date)}
           </span>
           <h2 className="single-event__title">{event.title ? event.title : "No Title"}</h2>
         </Link>

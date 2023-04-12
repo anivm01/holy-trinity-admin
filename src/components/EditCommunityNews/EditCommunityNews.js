@@ -5,7 +5,7 @@ import "./EditCommunityNews.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
-import { API_URL, communityNewsSlug } from "../../utilities/api";
+import { API_URL } from "../../utilities/api";
 import axios from "axios";
 import {
   dateInputConverter,
@@ -19,25 +19,28 @@ import { ThreeDots } from "react-loader-spinner";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 import { updateItem } from "../../utilities/send";
 
-function EditCommunityNews() {
+function EditCommunityNews({ data, dataBg }) {
+  console.log(data)
+  console.log(dataBg)
   //content states
-  const [featuredImgId, setFeaturedImgId] = useState("");
-  const [date, setDate] = useState("");
-  const [titleEn, setTitleEn] = useState("");
-  const [titleBg, setTitleBg] = useState("");
-  const [authorEn, setAuthorEn] = useState("");
-  const [authorBg, setAuthorBg] = useState("");
-  const [contentEn, setContentEn] = useState("");
-  const [contentBg, setContentBg] = useState("");
-  const [bgVersion, setBgVersion] = useState("yes");
+  const [date, setDate] = useState(dateOutputConverter(data.date));
+  const [titleEn, setTitleEn] = useState(data.title);
+  const [titleBg, setTitleBg] = useState(dataBg.title);
+  const [authorEn, setAuthorEn] = useState(data.author);
+  const [authorBg, setAuthorBg] = useState(dataBg.author);
+  const [contentEn, setContentEn] = useState(data.content);
+  const [contentBg, setContentBg] = useState(dataBg.content);
+  const [bgVersion, setBgVersion] = useState(dataBg.bg_version ? "yes" : "no");
 
-  const [isDraft, setIsDraft] = useState(true);
+  const [isDraft] = useState(data.is_draft);
 
   //image popup states
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
-  //states responsible for the option to add a different image on the bulgarian version of the site
+  //image states
+  const [imagesLoading, setImagesLoading] = useState(false);
+  const [featuredImgId, setFeaturedImgId] = useState("");
   const [featuredImgIdBg, setFeaturedImgIdBg] = useState("");
   const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
   const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
@@ -46,46 +49,32 @@ function EditCommunityNews() {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [dataLoaded, setDataLoaded] = useState(false);
 
   const params = useParams();
 
   useEffect(() => {
-    const fetchContent = async () => {
-      //shared content and english content
-      const enData = await axios.get(
-        `${API_URL}/article/en/${params.id}`
-      );
-      setDate(dateOutputConverter(enData.data.date));
-      setTitleEn(enData.data.title);
-      setAuthorEn(enData.data.author);
-      setContentEn(enData.data.content);
-      setIsDraft(enData.data.is_draft);
-
-      //bulgarian specific content
-      const bgData = await axios.get(
-        `${API_URL}/article/bg/${params.id}`
-      );
-      setTitleBg(bgData.data.title);
-      setAuthorBg(bgData.data.author);
-      setContentBg(bgData.data.content);
-      setBgVersion(bgData.data.bg_version ? "yes" : "no");
-
-      //image
-      const enImage = await axios.get(
-        `${API_URL}/featured-image/en/${params.id}`
-      );
-      const bgImage = await axios.get(
-        `${API_URL}/featured-image/bg/${params.id}`
-      );
-      setFeaturedImgId(enImage.data.image_id);
-      if (enImage.data.image_id !== bgImage.data.image_id) {
-        setFeaturedImgIdBg(bgImage.data.image_id);
-      }
-      setDataLoaded(true);
-    };
-    fetchContent();
+    try {
+      setImagesLoading(true);
+      const fetchImages = async () => {
+        const enImage = await axios.get(
+          `${API_URL}/featured-image/en/${params.id}`
+        );
+        const bgImage = await axios.get(
+          `${API_URL}/featured-image/bg/${params.id}`
+        );
+        setFeaturedImgId(enImage.data.image_id);
+        if (enImage.data.image_id !== bgImage.data.image_id) {
+          setFeaturedImgIdBg(bgImage.data.image_id);
+        }
+      };
+      fetchImages();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setImagesLoading(false);
+    }
   }, [params.id]);
+
   const createPosts = (draft) => {
     const articleEn = {
       title: titleEn,
@@ -133,25 +122,6 @@ function EditCommunityNews() {
     e.preventDefault();
 
     //validate content before publishing
-    if (!titleEn || !contentEn || !authorEn) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide a title, author and main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
-    if (contentEn.length < 8) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
-    if (!featuredImgId) {
-      setUploadError(true);
-      setErrorMessage("Make sure to upload a featured image");
-      return;
-    }
     if (!date) {
       setUploadError(true);
       setErrorMessage(
@@ -159,10 +129,15 @@ function EditCommunityNews() {
       );
       return;
     }
-    if (bgVersion === "yes" && !titleBg && !contentBg && !authorBg) {
+    if (bgVersion === "no" && !titleEn) {
+      setUploadError(true);
+      setErrorMessage("Make sure to fill out the title in English");
+      return;
+    }
+    if (bgVersion === "no" && contentEn.length < 8) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+        "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
       );
       return;
     }
@@ -180,13 +155,6 @@ function EditCommunityNews() {
       );
       return;
     }
-    if (bgVersion === "yes" && !authorBg) {
-      setUploadError(true);
-      setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but you have not provided the author's name in Bulgarian. Please fill out the main content in Bulgarian or choose the option not to display the Bulgarian version."
-      );
-      return;
-    }
 
     //publish
     const posts = createPosts(false);
@@ -199,21 +167,6 @@ function EditCommunityNews() {
       );
     }
   };
-
-  if (!dataLoaded) {
-    return (
-      <ThreeDots
-        height="80"
-        width="80"
-        radius="9"
-        color="#6F0B20"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{ justifyContent: "center" }}
-        wrapperClassName=""
-        visible={true}
-      />
-    );
-  }
 
   return (
     <>
@@ -257,6 +210,18 @@ function EditCommunityNews() {
           <p>This item is published to the live site.</p>
         )}
         <div className="community-news__top">
+          {imagesLoading && (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#6F0B20"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{ justifyContent: "center" }}
+              wrapperClassName=""
+              visible={true}
+            />
+          )}
           {featuredImgId ? (
             <div className="community-news__images">
               <div className="community-news__image-preview">
@@ -266,7 +231,7 @@ function EditCommunityNews() {
                 />
                 <button
                   type="button"
-                  className="community-news__button"
+                  className="button"
                   onClick={() => setImageReplaceVisible(true)}
                 >
                   Replace
@@ -274,7 +239,7 @@ function EditCommunityNews() {
                 {!featuredImgIdBg && (
                   <button
                     type="button"
-                    className="community-news__special-button"
+                    className="button"
                     onClick={() => {
                       setImageReplaceVisibleBg(true);
                     }}
@@ -291,14 +256,14 @@ function EditCommunityNews() {
                   />
                   <button
                     type="button"
-                    className="community-news__button"
+                    className="button"
                     onClick={() => setImageReplaceVisibleBg(true)}
                   >
                     Replace
                   </button>
                   <button
                     type="button"
-                    className="community-news__special-button"
+                    className="button"
                     onClick={() => {
                       setFeaturedImgIdBg("");
                     }}
@@ -351,7 +316,7 @@ function EditCommunityNews() {
           </div>
         </div>
         <input
-          className="community-news__button"
+          className="button"
           type="submit"
           value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
           onClick={onSave}
@@ -363,7 +328,7 @@ function EditCommunityNews() {
         />
         <div className="community-news__bottom">
           <input
-            className="community-news__button"
+            className="button"
             type="submit"
             value={isDraft ? "Publish" : "Update Live Content"}
             onClick={onPublish}

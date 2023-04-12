@@ -7,8 +7,19 @@ import event from "../../assets/event.svg";
 import news from "../../assets/news.svg";
 import cross from "../../assets/cross-beige.svg";
 import gallery from "../../assets/gallery.svg";
+import { useLoggedIn } from "../../utilities/LoggedInContext";
 
 function Dashboard() {
+  const loggedIn = useLoggedIn();
+  if (!loggedIn) {
+    return (
+      <section className="dashboard">
+        <NavLink className="dashboard__home" to="/">
+          <img className="dashboard__logo" src={logo} alt="logo" />
+        </NavLink>
+      </section>
+    );
+  }
   return (
     <section className="dashboard">
       <NavLink className="dashboard__home" to="/">

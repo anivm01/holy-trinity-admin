@@ -18,8 +18,6 @@ function AddNewEvent() {
   const [enContent, setEnContent] = useState("");
   const [bgTitle, setBgTitle] = useState("");
   const [bgContent, setBgContent] = useState("");
-  
-  const [bgVersion, setBgVersion] = useState("yes");
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
@@ -38,8 +36,7 @@ function AddNewEvent() {
       title: bgTitle,
       event_details: bgContent,
       event_date: dateInputConverter(eventDate),
-      date: dateInputConverter(date),
-      bg_version: bgVersion === "yes" ? true : false,
+      date: dateInputConverter(date)
     };
     return { en: newEventEN, bg: newEventBG };
   };
@@ -61,15 +58,7 @@ function AddNewEvent() {
 
   const onPublish = (e) => {
     e.preventDefault();
-
     //validate content before publishing
-    if (!enTitle || enContent.length < 8 || !eventDate) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide the date of the event, the event title, and the event description before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
     if (!date) {
       setUploadError(true);
       setErrorMessage(
@@ -77,28 +66,41 @@ function AddNewEvent() {
       );
       return;
     }
-    if (bgVersion === "yes" && !bgTitle && bgContent.length < 8) {
+    if (!eventDate) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+        "Make sure to add the date the event will occur"
       );
       return;
     }
-    if (bgVersion === "yes" && !bgTitle) {
+    if(!bgTitle) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
+        "Please fill out the title in Bulgarian"
       );
       return;
     }
-    if (bgVersion === "yes" && bgContent.length < 8) {
+    if(bgContent.length < 8){
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but the main content is empty. Please fill out the main content in Bulgarian or choose the option not to display the Bulgarian version."
+        "Please fill out the main content in Bulgarian."
       );
       return;
     }
-
+    if(!enTitle) {
+      setUploadError(true);
+      setErrorMessage(
+        "Please fill out the title in English"
+      );
+      return;
+    }
+    if(enContent.length < 8) {
+      setUploadError(true);
+      setErrorMessage(
+        "Please fill out the main content in English"
+      );
+      return;
+    }
     //publish
     const posts = createPosts(false);
     const response = uploadItem(posts, `${API_URL}/event`);
@@ -170,10 +172,6 @@ function AddNewEvent() {
           onClick={onSave}
         />
         <DateInput date={date} setDate={setDate} />
-        <BgVersionConfirmation
-          bgVersion={bgVersion}
-          setBgVersion={setBgVersion}
-        />
         <div className="event__bottom">
           <input
             className="event__submit"

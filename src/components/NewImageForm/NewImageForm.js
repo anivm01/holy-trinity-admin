@@ -5,7 +5,6 @@ import plus from "../../assets/plus.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 function NewImageForm({ setImageId, setVisible }) {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState("");
@@ -14,7 +13,7 @@ function NewImageForm({ setImageId, setVisible }) {
 
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const submit = async (event) => {
     event.preventDefault();
@@ -31,17 +30,20 @@ function NewImageForm({ setImageId, setVisible }) {
     formData.append("image", file);
     formData.append("description", description);
     formData.append("descriptionBG", descriptionBG);
-
+    const token = sessionStorage.getItem("authToken");
     try {
       const result = await axios.post(`${API_URL}/images/en`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
       });
       setImageId(result.data.new_image_en[0].id);
       setVisible(false);
-      setFile(null)
-      setDescription("")
-      setDescriptionBG("")
-      setPreviewURL(plus)      
+      setFile(null);
+      setDescription("");
+      setDescriptionBG("");
+      setPreviewURL(plus);
     } catch (error) {
       console.error(error);
       setUploadError(true);

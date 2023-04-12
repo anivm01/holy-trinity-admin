@@ -39,7 +39,6 @@ function AddNewObituary() {
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-
   const createPosts = (draft) => {
     const newObituaryEN = {
       name: nameEn,
@@ -47,7 +46,7 @@ function AddNewObituary() {
       years: years,
       date: dateInputConverter(date),
       image_id: imageId,
-      is_draft: draft
+      is_draft: draft,
     };
 
     let newObituaryBG = {
@@ -56,7 +55,7 @@ function AddNewObituary() {
       years: years,
       date: dateInputConverter(date),
       image_id: imageId,
-      bg_version: bgVersion === "yes" ? true : false
+      bg_version: bgVersion === "yes" ? true : false,
     };
 
     if (imageIdBg) {
@@ -70,7 +69,7 @@ function AddNewObituary() {
 
   const onSave = (e) => {
     e.preventDefault();
-   
+
     //save draft
     const posts = createPosts(true);
     const response = uploadItem(posts, `${API_URL}/obituary`);
@@ -86,14 +85,7 @@ function AddNewObituary() {
   const onPublish = (e) => {
     e.preventDefault();
 
-    //validate content before publishing
-    if (!nameEn || obituaryEn.length < 8 || !years) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide the date of the event, the event title, and the event description before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
+    //validate before publishing
     if (!date) {
       setUploadError(true);
       setErrorMessage(
@@ -101,29 +93,34 @@ function AddNewObituary() {
       );
       return;
     }
-    if (!imageId) {
+    if (!years) {
       setUploadError(true);
-      setErrorMessage("Make sure to upload an image before publishing this item.");
+      setErrorMessage("Make sure to fill out the years in English");
       return;
     }
-    if (bgVersion === "yes" && !nameBg && obituaryBg.length < 8) {
+    if (bgVersion === "no" && !nameEn) {
+      setUploadError(true);
+      setErrorMessage("Make sure to fill out the name in English");
+      return;
+    }
+    if (bgVersion === "no" && obituaryEn.length < 8) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+        "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
       );
       return;
     }
     if (bgVersion === "yes" && !nameBg) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
+        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian name. Please fill out the name in Bulgarian or choose the option not to display the Bulgarian version."
       );
       return;
     }
     if (bgVersion === "yes" && obituaryBg.length < 8) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but the obituary content is empty. Please fill out the obituary content in Bulgarian or choose the option not to display the Bulgarian version."
+        "You've requested to make the Bulgarian version of this item public but the main content is empty. Please fill out the main content in Bulgarian or choose the option not to display the Bulgarian version."
       );
       return;
     }

@@ -12,28 +12,29 @@ import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import DeleteModal from "../DeleteModal/DeleteModal";
-import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import {
+  dateInputConverter,
+  dateOutputConverter,
+} from "../../utilities/dateConverter";
 import DateInput from "../DateInput/DateInput";
 import { updateItem } from "../../utilities/send";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
-function EditObituary() {
-  const [imageId, setImageId] = useState("");
-  const [years, setYears] = useState("");
-  const [nameEn, setNameEn] = useState("");
-  const [nameBg, setNameBg] = useState("");
-  const [obituaryEn, setObituaryEn] = useState("");
-  const [obituaryBg, setObituaryBg] = useState("");
-  const [date, setDate] = useState("");
-  const [bgVersion, setBgVersion] = useState("yes");
-  const [isDraft, setIsDraft] = useState(true);
-
-  const [dataLoaded, setDataLoaded] = useState(false);
+function EditObituary({ data, dataBg }) {
+  const [years, setYears] = useState(data.years);
+  const [nameEn, setNameEn] = useState(data.name);
+  const [nameBg, setNameBg] = useState(dataBg.name);
+  const [obituaryEn, setObituaryEn] = useState(data.obituary);
+  const [obituaryBg, setObituaryBg] = useState(dataBg.obituary);
+  const [date, setDate] = useState(dateOutputConverter(data.date));
+  const [bgVersion, setBgVersion] = useState(dataBg.bg_version ? "yes" : "no");
+  const [isDraft] = useState(data.is_draft);
 
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
-  //states responsible for the option to add a different image on the bulgarian version of the site
+  const [imagesLoading, setImagesLoading] = useState(false);
+  const [imageId, setImageId] = useState("");
   const [imageIdBg, setImageIdBg] = useState("");
   const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
   const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
@@ -43,45 +44,30 @@ function EditObituary() {
   const [errorMessage, setErrorMessage] = useState("");
 
   //delete associated states
-  const [deleteVisible, setDeleteVisible] = useState(false)
-  const [deleteId, setDeleteId] = useState("")
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
 
   const params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchContent = async () => {
-      const enData = await axios.get(
-        `${API_URL}${obituarySlug}/en/${params.id}`
-      );
-      
-      setYears(enData.data.years);
-      setNameEn(enData.data.name);
-      setObituaryEn(enData.data.obituary);
-      setDate(dateOutputConverter(enData.data.date))
-      setIsDraft(enData.data.is_draft)
-      const bgData = await axios.get(
-        `${API_URL}${obituarySlug}/bg/${params.id}`
-      );
-      setNameBg(bgData.data.name);
-      setObituaryBg(bgData.data.obituary);
-      setBgVersion(bgData.data.bg_version ? "yes" : "no");
-      
-      const enImage = await axios.get(
-        `${API_URL}/deceased/en/${params.id}`
-      );
-      const bgImage = await axios.get(
-        `${API_URL}/deceased/bg/${params.id}`
-      );
-      setImageId(enImage.data.image_id);
-      
-      if (enImage.data.image_id !== bgImage.data.image_id) {
-        setImageIdBg(bgImage.data.image_id);
-      }
+    const fetchImages = async () => {
+      try {
+        setImagesLoading(true);
+        const enImage = await axios.get(`${API_URL}/deceased/en/${params.id}`);
+        const bgImage = await axios.get(`${API_URL}/deceased/bg/${params.id}`);
+        setImageId(enImage.data.image_id);
 
-      setDataLoaded(true);
+        if (enImage.data.image_id !== bgImage.data.image_id) {
+          setImageIdBg(bgImage.data.image_id);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setImagesLoading(false);
+      }
     };
-    fetchContent();
+    fetchImages();
   }, [params.id]);
 
   const createPosts = (draft) => {
@@ -91,7 +77,7 @@ function EditObituary() {
       years: years,
       date: dateInputConverter(date),
       image_id: imageId,
-      is_draft: draft
+      is_draft: draft,
     };
 
     let newObituaryBG = {
@@ -100,7 +86,7 @@ function EditObituary() {
       years: years,
       date: dateInputConverter(date),
       image_id: imageId,
-      bg_version: bgVersion === "yes" ? true : false
+      bg_version: bgVersion === "yes" ? true : false,
     };
 
     if (imageIdBg) {
@@ -114,7 +100,6 @@ function EditObituary() {
 
   const onSave = (e) => {
     e.preventDefault();
-
     //save draft
     const posts = createPosts(true);
     const response = updateItem(posts, `${API_URL}/obituary`, params.id);
@@ -129,15 +114,7 @@ function EditObituary() {
 
   const onPublish = (e) => {
     e.preventDefault();
-
-    //validate content before publishing
-    if (!nameEn || obituaryEn.length < 8 || !years) {
-      setUploadError(true);
-      setErrorMessage(
-        "Make sure to provide the date of the event, the event title, and the event description before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-      );
-      return;
-    }
+    //validate before publishing
     if (!date) {
       setUploadError(true);
       setErrorMessage(
@@ -145,29 +122,34 @@ function EditObituary() {
       );
       return;
     }
-    if (!imageId) {
+    if (!years) {
       setUploadError(true);
-      setErrorMessage("Make sure to upload an image before publishing this item.");
+      setErrorMessage("Make sure to fill out the years in English");
       return;
     }
-    if (bgVersion === "yes" && !nameBg && obituaryBg.length < 8) {
+    if (bgVersion === "no" && !nameEn) {
+      setUploadError(true);
+      setErrorMessage("Make sure to fill out the name in English");
+      return;
+    }
+    if (bgVersion === "no" && obituaryEn.length < 8) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but no Bulgarian translations have been provided. Please fill out correct fields in Bulgarian or choose the option not to display the Bulgarian version."
+        "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
       );
       return;
     }
     if (bgVersion === "yes" && !nameBg) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian title. Please fill out the title in Bulgarian or choose the option not to display the Bulgarian version."
+        "You've requested to make the Bulgarian version of this item public but there is no Bulgarian name. Please fill out the name in Bulgarian or choose the option not to display the Bulgarian version."
       );
       return;
     }
     if (bgVersion === "yes" && obituaryBg.length < 8) {
       setUploadError(true);
       setErrorMessage(
-        "You've requested to make the Bulgarian version of this item public but the obituary content is empty. Please fill out the obituary content in Bulgarian or choose the option not to display the Bulgarian version."
+        "You've requested to make the Bulgarian version of this item public but the main content is empty. Please fill out the main content in Bulgarian or choose the option not to display the Bulgarian version."
       );
       return;
     }
@@ -192,21 +174,6 @@ function EditObituary() {
       console.log(error);
     }
   };
-
-  if (!dataLoaded) {
-    return (
-      <ThreeDots
-        height="80"
-        width="80"
-        radius="9"
-        color="#6F0B20"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{ justifyContent: "center" }}
-        wrapperClassName=""
-        visible={true}
-      />
-    );
-  }
 
   return (
     <>
@@ -242,7 +209,13 @@ function EditObituary() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      {deleteVisible && <DeleteModal imageId={deleteId} setVisible={setDeleteVisible} deleteFunction={deleteItem}/>}
+      {deleteVisible && (
+        <DeleteModal
+          imageId={deleteId}
+          setVisible={setDeleteVisible}
+          deleteFunction={deleteItem}
+        />
+      )}
       <form className="obituary">
         <h1 className="obituary__title">Edit Obituary</h1>
         {isDraft ? (
@@ -251,6 +224,18 @@ function EditObituary() {
           <p>This item is published to the live site.</p>
         )}
         <div className="obituary__top">
+          {imagesLoading && (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#6F0B20"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{ justifyContent: "center" }}
+              wrapperClassName=""
+              visible={true}
+            />
+          )}
           {imageId ? (
             <div className="obituary__images">
               <div className="obituary__image-preview">
@@ -340,28 +325,28 @@ function EditObituary() {
           </div>
         </div>
         <input
-          className="obituary__submit"
+          className="button"
           type="submit"
           value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
           onClick={onSave}
         />
-        <DateInput date={date} setDate={setDate}/>
+        <DateInput date={date} setDate={setDate} />
         <BgVersionConfirmation
           bgVersion={bgVersion}
           setBgVersion={setBgVersion}
         />
         <div className="obituary__bottom">
           <input
-            className="obituary__submit"
+            className="button"
             type="submit"
             value={isDraft ? "Publish" : "Update Live Content"}
             onClick={onPublish}
           />
           <button
-            className="obituary__submit"
+            className="button"
             onClick={() => {
-              setDeleteId(params.id)
-                  setDeleteVisible(true)
+              setDeleteId(params.id);
+              setDeleteVisible(true);
             }}
             type="button"
           >

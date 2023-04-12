@@ -14,38 +14,19 @@ import { ThreeDots } from "react-loader-spinner";
 import { updateItem } from "../../utilities/send";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
-function EditWeeklyAnnouncement() {
-  const [date, setDate] = useState("");
-  const [enTitle, setEnTitle] = useState("");
-  const [enContent, setEnContent] = useState("");
-  const [bgTitle, setBgTitle] = useState("");
-  const [bgContent, setBgContent] = useState("");
-  const [bgVersion, setBgVersion] = useState("yes");
-  const [isDraft, setIsDraft] = useState(true);
-  const [dataLoaded, setDataLoaded] = useState(false);
-
+function EditWeeklyAnnouncement({data, dataBg}) {
+  const [date, setDate] = useState(dateOutputConverter(data.date));
+  const [enTitle, setEnTitle] = useState(data.title);
+  const [enContent, setEnContent] = useState(data.announcement);
+  const [bgTitle, setBgTitle] = useState(dataBg.title);
+  const [bgContent, setBgContent] = useState(dataBg.announcement);
+  const [bgVersion, setBgVersion] = useState(dataBg.bg_version ? "yes" : "no");
+  const [isDraft] = useState(data.is_draft);
 
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const params = useParams()
-
-  useEffect(()=>{
-    const fetchAnnouncementContent = async () => {
-        const enData = await axios.get(`${API_URL}${weeklyAnnouncementSlug}/en/${params.id}`)
-        setEnTitle(enData.data.title)
-        setEnContent(enData.data.announcement)
-        setDate(dateOutputConverter(enData.data.date))
-        setIsDraft(enData.data.is_draft)
-        const bgData = await axios.get(`${API_URL}${weeklyAnnouncementSlug}/bg/${params.id}`)
-        setBgTitle(bgData.data.title)
-        setBgContent(bgData.data.announcement)
-        setBgVersion(bgData.data.bg_version ? "yes" : "no");
-        setDataLoaded(true);
-    }
-    fetchAnnouncementContent()
-  },[params.id])
-
 
   const createPosts = (draft) => {
     const newAnnouncementEN = {
@@ -129,21 +110,6 @@ function EditWeeklyAnnouncement() {
       );
     }
   };
-
-  if (!dataLoaded) {
-    return (
-      <ThreeDots
-        height="80"
-        width="80"
-        radius="9"
-        color="#6F0B20"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{ justifyContent: "center" }}
-        wrapperClassName=""
-        visible={true}
-      />
-    );
-  }
 
   return (
     <form className="weekly-announcement">
