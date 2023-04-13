@@ -28,44 +28,44 @@ function App() {
           <Dashboard />
           <div className="app__main">
             <Routes>
-              <Route path="/" element={<QuickNav />} />
+              <Route path="./" element={<QuickNav />} />
               <Route
-                path="/weekly-announcements"
+                path="./weekly-announcements"
                 element={<WeeklyAnnouncementsPage />}
               />
               <Route
-                path="/weekly-announcements/add-new"
+                path="./weekly-announcements/add-new"
                 element={<AddNewWeeklyAnnouncement />}
               />
               <Route
-                path="/weekly-announcements/:id"
+                path="./weekly-announcements/:id"
                 element={<EditAnnouncementPage />}
               />
-              <Route path="/worship-offices" element={<WorshipOfficesPage />} />
+              <Route path="./worship-offices" element={<WorshipOfficesPage />} />
               <Route
-                path="/worship-offices/add-new"
+                path="./worship-offices/add-new"
                 element={<AddNewWorshipOffice />}
               />
               <Route
-                path="/worship-offices/:id"
+                path="./worship-offices/:id"
                 element={<EditWorshipOfficePage />}
               />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/events/add-new" element={<AddNewEvent />} />
-              <Route path="/events/:id" element={<EditEventPage />} />
-              <Route path="/community-news" element={<CommunityNewsPage />} />
+              <Route path="./events" element={<EventsPage />} />
+              <Route path="./events/add-new" element={<AddNewEvent />} />
+              <Route path="./events/:id" element={<EditEventPage />} />
+              <Route path="./community-news" element={<CommunityNewsPage />} />
               <Route
-                path="/community-news/add-new"
+                path="./community-news/add-new"
                 element={<AddNewCommunityNews />}
               />
               <Route
-                path="/community-news/:id"
+                path="./community-news/:id"
                 element={<EditCommunityNewsPage />}
               />
-              <Route path="/obituaries" element={<ObituariesPage />} />
-              <Route path="/obituaries/add-new" element={<AddNewObituary />} />
-              <Route path="/obituaries/:id" element={<EditObituaryPage />} />
-              <Route path="/image-gallery" element={<ImageGalleryPage />} />
+              <Route path="./obituaries" element={<ObituariesPage />} />
+              <Route path="./obituaries/add-new" element={<AddNewObituary />} />
+              <Route path="./obituaries/:id" element={<EditObituaryPage />} />
+              <Route path="./image-gallery" element={<ImageGalleryPage />} />
             </Routes>
           </div>
         </div>
