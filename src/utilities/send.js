@@ -1,6 +1,8 @@
 import axios from "axios";
-const token = sessionStorage.getItem("authToken");
+
 export const uploadItem = async (posts, url) => {
+  const token = sessionStorage.getItem("authToken");
+  console.log(token)
   try {
     const enResponse = await axios.post(`${url}/en`, posts.en, {
       headers: {
@@ -21,6 +23,7 @@ export const uploadItem = async (posts, url) => {
 };
 
 export const updateItem = async (posts, url, id) => {
+  const token = sessionStorage.getItem("authToken");
   console.log(posts);
   try {
     await axios.put(`${url}/en/${id}`, posts.en, {
