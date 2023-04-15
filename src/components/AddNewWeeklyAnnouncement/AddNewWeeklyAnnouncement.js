@@ -150,7 +150,7 @@ function AddNewWeeklyAnnouncement() {
           </div>
         </div>
         <input
-            className="weekly-announcement__submit"
+            className="button"
             type="submit"
             value="Save as Draft"
           onClick={onSave}
@@ -162,7 +162,7 @@ function AddNewWeeklyAnnouncement() {
         />
         <div className="weekly-announcement__bottom">
           <input
-            className="weekly-announcement__submit"
+            className="button"
             type="submit"
             value="Publish"
             onClick={onPublish}
