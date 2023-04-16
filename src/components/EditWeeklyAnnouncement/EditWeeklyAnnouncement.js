@@ -156,7 +156,7 @@ function EditWeeklyAnnouncement({data, dataBg}) {
         </div>
       </div>
       <input
-          className="weekly-announcement__submit"
+          className="button"
           type="submit"
           value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
           onClick={onSave}
@@ -168,7 +168,7 @@ function EditWeeklyAnnouncement({data, dataBg}) {
         />
       <div className="weekly-announcement__bottom">
         <input
-          className="weekly-announcement__submit"
+          className="button"
           type="submit"
           value={isDraft ? "Publish" : "Update Live Content"}
           onClick={onPublish}
