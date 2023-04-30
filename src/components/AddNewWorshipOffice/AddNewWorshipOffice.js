@@ -185,6 +185,9 @@ function AddNewWorshipOffice() {
                 >
                   Replace
                 </button>
+                <button className="button" type="button" onClick={()=>setThumbnailId("")}>
+                  Remove
+                </button>
                 {!thumbnailIdBg && <button
                   type="button"
                   className="worship-office__special-button"

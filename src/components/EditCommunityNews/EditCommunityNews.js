@@ -18,21 +18,25 @@ import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { ThreeDots } from "react-loader-spinner";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 import { updateItem } from "../../utilities/send";
+import CreateGallery from "../CreateGallery/CreateGallery";
 
 function EditCommunityNews({ data, dataBg }) {
-  console.log(data)
-  console.log(dataBg)
-  //content states
-  const [date, setDate] = useState(dateOutputConverter(data.date));
-  const [titleEn, setTitleEn] = useState(data.title);
-  const [titleBg, setTitleBg] = useState(dataBg.title);
-  const [authorEn, setAuthorEn] = useState(data.author);
-  const [authorBg, setAuthorBg] = useState(dataBg.author);
-  const [contentEn, setContentEn] = useState(data.content);
-  const [contentBg, setContentBg] = useState(dataBg.content);
-  const [bgVersion, setBgVersion] = useState(dataBg.bg_version ? "yes" : "no");
+  console.log(data);
+  console.log(dataBg);
 
-  const [isDraft] = useState(data.is_draft);
+  //content states
+  const [date, setDate] = useState(dateOutputConverter(data.entry_data.date));
+  const [titleEn, setTitleEn] = useState(data.entry_data.title);
+  const [titleBg, setTitleBg] = useState(dataBg.entry_data.title);
+  const [authorEn, setAuthorEn] = useState(data.entry_data.author);
+  const [authorBg, setAuthorBg] = useState(dataBg.entry_data.author);
+  const [contentEn, setContentEn] = useState(data.entry_data.content);
+  const [contentBg, setContentBg] = useState(dataBg.entry_data.content);
+  const [bgVersion, setBgVersion] = useState(
+    dataBg.entry_data.bg_version ? "yes" : "no"
+  );
+
+  const [isDraft] = useState(data.entry_data.is_draft);
 
   //image popup states
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
@@ -40,10 +44,27 @@ function EditCommunityNews({ data, dataBg }) {
 
   //image states
   const [imagesLoading, setImagesLoading] = useState(false);
-  const [featuredImgId, setFeaturedImgId] = useState("");
-  const [featuredImgIdBg, setFeaturedImgIdBg] = useState("");
+  const [featuredImgId, setFeaturedImgId] = useState(data.entry_data.image_id);
+  const [featuredImgIdBg, setFeaturedImgIdBg] = useState(
+    dataBg.entry_data.image_id !== data.entry_data.image_id
+      ? dataBg.entry_data.image_id
+      : ""
+  );
   const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
   const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
+
+  //image gallery
+  const galleryData = data.image_gallery.map((image) => {
+    return image.id;
+  });
+  const galleryDataBg = dataBg.image_gallery.map((image) => {
+    return image.id;
+  });
+
+  const [galleryEn, setGalleryEn] = useState(galleryData);
+  const [galleryBg, setGalleryBg] = useState(galleryDataBg);
+  const [createGalleryVisbile, setCreateGalleryVisible] = useState(false);
+  const [createBgGalleryVisbile, setCreateBgGalleryVisible] = useState(false);
 
   //success and error states
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -51,29 +72,6 @@ function EditCommunityNews({ data, dataBg }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const params = useParams();
-
-  useEffect(() => {
-    try {
-      setImagesLoading(true);
-      const fetchImages = async () => {
-        const enImage = await axios.get(
-          `${API_URL}/featured-image/en/${params.id}`
-        );
-        const bgImage = await axios.get(
-          `${API_URL}/featured-image/bg/${params.id}`
-        );
-        setFeaturedImgId(enImage.data.image_id);
-        if (enImage.data.image_id !== bgImage.data.image_id) {
-          setFeaturedImgIdBg(bgImage.data.image_id);
-        }
-      };
-      fetchImages();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setImagesLoading(false);
-    }
-  }, [params.id]);
 
   const createPosts = (draft) => {
     const articleEn = {
@@ -83,6 +81,7 @@ function EditCommunityNews({ data, dataBg }) {
       featured_img_id: featuredImgId,
       date: dateInputConverter(date),
       is_draft: draft,
+      gallery: galleryEn,
     };
 
     let articleBg = {
@@ -92,6 +91,7 @@ function EditCommunityNews({ data, dataBg }) {
       featured_img_id: featuredImgId,
       date: dateInputConverter(date),
       bg_version: bgVersion === "yes" ? true : false,
+      gallery: galleryBg,
     };
 
     if (featuredImgIdBg) {
@@ -170,6 +170,20 @@ function EditCommunityNews({ data, dataBg }) {
 
   return (
     <>
+      {createGalleryVisbile && (
+        <CreateGallery
+          chosenIds={galleryEn}
+          setChosenIds={setGalleryEn}
+          setVisible={setCreateGalleryVisible}
+        />
+      )}
+      {createBgGalleryVisbile && (
+        <CreateGallery
+          chosenIds={galleryBg}
+          setChosenIds={setGalleryBg}
+          setVisible={setCreateBgGalleryVisible}
+        />
+      )}
       {imageUploadVisible && (
         <ImageUpload
           setImageId={setFeaturedImgId}
@@ -235,6 +249,13 @@ function EditCommunityNews({ data, dataBg }) {
                   onClick={() => setImageReplaceVisible(true)}
                 >
                   Replace
+                </button>
+                <button
+                  className="button"
+                  type="button"
+                  onClick={() => setFeaturedImgId("")}
+                >
+                  Remove
                 </button>
                 {!featuredImgIdBg && (
                   <button
@@ -314,6 +335,22 @@ function EditCommunityNews({ data, dataBg }) {
               content={contentBg}
             />
           </div>
+        </div>
+        <div className="community-news__gallery">
+          <button
+            className="button"
+            type="button"
+            onClick={() => setCreateGalleryVisible(true)}
+          >
+            Gallery
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => setCreateBgGalleryVisible(true)}
+          >
+            Bg Gallery
+          </button>
         </div>
         <input
           className="button"

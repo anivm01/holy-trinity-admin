@@ -10,6 +10,7 @@
     color: $wine-red;
     background-color: $beige;
     margin: 0 3rem;
+    gap: 2rem;
     &__title {
         border-bottom: 2px solid $wine-red;
         width: 100%;
@@ -26,26 +27,5 @@
     &__subtitle {
         margin: 1rem 0;
         border-bottom: 2px solid $wine-red;
-    }
-    &__submit {
-        margin: 2rem auto;
-        width: 10rem;
-        padding: .5rem .25rem;
-        background-color: $wine-red;
-        color: $beige;
-        border-radius: 4px;
-        border: none;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        &:hover {
-            color: $wine-red;
-            background-color: $golden;
-            border: 2px solid $wine-red;
-        }
-        &:active {
-            transition: .2s;
-            transform: scale(.90);
-        }
     }
 }

@@ -188,6 +188,9 @@ function AddNewObituary() {
                 >
                   Replace
                 </button>
+                <button className="button" type="button" onClick={()=>setImageId("")}>
+                  Remove
+                </button>
                 {!imageIdBg && (
                   <button
                     type="button"
