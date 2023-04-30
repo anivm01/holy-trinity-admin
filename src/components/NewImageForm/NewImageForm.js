@@ -3,7 +3,6 @@ import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import plus from "../../assets/plus.svg";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function NewImageForm({ setImageId, setVisible }) {
   const [file, setFile] = useState(null);
@@ -13,7 +12,6 @@ function NewImageForm({ setImageId, setVisible }) {
 
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
 
   const submit = async (event) => {
     event.preventDefault();

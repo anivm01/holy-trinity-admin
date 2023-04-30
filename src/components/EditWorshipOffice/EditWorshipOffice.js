@@ -6,7 +6,7 @@ import SavedImage from "../SavedImage/SavedImage";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
-import { API_URL, worshipOfficeSlug } from "../../utilities/api";
+import { API_URL } from "../../utilities/api";
 import axios from "axios";
 import {
   dateInputConverter,
@@ -17,7 +17,6 @@ import SuccessModal from "../SuccessModal/SuccessModal";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { ThreeDots } from "react-loader-spinner";
-import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 import { updateItem } from "../../utilities/send";
 
 function EditWorshipOffice({ data, dataBg }) {
@@ -89,7 +88,7 @@ function EditWorshipOffice({ data, dataBg }) {
       old_testament: oldTestamentBg,
       thumbnail_id: thumbnailId,
       youtube_video_id: youtubeId,
-      date: dateInputConverter(date)
+      date: dateInputConverter(date),
     };
 
     if (thumbnailIdBg) {
@@ -133,18 +132,14 @@ function EditWorshipOffice({ data, dataBg }) {
       );
       return;
     }
-    if(!titleEn) {
+    if (!titleEn) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the title in English"
-      );
+      setErrorMessage("Please fill out the title in English");
       return;
     }
-    if(!titleBg) {
+    if (!titleBg) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the title in Bulgarian"
-      );
+      setErrorMessage("Please fill out the title in Bulgarian");
       return;
     }
 
@@ -230,6 +225,13 @@ function EditWorshipOffice({ data, dataBg }) {
                     onClick={() => setImageReplaceVisible(true)}
                   >
                     Replace
+                  </button>
+                  <button
+                    className="button"
+                    type="button"
+                    onClick={() => setThumbnailId("")}
+                  >
+                    Remove
                   </button>
                   {!thumbnailIdBg && (
                     <button
@@ -323,12 +325,14 @@ function EditWorshipOffice({ data, dataBg }) {
         </div>
         <DateInput date={date} setDate={setDate} />
         <div className="worship-office__bottom">
-        <input
-          className="button"
-          type="submit"
-          value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
-          onClick={onSave}
-        />
+          <input
+            className="button"
+            type="submit"
+            value={
+              isDraft ? "Update Draft" : "Revert to Draft and Save Changes"
+            }
+            onClick={onSave}
+          />
           <input
             className="button"
             type="submit"

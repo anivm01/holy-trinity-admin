@@ -1,0 +1,5 @@
+@use "../../partials/colors"as*;
+.chosen {
+    border: 4px solid $wine-red;
+    opacity: .6;
+}

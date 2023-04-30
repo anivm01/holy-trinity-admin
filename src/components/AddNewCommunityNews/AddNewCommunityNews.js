@@ -15,6 +15,7 @@ import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 import { uploadItem } from "../../utilities/send";
+import CreateGallery from "../CreateGallery/CreateGallery";
 
 function AddNewCommunityNews() {
   const currentDate = Math.floor(Date.now() / 1000);
@@ -28,7 +29,6 @@ function AddNewCommunityNews() {
   const [contentBg, setContentBg] = useState("");
   const [bgVersion, setBgVersion] = useState("yes");
 
-
   const [imageUploadVisible, setImageUploadVisible] = useState(false);
   const [imageReplaceVisible, setImageReplaceVisible] = useState(false);
 
@@ -37,53 +37,63 @@ function AddNewCommunityNews() {
   const [imageUploadVisibleBg, setImageUploadVisibleBg] = useState(false);
   const [imageReplaceVisibleBg, setImageReplaceVisibleBg] = useState(false);
 
+  //image gallery
+  const [galleryEn, setGalleryEn] = useState([]);
+  const [galleryBg, setGalleryBg] = useState([]);
+  const [createGalleryVisbile, setCreateGalleryVisible] = useState(false);
+  const [createBgGalleryVisbile, setCreateBgGalleryVisible] = useState(false);
+
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const createPosts = (draft) => {
-    const articleEn = ({
+    const articleEn = {
       title: titleEn,
       author: authorEn,
       content: contentEn,
       featured_img_id: featuredImgId,
       date: dateInputConverter(date),
-      is_draft: draft
-    });
+      is_draft: draft,
+      gallery: galleryEn,
+    };
 
-    let articleBg = ({
+    let articleBg = {
       title: titleBg,
       author: authorBg,
       content: contentBg,
       featured_img_id: featuredImgId,
       date: dateInputConverter(date),
       bg_version: bgVersion === "yes" ? true : false,
-    });
+      gallery: galleryBg,
+    };
 
     if (featuredImgIdBg) {
-      articleBg = ({
+      articleBg = {
         ...articleBg,
         featured_img_id: featuredImgIdBg,
-      });
+      };
     }
-    return {en:articleEn, bg:articleBg}
+    return { en: articleEn, bg: articleBg };
   };
 
   const onSave = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     //save draft
-    const posts = createPosts(true)
-    const response = uploadItem(posts, `${API_URL}/article`)
-    setUploadSuccess(response)
+    const posts = createPosts(true);
+    const response = uploadItem(posts, `${API_URL}/article`);
+    setUploadSuccess(response);
     if (response === false) {
-      setUploadError(true)
-      setErrorMessage("There was a problem with the connection. Try again later.")
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
     }
   };
 
   const onPublish = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     //validate content before publishing
 
@@ -96,17 +106,15 @@ function AddNewCommunityNews() {
     }
     if (bgVersion === "no" && !titleEn) {
       setUploadError(true);
-      setErrorMessage(
-        "Make sure to fill out the title in English"
-      );
+      setErrorMessage("Make sure to fill out the title in English");
       return;
     }
-    if(bgVersion === "no" && contentEn.length < 8) {
+    if (bgVersion === "no" && contentEn.length < 8) {
       setUploadError(true);
       setErrorMessage(
         "Make sure to provide some main content before publishing this item to the public. If you wish to return and edit the content later click the Save as Draft button above"
-        );
-      return
+      );
+      return;
     }
     if (bgVersion === "yes" && !titleBg) {
       setUploadError(true);
@@ -123,18 +131,26 @@ function AddNewCommunityNews() {
       return;
     }
 
-    //publish 
-    const posts = createPosts(false)
-    const response = uploadItem(posts, `${API_URL}/article`)
-    setUploadSuccess(response)
+    //publish
+    const posts = createPosts(false);
+    const response = uploadItem(posts, `${API_URL}/article`);
+    setUploadSuccess(response);
     if (response === false) {
-      setUploadError(true)
-      setErrorMessage("There was a problem with the connection. Try again later.")
+      setUploadError(true);
+      setErrorMessage(
+        "There was a problem with the connection. Try again later."
+      );
     }
   };
 
   return (
     <>
+      {createGalleryVisbile && (
+        <CreateGallery chosenIds={galleryEn} setChosenIds={setGalleryEn} setVisible={setCreateGalleryVisible} />
+      )}
+      {createBgGalleryVisbile && (
+        <CreateGallery chosenIds={galleryBg} setChosenIds={setGalleryBg} setVisible={setCreateBgGalleryVisible} />
+      )}
       {imageUploadVisible && (
         <ImageUpload
           setImageId={setFeaturedImgId}
@@ -181,10 +197,17 @@ function AddNewCommunityNews() {
                 />
                 <button
                   type="button"
-                  className="community-news__button"
+                  className="button"
                   onClick={() => setImageReplaceVisible(true)}
                 >
                   Replace
+                </button>
+                <button
+                  className="button"
+                  type="button"
+                  onClick={() => setFeaturedImgId("")}
+                >
+                  Remove
                 </button>
                 {!featuredImgIdBg && (
                   <button
@@ -262,6 +285,22 @@ function AddNewCommunityNews() {
               setContent={setContentBg}
             />
           </div>
+        </div>
+        <div className="community-news__gallery">
+          <button
+            className="button"
+            type="button"
+            onClick={() => setCreateGalleryVisible(true)}
+          >
+            Gallery
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => setCreateBgGalleryVisible(true)}
+          >
+            Bg Gallery
+          </button>
         </div>
         <input
           className="community-news__button"

@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./EditWeeklyAnnouncement.scss";
-import axios from "axios";
-import { API_URL, weeklyAnnouncementSlug } from "../../utilities/api";
+import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import HeadingInput from "../OneLineInput/OneLineInput";
 import DateInput from "../DateInput/DateInput";
 import { useParams } from "react-router-dom";
 import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import OneLineInput from "../OneLineInput/OneLineInput";
-import { ThreeDots } from "react-loader-spinner";
 import { updateItem } from "../../utilities/send";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
