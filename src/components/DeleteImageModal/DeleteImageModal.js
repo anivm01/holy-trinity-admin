@@ -9,10 +9,15 @@ function DeleteImageModal({ imageId, setVisible }) {
   const navigate = useNavigate();
 
   const [postsList, setPostsList] = useState([]);
+  const token = sessionStorage.getItem("authToken");
 
   const deleteItem = async (id) => {
     try {
-      await axios.delete(`${API_URL}/images/en/${id}`);
+      await axios.delete(`${API_URL}/images/en/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       navigate(0);
     } catch (error) {
       console.log(error);

@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const uploadItem = async (posts, url) => {
   const token = sessionStorage.getItem("authToken");
-  console.log(token)
   try {
     const enResponse = await axios.post(`${url}/en`, posts.en, {
       headers: {

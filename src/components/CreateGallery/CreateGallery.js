@@ -18,12 +18,10 @@ function CreateGallery({ chosenIds, setChosenIds,  setVisible }) {
           src={close}
           alt="close create gallery popup"
         />
-        {addNewVisible && (
-          <NewImageForm
+        <NewImageForm
             setImageId={setNewlyAddedId}
             setVisible={setAddNewVisible}
           />
-        )}
         <button
           className="button"
           type="button"
