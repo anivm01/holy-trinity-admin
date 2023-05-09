@@ -30,15 +30,19 @@
         padding-left: 1rem;
         display: flex;
         align-items: center;
-        color: $wine-red;
-        font-size: 1rem;
-        font-weight: bold;
         background-color: $wine-red;
         border: 1px solid $wine-red;
         &:hover {
             color: $wine-red;
             transform: translateX(1rem);
         }
+    }
+    &__button {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        padding: 1.5rem 0;
+        cursor: pointer;
     }
     &__icon {
         width: 1.5rem;
@@ -48,8 +52,11 @@
     }
     &__text {
         background-color: $golden;
-        padding: 1rem;
+        padding: .8rem 1rem;
         flex-grow: 1;
+        color: $wine-red;
+        font-size: 1rem;
+        font-weight: bold;
     }
     &__logo {
         background-color: $golden;
