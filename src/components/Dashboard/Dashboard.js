@@ -7,10 +7,17 @@ import event from "../../assets/event.svg";
 import news from "../../assets/news.svg";
 import cross from "../../assets/cross-beige.svg";
 import gallery from "../../assets/gallery.svg";
-import { useLoggedIn } from "../../utilities/LoggedInContext";
+import { LoggedInUpdate, useLoggedIn } from "../../utilities/LoggedInContext";
 
 function Dashboard() {
   const loggedIn = useLoggedIn();
+  const changeLoggedIn = LoggedInUpdate();
+  const logout = () => {
+    sessionStorage.removeItem("authToken");
+    if (loggedIn) {
+      changeLoggedIn();
+    }
+  };
   if (!loggedIn) {
     return (
       <section className="dashboard">
@@ -65,6 +72,16 @@ function Dashboard() {
             <img className="dashboard__icon" src={gallery} alt="video icon" />
             <span className="dashboard__text">Image Gallery</span>
           </NavLink>
+        </li>
+        <li className="dashboard__item">
+          <button
+            onClick={() => {
+              logout();
+            }}
+            className="dashboard__button"
+          >
+            <span className="dashboard__text">Logout</span>
+          </button>
         </li>
       </ul>
     </section>

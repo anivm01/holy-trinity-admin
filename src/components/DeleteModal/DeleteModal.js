@@ -1,7 +1,7 @@
 import "./DeleteModal.scss";
 import deleteIcon from "../../assets/delete.svg";
 import useDelete from "../../utilities/useDelete";
-import { useNavigate } from "react-router-dom";
+
 
 function DeleteModal({ setVisible, url }) {
 const {deleteItem} = useDelete(url)
