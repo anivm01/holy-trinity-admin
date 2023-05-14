@@ -28,7 +28,7 @@ function EditWorshipOffice({ data, dataBg }) {
   const [gospelEn, setGospelEn] = useState(data.gospel);
   const [gospelBg, setGospelBg] = useState(dataBg.gospel);
   const [epistleEn, setEpistleEn] = useState(data.epistle);
-  const [epistleBg, setEpistleBg] = useState(dataBg.epislte);
+  const [epistleBg, setEpistleBg] = useState(dataBg.epistle);
   const [oldTestamentEn, setOldTestamentEn] = useState(data.old_testament);
   const [oldTestamentBg, setOldTestamentBg] = useState(dataBg.old_testament);
 
