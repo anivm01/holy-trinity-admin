@@ -2,7 +2,10 @@ import { useState } from "react";
 import "./EditWeeklyAnnouncement.scss";
 import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
-import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import {
+  dateInputConverter,
+  dateOutputConverter,
+} from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import DateInput from "../DateInput/DateInput";
 import { useParams } from "react-router-dom";
@@ -11,7 +14,9 @@ import OneLineInput from "../OneLineInput/OneLineInput";
 import { updateItem } from "../../utilities/send";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 
-function EditWeeklyAnnouncement({data, dataBg}) {
+function EditWeeklyAnnouncement({ data, dataBg }) {
+  console.log(data);
+  console.log(dataBg);
   const [date, setDate] = useState(dateOutputConverter(data.date));
   const [enTitle, setEnTitle] = useState(data.title);
   const [enContent, setEnContent] = useState(data.announcement);
@@ -23,22 +28,22 @@ function EditWeeklyAnnouncement({data, dataBg}) {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const params = useParams()
+  const params = useParams();
 
   const createPosts = (draft) => {
     const newAnnouncementEN = {
-          title: enTitle,
-          announcement: enContent,
-          date: dateInputConverter(date),
-          is_draft: draft
-        };
-    
-        const newAnnouncementBG = {
-          title: bgTitle,
-          announcement: bgContent,
-          date: dateInputConverter(date),
-          bg_version: bgVersion === "yes" ? true : false
-        };
+      title: enTitle,
+      announcement: enContent,
+      date: dateInputConverter(date),
+      is_draft: draft,
+    };
+
+    const newAnnouncementBG = {
+      title: bgTitle,
+      announcement: bgContent,
+      date: dateInputConverter(date),
+      bg_version: bgVersion === "yes" ? true : false,
+    };
     return { en: newAnnouncementEN, bg: newAnnouncementBG };
   };
 
@@ -46,7 +51,11 @@ function EditWeeklyAnnouncement({data, dataBg}) {
     e.preventDefault();
     //save draft
     const posts = createPosts(true);
-    const response = updateItem(posts, `${API_URL}/weekly-announcement`, params.id);
+    const response = updateItem(
+      posts,
+      `${API_URL}/weekly-announcement`,
+      params.id
+    );
     setUploadSuccess(response);
     if (response === false) {
       setUploadError(true);
@@ -98,7 +107,11 @@ function EditWeeklyAnnouncement({data, dataBg}) {
 
     //publish
     const posts = createPosts(false);
-    const response = updateItem(posts, `${API_URL}/weekly-announcement`, params.id);
+    const response = updateItem(
+      posts,
+      `${API_URL}/weekly-announcement`,
+      params.id
+    );
     setUploadSuccess(response);
     if (response === false) {
       setUploadError(true);
@@ -120,10 +133,10 @@ function EditWeeklyAnnouncement({data, dataBg}) {
       {uploadSuccess && <SuccessModal />}
       <h1 className="weekly-announcement__title">Edit Weekly Announcement</h1>
       {isDraft ? (
-          <p>This item is currently saved as a draft</p>
-        ) : (
-          <p>This item is published to the live site.</p>
-        )}
+        <p>This item is currently saved as a draft</p>
+      ) : (
+        <p>This item is published to the live site.</p>
+      )}
       <div className="weekly-announcement__multilingual">
         <div className="weekly-announcement__language-specific">
           <h2 className="weekly-announcement__subtitle">English</h2>
@@ -153,16 +166,16 @@ function EditWeeklyAnnouncement({data, dataBg}) {
         </div>
       </div>
       <input
-          className="button"
-          type="submit"
-          value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
-          onClick={onSave}
-        />
-      <DateInput date={date} setDate={setDate}/>
+        className="button"
+        type="submit"
+        value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
+        onClick={onSave}
+      />
+      <DateInput date={date} setDate={setDate} />
       <BgVersionConfirmation
-          bgVersion={bgVersion}
-          setBgVersion={setBgVersion}
-        />
+        bgVersion={bgVersion}
+        setBgVersion={setBgVersion}
+      />
       <div className="weekly-announcement__bottom">
         <input
           className="button"

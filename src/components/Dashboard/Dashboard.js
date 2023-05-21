@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Dashboard.scss";
 import logo from "../../assets/church-logo.png";
 import announcement from "../../assets/announcement.svg";
@@ -11,11 +11,13 @@ import { LoggedInUpdate, useLoggedIn } from "../../utilities/LoggedInContext";
 
 function Dashboard() {
   const loggedIn = useLoggedIn();
+  const navigate = useNavigate();
   const changeLoggedIn = LoggedInUpdate();
   const logout = () => {
     sessionStorage.removeItem("authToken");
     if (loggedIn) {
       changeLoggedIn();
+      navigate("/");
     }
   };
   if (!loggedIn) {
@@ -84,6 +86,9 @@ function Dashboard() {
           </button>
         </li>
       </ul>
+      <a href="https://ourholytrinitymbc.com" className="button">
+        Live Site
+      </a>
     </section>
   );
 }
