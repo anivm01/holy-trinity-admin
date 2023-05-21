@@ -1,15 +1,17 @@
 import { useState } from "react";
 import "./AddNewWeeklyAnnouncement.scss";
-import axios from "axios";
-import { API_URL, weeklyAnnouncementSlug } from "../../utilities/api";
+import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
-import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import {
+  dateInputConverter,
+  dateOutputConverter,
+} from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import DateInput from "../DateInput/DateInput";
 import OneLineInput from "../OneLineInput/OneLineInput";
 import { uploadItem } from "../../utilities/send";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
+import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 
 function AddNewWeeklyAnnouncement() {
   const currentDate = Math.floor(Date.now() / 1000);
@@ -26,18 +28,18 @@ function AddNewWeeklyAnnouncement() {
 
   const createPosts = (draft) => {
     const newAnnouncementEN = {
-          title: enTitleToSend,
-          announcement: enContentToSend,
-          date: dateInputConverter(date),
-          is_draft: draft
-        };
-    
-        const newAnnouncementBG = {
-          title: bgTitleToSend,
-          announcement: bgContentToSend,
-          date: dateInputConverter(date),
-          bg_version: bgVersion === "yes" ? true : false
-        };
+      title: enTitleToSend,
+      announcement: enContentToSend,
+      date: dateInputConverter(date),
+      is_draft: draft,
+    };
+
+    const newAnnouncementBG = {
+      title: bgTitleToSend,
+      announcement: bgContentToSend,
+      date: dateInputConverter(date),
+      bg_version: bgVersion === "yes" ? true : false,
+    };
     return { en: newAnnouncementEN, bg: newAnnouncementBG };
   };
 
@@ -45,9 +47,9 @@ function AddNewWeeklyAnnouncement() {
     e.preventDefault();
     //save draft
     const posts = createPosts(true);
-    console.log(posts)
+    console.log(posts);
     const response = uploadItem(posts, `${API_URL}/weekly-announcement`);
-    console.log(response)
+    console.log(response);
     setUploadSuccess(response);
     if (response === false) {
       setUploadError(true);
@@ -109,8 +111,6 @@ function AddNewWeeklyAnnouncement() {
     }
   };
 
-  
-
   return (
     <>
       {uploadError && (
@@ -122,7 +122,9 @@ function AddNewWeeklyAnnouncement() {
       )}
       {uploadSuccess && <SuccessModal />}
       <form className="weekly-announcement">
-        <h1 className="weekly-announcement__title">Add a New Weekly Announcement</h1>
+        <h1 className="weekly-announcement__title">
+          Add a New Weekly Announcement
+        </h1>
         <div className="weekly-announcement__multilingual">
           <div className="weekly-announcement__language-specific">
             <h2 className="weekly-announcement__subtitle">English</h2>
@@ -131,9 +133,10 @@ function AddNewWeeklyAnnouncement() {
               oneLine={enTitleToSend}
               setOneLine={setEnTitleToSend}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Enter the main content:"
               setContent={setEnContentToSend}
+              content={enContentToSend}
             />
           </div>
           <div className="weekly-announcement__language-specific">
@@ -143,19 +146,20 @@ function AddNewWeeklyAnnouncement() {
               oneLine={bgTitleToSend}
               setOneLine={setBgTitleToSend}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Въведете основното съдържание:"
               setContent={setBgContentToSend}
+              content={bgContentToSend}
             />
           </div>
         </div>
         <input
-            className="button"
-            type="submit"
-            value="Save as Draft"
+          className="button"
+          type="submit"
+          value="Save as Draft"
           onClick={onSave}
-          />
-        <DateInput date={date} setDate={setDate}/>
+        />
+        <DateInput date={date} setDate={setDate} />
         <BgVersionConfirmation
           bgVersion={bgVersion}
           setBgVersion={setBgVersion}

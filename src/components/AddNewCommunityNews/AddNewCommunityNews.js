@@ -5,7 +5,6 @@ import "./AddNewCommunityNews.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";
-import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import { API_URL } from "../../utilities/api";
 import {
   dateInputConverter,
@@ -16,6 +15,7 @@ import SuccessModal from "../SuccessModal/SuccessModal";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 import { uploadItem } from "../../utilities/send";
 import CreateGallery from "../CreateGallery/CreateGallery";
+import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 
 function AddNewCommunityNews() {
   const currentDate = Math.floor(Date.now() / 1000);
@@ -146,10 +146,18 @@ function AddNewCommunityNews() {
   return (
     <>
       {createGalleryVisbile && (
-        <CreateGallery chosenIds={galleryEn} setChosenIds={setGalleryEn} setVisible={setCreateGalleryVisible} />
+        <CreateGallery
+          chosenIds={galleryEn}
+          setChosenIds={setGalleryEn}
+          setVisible={setCreateGalleryVisible}
+        />
       )}
       {createBgGalleryVisbile && (
-        <CreateGallery chosenIds={galleryBg} setChosenIds={setGalleryBg} setVisible={setCreateBgGalleryVisible} />
+        <CreateGallery
+          chosenIds={galleryBg}
+          setChosenIds={setGalleryBg}
+          setVisible={setCreateBgGalleryVisible}
+        />
       )}
       {imageUploadVisible && (
         <ImageUpload
@@ -263,9 +271,10 @@ function AddNewCommunityNews() {
               oneLine={authorEn}
               setOneLine={setAuthorEn}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Enter the main content:"
               setContent={setContentEn}
+              content={contentEn}
             />
           </div>
           <div className="community-news__language">
@@ -280,9 +289,10 @@ function AddNewCommunityNews() {
               oneLine={authorBg}
               setOneLine={setAuthorBg}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Въведете главното съдържание:"
               setContent={setContentBg}
+              content={contentBg}
             />
           </div>
         </div>
