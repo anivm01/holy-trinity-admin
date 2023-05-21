@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import OneLineInput from "../OneLineInput/OneLineInput";
 import "./EditWorshipOffice.scss";
-import SavedImage from "../SavedImage/SavedImage";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
 import DateInput from "../DateInput/DateInput";

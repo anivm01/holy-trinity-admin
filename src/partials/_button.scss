@@ -1,9 +1,9 @@
-@use "./colors"as*;
+@use "./colors" as*;
 
 .button {
     text-decoration: none;
     text-align: center;
-    margin: 0 auto;
+    margin: 1rem auto;
     padding: .25rem 2rem;
     background-color: $wine-red;
     color: $beige;
@@ -12,6 +12,7 @@
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
+
     &:hover {
         color: $wine-red;
         background-color: $golden;
