@@ -62,7 +62,11 @@ function NewImageForm({ setImageId, setVisible }) {
       <form onSubmit={submit} className="image-upload__form">
         <div className="image-upload__main">
           <label htmlFor="image-upload" className="image-upload__image">
-            <img className="image-upload__preview" src={previewURL} />
+            <img
+              className="image-upload__preview"
+              src={previewURL}
+              alt="preview"
+            />
             <input
               className="image-upload__input"
               filename={file}

@@ -2,13 +2,15 @@ import { useState } from "react";
 import "./AddNewEvent.scss";
 import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
-import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import {
+  dateInputConverter,
+  dateOutputConverter,
+} from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import DateInput from "../DateInput/DateInput";
 import OneLineInput from "../OneLineInput/OneLineInput";
 import { uploadItem } from "../../utilities/send";
-import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
+import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 
 function AddNewEvent() {
   const currentDate = Math.floor(Date.now() / 1000);
@@ -36,7 +38,7 @@ function AddNewEvent() {
       title: bgTitle,
       event_details: bgContent,
       event_date: dateInputConverter(eventDate),
-      date: dateInputConverter(date)
+      date: dateInputConverter(date),
     };
     return { en: newEventEN, bg: newEventBG };
   };
@@ -68,37 +70,27 @@ function AddNewEvent() {
     }
     if (!eventDate) {
       setUploadError(true);
-      setErrorMessage(
-        "Make sure to add the date the event will occur"
-      );
+      setErrorMessage("Make sure to add the date the event will occur");
       return;
     }
-    if(!bgTitle) {
+    if (!bgTitle) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the title in Bulgarian"
-      );
+      setErrorMessage("Please fill out the title in Bulgarian");
       return;
     }
-    if(bgContent.length < 8){
+    if (bgContent.length < 8) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the main content in Bulgarian."
-      );
+      setErrorMessage("Please fill out the main content in Bulgarian.");
       return;
     }
-    if(!enTitle) {
+    if (!enTitle) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the title in English"
-      );
+      setErrorMessage("Please fill out the title in English");
       return;
     }
-    if(enContent.length < 8) {
+    if (enContent.length < 8) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the main content in English"
-      );
+      setErrorMessage("Please fill out the main content in English");
       return;
     }
     //publish
@@ -147,9 +139,10 @@ function AddNewEvent() {
               setOneLine={setEnTitle}
             />
 
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Enter the main content:"
               setContent={setEnContent}
+              content={enContent}
             />
           </div>
           <div className="event__language-specific">
@@ -159,9 +152,10 @@ function AddNewEvent() {
               oneLine={bgTitle}
               setOneLine={setBgTitle}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Въведете основното съдържание:"
               setContent={setBgContent}
+              content={bgContent}
             />
           </div>
         </div>

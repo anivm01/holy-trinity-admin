@@ -4,7 +4,6 @@ import OneLineInput from "../OneLineInput/OneLineInput";
 import "./AddNewObituary.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
-import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
@@ -15,6 +14,7 @@ import {
 } from "../../utilities/dateConverter";
 import BgVersionConfirmation from "../BgVersionConfirmation/BgVersionConfirmation";
 import { uploadItem } from "../../utilities/send";
+import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 
 function AddNewObituary() {
   const currentDate = Math.floor(Date.now() / 1000);
@@ -188,7 +188,11 @@ function AddNewObituary() {
                 >
                   Replace
                 </button>
-                <button className="button" type="button" onClick={()=>setImageId("")}>
+                <button
+                  className="button"
+                  type="button"
+                  onClick={() => setImageId("")}
+                >
                   Remove
                 </button>
                 {!imageIdBg && (
@@ -245,9 +249,10 @@ function AddNewObituary() {
               oneLine={nameEn}
               setOneLine={setNameEn}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Enter the main content:"
               setContent={setObituaryEn}
+              content={obituaryEn}
             />
           </div>
           <div className="obituary__language">
@@ -257,9 +262,10 @@ function AddNewObituary() {
               oneLine={nameBg}
               setOneLine={setNameBg}
             />
-            <Wysiwyg
+            <WysiwygEdit
               editorLabel="Въведете главното съдържание:"
               setContent={setObituaryBg}
+              content={obituaryBg}
             />
           </div>
         </div>
