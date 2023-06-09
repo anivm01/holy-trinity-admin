@@ -45,9 +45,7 @@ function NewImageForm({ setImageId, setVisible }) {
     } catch (error) {
       console.error(error);
       setUploadError(true);
-      setErrorMessage(
-        "There was a problem with the connection. Please try again later."
-      );
+      setErrorMessage(error);
     }
   };
   return (
