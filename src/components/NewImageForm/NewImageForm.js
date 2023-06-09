@@ -29,6 +29,7 @@ function NewImageForm({ setImageId, setVisible }) {
     formData.append("description", description);
     formData.append("descriptionBG", descriptionBG);
     const token = sessionStorage.getItem("authToken");
+    console.log(formData);
     try {
       const result = await axios.post(`${API_URL}/images/en`, formData, {
         headers: {
