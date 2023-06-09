@@ -45,7 +45,7 @@ function NewImageForm({ setImageId, setVisible }) {
     } catch (error) {
       console.error(error);
       setUploadError(true);
-      setErrorMessage(error);
+      setErrorMessage("There was an error with the image upload");
     }
   };
   return (
