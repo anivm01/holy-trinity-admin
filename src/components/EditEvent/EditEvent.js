@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./EditEvent.scss";
-import axios from "axios";
-import { API_URL, eventSlug } from "../../utilities/api";
+import { API_URL } from "../../utilities/api";
 import ErrorModal from "../ErrorModal/ErrorModal";
-import { dateInputConverter, dateOutputConverter } from "../../utilities/dateConverter";
+import {
+  dateInputConverter,
+  dateOutputConverter,
+} from "../../utilities/dateConverter";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import DateInput from "../DateInput/DateInput";
 import OneLineInput from "../OneLineInput/OneLineInput";
@@ -11,21 +13,22 @@ import WysiwygEdit from "../WysiwygEdit/WysiwygEdit";
 import { useParams } from "react-router-dom";
 import { updateItem } from "../../utilities/send";
 
-function EditEvent({data, dataBg}) {
+function EditEvent({ data, dataBg }) {
   const [date, setDate] = useState(dateOutputConverter(data.date));
-  const [eventDate, setEventDate] = useState(dateOutputConverter(data.event_date))
+  const [eventDate, setEventDate] = useState(
+    dateOutputConverter(data.event_date)
+  );
   const [enTitle, setEnTitle] = useState(data.title);
   const [enContent, setEnContent] = useState(data.event_details);
   const [bgTitle, setBgTitle] = useState(dataBg.title);
   const [bgContent, setBgContent] = useState(dataBg.event_details);
   const [isDraft] = useState(data.is_draft);
 
-
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const params = useParams()
+  const params = useParams();
 
   const createPosts = (draft) => {
     const newEventEN = {
@@ -40,7 +43,8 @@ function EditEvent({data, dataBg}) {
       title: bgTitle,
       event_details: bgContent,
       event_date: dateInputConverter(eventDate),
-      date: dateInputConverter(date)
+      date: dateInputConverter(date),
+      bg_version: bgTitle.length > 0 && bgContent.length > 0 ? true : false,
     };
     return { en: newEventEN, bg: newEventBG };
   };
@@ -72,37 +76,27 @@ function EditEvent({data, dataBg}) {
     }
     if (!eventDate) {
       setUploadError(true);
-      setErrorMessage(
-        "Make sure to add the date the event will occur"
-      );
+      setErrorMessage("Make sure to add the date the event will occur");
       return;
     }
-    if(!bgTitle) {
+    if (!bgTitle) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the title in Bulgarian"
-      );
+      setErrorMessage("Please fill out the title in Bulgarian");
       return;
     }
-    if(bgContent.length < 8){
+    if (bgContent.length < 8) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the main content in Bulgarian."
-      );
+      setErrorMessage("Please fill out the main content in Bulgarian.");
       return;
     }
-    if(!enTitle) {
+    if (!enTitle) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the title in English"
-      );
+      setErrorMessage("Please fill out the title in English");
       return;
     }
-    if(enContent.length < 8) {
+    if (enContent.length < 8) {
       setUploadError(true);
-      setErrorMessage(
-        "Please fill out the main content in English"
-      );
+      setErrorMessage("Please fill out the main content in English");
       return;
     }
     //publish
@@ -129,23 +123,23 @@ function EditEvent({data, dataBg}) {
       {uploadSuccess && <SuccessModal />}
       <h1 className="event__title">Edit Event</h1>
       {isDraft ? (
-          <p>This item is currently saved as a draft</p>
-        ) : (
-          <p>This item is published to the live site.</p>
-        )}
+        <p>This item is currently saved as a draft</p>
+      ) : (
+        <p>This item is published to the live site.</p>
+      )}
       <div className="date-input">
-              <label className="date-input__label" htmlFor="event-date">
-                Input the date of the event
-              </label>
-              <input
-                className="date-input__date"
-                type="date"
-                id="event-date"
-                name="event-date"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-              />
-            </div>
+        <label className="date-input__label" htmlFor="event-date">
+          Input the date of the event
+        </label>
+        <input
+          className="date-input__date"
+          type="date"
+          id="event-date"
+          name="event-date"
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
+        />
+      </div>
       <div className="event__multilingual">
         <div className="event__language-specific">
           <h2 className="event__subtitle">English</h2>
@@ -175,19 +169,19 @@ function EditEvent({data, dataBg}) {
         </div>
       </div>
       <input
-            className="button"
-            type="submit"
-            value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
-            onClick={onSave}
-          />
-      <DateInput date={date} setDate={setDate}/>
+        className="button"
+        type="submit"
+        value={isDraft ? "Update Draft" : "Revert to Draft and Save Changes"}
+        onClick={onSave}
+      />
+      <DateInput date={date} setDate={setDate} />
       <div className="event__bottom">
-      <input
-            className="button"
-            type="submit"
-            value={isDraft ? "Publish" : "Update Live Content"}
-            onClick={onPublish}
-          />
+        <input
+          className="button"
+          type="submit"
+          value={isDraft ? "Publish" : "Update Live Content"}
+          onClick={onPublish}
+        />
       </div>
     </form>
   );
