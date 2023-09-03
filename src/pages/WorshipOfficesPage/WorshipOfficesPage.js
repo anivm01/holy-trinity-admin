@@ -7,7 +7,7 @@ import { API_URL } from "../../utilities/api";
 import "./WorshipOfficesPage.scss";
 
 function WorshipOfficesPage() {
-  const [draft, setDraft] = useState(true);
+  const [draft, setDraft] = useState(false);
 
   return (
     <section className="worship-offices-page">

@@ -7,8 +7,8 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import { API_URL } from '../../utilities/api';
 
 function EventsPage() {
-  const [draft, setDraft] = useState(true);
-    
+  const [draft, setDraft] = useState(false);
+
   return (
     <section className='events-page'>
       <PageHeader title="Events">
@@ -24,7 +24,7 @@ function EventsPage() {
         />
       )}
     </section>
-    )
+  )
 }
 
 export default EventsPage

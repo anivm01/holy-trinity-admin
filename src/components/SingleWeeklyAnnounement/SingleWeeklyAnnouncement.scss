@@ -1,4 +1,5 @@
-@use "../../partials/colors"as*;
+@use "../../partials/colors" as*;
+
 .announcement-single-draft {
     gap: 1rem;
     display: flex;
@@ -8,6 +9,7 @@
     align-items: flex-start;
     position: relative;
     padding-right: 3rem;
+
     &__date {
         font-weight: 600;
         border-right: 4px solid $wine-red;
@@ -17,21 +19,19 @@
         min-width: 8rem;
         text-decoration: none;
         color: $wine-red;
+
         &:hover {
             background-color: $wine-red;
             color: $beige;
         }
     }
+
     &__text {
         text-decoration: none;
         color: $wine-red;
         padding-right: .5rem;
-        &:hover {
-            transition: .2s;
-            scale: 1.02;
-            transform: translateX(1rem);
-        }
     }
+
     &__title {
         padding: 0;
         margin-top: .5rem;
@@ -41,11 +41,20 @@
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
+
     &__content {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
+        width: 100%;
+        overflow: scroll;
+        max-height: 12.5rem;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 }

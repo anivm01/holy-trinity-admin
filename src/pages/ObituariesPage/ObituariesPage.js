@@ -7,8 +7,8 @@ import DraftPublishToggle from '../../components/DraftPublishToggle/DraftPublish
 import PageHeader from '../../components/PageHeader/PageHeader';
 
 function ObituariesPage() {
-  const [draft, setDraft] = useState(true);
-    
+  const [draft, setDraft] = useState(false);
+
   return (
     <section className='obituaries-page'>
       <PageHeader title="In Memoriam">
@@ -24,7 +24,7 @@ function ObituariesPage() {
         />
       )}
     </section>
-    )
+  )
 }
 
 export default ObituariesPage

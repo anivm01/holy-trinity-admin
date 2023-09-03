@@ -7,8 +7,8 @@ import DraftPublishToggle from '../../components/DraftPublishToggle/DraftPublish
 import { API_URL } from '../../utilities/api';
 
 function CommunityNewsPage() {
-  const [draft, setDraft] = useState(true);
-    
+  const [draft, setDraft] = useState(false);
+
   return (
     <section className='community-news-page'>
       <PageHeader title="Community News">
@@ -24,7 +24,7 @@ function CommunityNewsPage() {
         />
       )}
     </section>
-    )
+  )
 }
 
 export default CommunityNewsPage
