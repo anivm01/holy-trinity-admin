@@ -1,0 +1,22 @@
+@use "../../partials/colors"as*;
+
+.date-input {
+    width: 100%;
+    background-color: $beige;
+    border-bottom: 2px solid $wine-red;
+    padding: 1rem;
+    &__label {
+        margin-right: 1rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+    &__date {
+        width: 8rem;
+        text-align: center;
+        padding: .5rem;
+        border: 1px solid $wine-red;
+        &:focus {
+            outline: 2px solid $wine-red;        
+        }
+    }
+}

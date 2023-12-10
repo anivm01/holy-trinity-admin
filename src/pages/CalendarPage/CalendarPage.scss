@@ -1,0 +1,9 @@
+@use "../../partials/colors"as*;
+@use "../../partials/button"as*;
+.events-page {
+width: 100%;
+
+&__link {
+   @extend .button;
+}
+}
