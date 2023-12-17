@@ -1,0 +1,56 @@
+@use "../../partials/colors" as*;
+
+.entry {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 2rem 0;
+    text-align: center;
+    color: $wine-red;
+
+    &__heading {
+        border-bottom: 2px solid $wine-red;
+        width: 100%;
+        color: $wine-red;
+    }
+
+    &__section {
+        display: flex;
+        gap: 2rem;
+        padding: 2rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    &__title {
+        flex-basis: 100%;
+        background-color: $golden;
+    }
+
+    &__column {
+        flex-basis: 45%;
+    }
+
+    &__submit {
+        margin: 2rem auto;
+        width: 10rem;
+        padding: .5rem .25rem;
+        background-color: $wine-red;
+        color: $beige;
+        border-radius: 4px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            color: $wine-red;
+            background-color: $golden;
+            border: 2px solid $wine-red;
+        }
+
+        &:active {
+            transition: .2s;
+            transform: scale(.90);
+        }
+    }
+}

@@ -25,9 +25,9 @@ function SavedCalendar({ url }) {
   }
   if (data) {
     return (
-      <div className="saved-events">
+      <div className="saved-entries">
         {data.map((single, index) => {
-          return <SingleCalendarEntry key={index} event={single} />;
+          return <SingleCalendarEntry key={index} single={single} />;
         })}
       </div>
     );
