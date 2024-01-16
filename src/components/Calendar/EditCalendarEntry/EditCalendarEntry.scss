@@ -1,4 +1,31 @@
-@use "../../partials/colors" as*;
+@use "../../../partials/colors" as*;
+
+
+.edit-calendar {
+    &__button {
+        background-color: $golden;
+        border: none;
+        padding: .25rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            scale: 1.05;
+            background-color: $beige;
+        }
+
+        &:active {
+            scale: .95;
+        }
+    }
+
+    &__icon {
+        width: 1rem;
+    }
+}
+
 
 .entry {
     max-width: 80%;

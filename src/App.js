@@ -20,7 +20,7 @@ import EditAnnouncementPage from "./pages/EditAnnouncementPage/EditAnnouncementP
 import EditEventPage from "./pages/EditEventPage/EditEventPage";
 import { LoggedInProvider } from "./utilities/LoggedInContext";
 import CalendarPage from "./pages/CalendarPage/CalendarPage";
-import AddNewCalendarEntry from "./components/AddNewCalendarEntry/AddNewCalendarEntry";
+import EditCalendarPage from "./pages/EditCalendarPage/EditCalendarPage";
 
 function App() {
   return (
@@ -70,7 +70,7 @@ function App() {
               <Route path="/image-gallery" element={<ImageGalleryPage />} />
 
               <Route path="/calendar" element={<CalendarPage />} />
-              <Route path="/calendar/add-new" element={<AddNewCalendarEntry />} />
+              <Route path="/calendar/:id" element={<EditCalendarPage />} />
             </Routes>
           </div>
         </div>

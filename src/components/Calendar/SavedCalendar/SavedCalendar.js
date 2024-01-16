@@ -1,8 +1,9 @@
 import "./SavedCalendar.scss";
 import { ThreeDots } from "react-loader-spinner";
-import NoData from "../NoData/NoData";
-import useFetch from "../../utilities/useFetch";
+import NoData from "../../NoData/NoData";
+import useFetch from "../../../utilities/useFetch";
 import SingleCalendarEntry from "../SingleCalendarEntry/SingleCalendarEntry";
+import { sortOldestToNewest } from "../../../utilities/sort";
 
 function SavedCalendar({ url }) {
   const { data, error, loading } = useFetch(url);
@@ -24,9 +25,10 @@ function SavedCalendar({ url }) {
     return <NoData />;
   }
   if (data) {
+    const sortedData = sortOldestToNewest(data)
     return (
       <div className="saved-entries">
-        {data.map((single, index) => {
+        {sortedData.map((single, index) => {
           return <SingleCalendarEntry key={index} single={single} />;
         })}
       </div>

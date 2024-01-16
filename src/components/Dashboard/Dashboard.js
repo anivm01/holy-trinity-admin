@@ -4,6 +4,7 @@ import logo from "../../assets/church-logo.png";
 import announcement from "../../assets/announcement.svg";
 import video from "../../assets/video.svg";
 import event from "../../assets/event.svg";
+import calendar from "../../assets/calendar.svg";
 import news from "../../assets/news.svg";
 import cross from "../../assets/cross-beige.svg";
 import gallery from "../../assets/gallery.svg";
@@ -55,6 +56,12 @@ function Dashboard() {
           <NavLink className="dashboard__link" to="/events">
             <img className="dashboard__icon" src={event} alt="video icon" />
             <span className="dashboard__text">Events</span>
+          </NavLink>
+        </li>
+        <li className="dashboard__item">
+          <NavLink className="dashboard__link" to="/calendar">
+            <img className="dashboard__icon" src={calendar} alt="video icon" />
+            <span className="dashboard__text">Calendar</span>
           </NavLink>
         </li>
         <li className="dashboard__item">

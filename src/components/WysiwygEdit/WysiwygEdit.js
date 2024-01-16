@@ -13,7 +13,7 @@ function WysiwygEdit({ editorLabel, setContent, content }) {
         containerProps={{
           style: {
             resize: "vertical",
-            minHeight: "300px",
+            minHeight: "200px",
             minWidth: "500px",
             backgroundColor: "white",
             border: "1px solid #6F0B20",

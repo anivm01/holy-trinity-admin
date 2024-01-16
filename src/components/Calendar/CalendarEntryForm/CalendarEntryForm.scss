@@ -1,0 +1,102 @@
+@use "../../../partials/colors" as*;
+
+.calendar-form {
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    color: $wine-red;
+
+    &__heading {
+        border-bottom: 2px solid $wine-red;
+        width: 100%;
+        color: $wine-red;
+    }
+
+    &__main {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: .5rem auto;
+    }
+
+    &__column {
+        flex-basis: 45%;
+    }
+
+    &__submit {
+        margin: 2rem auto;
+        width: 10rem;
+        padding: .5rem .25rem;
+        background-color: $wine-red;
+        color: $beige;
+        border-radius: 4px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            color: $wine-red;
+            background-color: $golden;
+            border: 2px solid $wine-red;
+        }
+
+        &:active {
+            transition: .2s;
+            transform: scale(.90);
+        }
+    }
+
+    &__type {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem 0;
+
+        input[type="checkbox"] {
+            display: none;
+
+            // When checkbox is checked
+            &:checked {
+
+                // Selects the adjacent label
+                +label {
+                    background-color: $wine-red;
+                    color: $beige;
+                }
+            }
+
+            &:not(:checked) {
+
+                // Selects the adjacent label
+                +label {
+                    background-color: $beige;
+                    color: $wine-red;
+                }
+            }
+        }
+
+        label {
+            // Basic styling for labels
+            padding: .2rem 1rem;
+            margin-right: 1em;
+            border: 2px solid transparent;
+            border-radius: 35px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: $beige;
+            color: $wine-red;
+
+            // Change this to style the label as you like
+            &:hover {
+                background-color: $wine-red;
+                color: $beige;
+            }
+        }
+    }
+}
