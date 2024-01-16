@@ -1,0 +1,36 @@
+@use "../../../partials/colors" as*;
+
+.calendar-single {
+    width: 80%;
+    margin: 0 auto .5rem auto;
+    display: grid;
+    grid-template-columns: 2.5% 2.5% 7.5% 40% 7.5% 40%;
+    gap: .5rem;
+    color: $wine-red;
+    font-size: 1rem;
+    color: black;
+
+
+    &__date {
+        font-weight: 600;
+    }
+
+    &__entry {
+        display: flex;
+        font-weight: 400;
+    }
+
+    &__title {
+        font-size: 1rem;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__bold {
+        font-weight: bold;
+    }
+
+    &__red {
+        color: red;
+    }
+}

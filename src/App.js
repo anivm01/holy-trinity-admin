@@ -19,6 +19,8 @@ import EditWorshipOfficePage from "./pages/EditWorshipOfficePage/EditWorshipOffi
 import EditAnnouncementPage from "./pages/EditAnnouncementPage/EditAnnouncementPage";
 import EditEventPage from "./pages/EditEventPage/EditEventPage";
 import { LoggedInProvider } from "./utilities/LoggedInContext";
+import CalendarPage from "./pages/CalendarPage/CalendarPage";
+import EditCalendarPage from "./pages/EditCalendarPage/EditCalendarPage";
 
 function App() {
   return (
@@ -66,6 +68,9 @@ function App() {
               <Route path="/obituaries/add-new" element={<AddNewObituary />} />
               <Route path="/obituaries/:id" element={<EditObituaryPage />} />
               <Route path="/image-gallery" element={<ImageGalleryPage />} />
+
+              <Route path="/calendar" element={<CalendarPage />} />
+              <Route path="/calendar/:id" element={<EditCalendarPage />} />
             </Routes>
           </div>
         </div>
