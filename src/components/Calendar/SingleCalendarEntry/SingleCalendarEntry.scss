@@ -9,15 +9,16 @@
     color: $wine-red;
     font-size: 1rem;
     color: black;
+    font-weight: 400;
 
 
     &__date {
-        font-weight: 600;
+        font-weight: inherit;
     }
 
     &__entry {
         display: flex;
-        font-weight: 400;
+        font-weight: inherit;
     }
 
     &__title {
