@@ -18,14 +18,14 @@ function SingleCalendarEntry({ single }) {
 
   return (
     <div>
-      <div className="calendar-single">
+      <div className={`calendar-single ${entry.bold ? "calendar-single__bold" : ""}`}>
         <DeleteCaledarEntry id={single.id} />
         <EditCalendarEntry single={single} />
         <div className={`calendar-single__date ${entry.red ? "calendar-single__red" : ""}`}>
           {`${entry.date.date} ${entry.date.dayEn}`}
         </div>
         <div className={`calendar-single__entry ${entry.red ? "calendar-single__red" : ""}`}>
-          <p className={`calendar-single__title ${entry.bold ? "calendar-single__bold" : ""}`}>
+          <p className="calendar-single__title">
             <span className="calendar-single__prefix">{entry.cross ? "† " : ""}</span>
             <span className="calendar-single__prefix">{entry.star ? "* " : ""}</span>
             {entry.title}</p>
@@ -34,7 +34,7 @@ function SingleCalendarEntry({ single }) {
           {`${entry.date.date} ${entry.date.dayBg}`}
         </div>
         <div className={`calendar-single__entry ${entry.red ? "calendar-single__red" : ""}`}>
-          <p className={`calendar-single__title ${entry.bold ? "calendar-single__bold" : ""}`}>
+          <p className="calendar-single__title">
             <span className="calendar-single__prefix">{entry.cross ? "† " : ""}</span>
             <span className="calendar-single__prefix">{entry.star ? "* " : ""}</span>
             {entry.titleBg}</p>
