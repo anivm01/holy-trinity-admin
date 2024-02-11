@@ -5,6 +5,7 @@ import announcement from "../../assets/announcement.svg";
 import video from "../../assets/video.svg";
 import event from "../../assets/event.svg";
 import calendar from "../../assets/calendar.svg";
+import resources from "../../assets/resources.svg"
 import news from "../../assets/news.svg";
 import cross from "../../assets/cross-beige.svg";
 import gallery from "../../assets/gallery.svg";
@@ -74,6 +75,12 @@ function Dashboard() {
           <NavLink className="dashboard__link" to="/obituaries">
             <img className="dashboard__icon" src={cross} alt="video icon" />
             <span className="dashboard__text">Obituaries</span>
+          </NavLink>
+        </li>
+        <li className="dashboard__item">
+          <NavLink className="dashboard__link" to="/resources">
+            <img className="dashboard__icon" src={resources} alt="video icon" />
+            <span className="dashboard__text">Resources</span>
           </NavLink>
         </li>
         <li className="dashboard__item">

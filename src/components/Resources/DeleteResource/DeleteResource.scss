@@ -1,0 +1,42 @@
+@use "../../../partials/colors" as*;
+
+.delete-resource {
+    &__button {
+        background-color: $golden;
+        border: none;
+        padding: .25rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            scale: 1.05;
+            background-color: $beige;
+        }
+
+        &:active {
+            scale: .95;
+        }
+    }
+
+    &__icon {
+        width: 1rem;
+    }
+
+    &__message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        color: $wine-red;
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 2rem;
+    }
+}
