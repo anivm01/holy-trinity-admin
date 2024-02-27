@@ -12,7 +12,7 @@ export default function useFetch(url) {
       try {
         setLoading(true);
         const response = await axios.get(url);
-        if(Array.isArray(response.data)){
+        if (Array.isArray(response.data)) {
           setData(sortNewestToOldest(response.data))
           return
         }

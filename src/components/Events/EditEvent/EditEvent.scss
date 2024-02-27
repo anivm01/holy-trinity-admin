@@ -1,0 +1,48 @@
+@use "../../../partials/colors" as*;
+
+.edit-event {
+    margin-left: auto;
+
+    &__button {
+        background-color: transparent;
+        border: none;
+        padding: .3rem .5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            border-radius: 35px;
+            background-color: $golden;
+        }
+
+        &:active {
+            scale: .95;
+        }
+    }
+
+    &__icon {
+        width: 1.25rem;
+    }
+
+    &__form {
+        max-height: 60vh;
+        overflow: scroll;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            width: .5rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $beige;
+            border-radius: 20px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $wine-red;
+            border-radius: 20px;
+        }
+    }
+}

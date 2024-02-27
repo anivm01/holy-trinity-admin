@@ -1,39 +1,46 @@
 import "./SavedCalendar.scss";
-import { ThreeDots } from "react-loader-spinner";
-import NoData from "../../NoData/NoData";
-import useFetch from "../../../utilities/useFetch";
 import SingleCalendarEntry from "../SingleCalendarEntry/SingleCalendarEntry";
-import { sortOldestToNewest } from "../../../utilities/sort";
+import React, { useEffect, useRef } from "react";
 
-function SavedCalendar({ url }) {
-  const { data, error, loading } = useFetch(url);
-  if (loading) {
-    return (
-      <ThreeDots
-        height="80"
-        width="80"
-        radius="9"
-        color="#6F0B20"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{ justifyContent: "center" }}
-        wrapperClassName=""
-        visible={true}
-      />
-    );
-  }
-  if (error) {
-    return <NoData />;
-  }
-  if (data) {
-    const sortedData = sortOldestToNewest(data)
-    return (
-      <div className="saved-entries">
-        {sortedData.map((single, index) => {
-          return <SingleCalendarEntry key={index} single={single} />;
-        })}
+function SavedCalendar({ data }) {
+  const monthRefs = useRef({});
+
+  useEffect(() => {
+    // Initialize monthRefs with all months as keys and their ref values
+    if (data) {
+      monthRefs.current = Object.keys(data).reduce((acc, month) => {
+        acc[month] = React.createRef();
+        return acc;
+      }, {});
+    }
+  }, [data]);
+
+  const scrollToMonth = (month) => {
+    monthRefs.current[month]?.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+
+  return (
+    <>
+      <div className="month-navigation">
+        {Object.keys(data).map((month, index) => (
+          <button key={index} onClick={() => scrollToMonth(month)} style={{ marginRight: '10px' }}>
+            {month}
+          </button>
+        ))}
       </div>
-    );
-  }
-}
+      <div className="saved-entries">
+        {Object.entries(data).map(([month, entries], index) => (
+          <div key={index}>
+            <h3>{month}</h3> {/* Display the month */}
+            {entries.map((single, entryIndex) => (
+              <SingleCalendarEntry key={entryIndex} single={single} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
+  );
 
+}
 export default SavedCalendar;

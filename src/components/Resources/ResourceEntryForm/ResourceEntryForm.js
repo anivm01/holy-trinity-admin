@@ -2,8 +2,6 @@ import "./ResourceEntryForm.scss";
 import OneLineInputUpdated from "../../OneLineInputUpdated/OneLineInputUpdated";
 
 function ResourceEntryForm({ formTitle, entry, handleChange, onPublish }) {
-    console.log(entry)
-
     return (
         <form className="resources-form">
             <h1 className="resources-form__heading">{formTitle}</h1>
