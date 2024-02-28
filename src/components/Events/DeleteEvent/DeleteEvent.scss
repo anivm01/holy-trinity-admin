@@ -1,0 +1,44 @@
+@use "../../../partials/colors" as*;
+
+.delete-event {
+    // margin-left: auto;
+
+    &__button {
+        background-color: transparent;
+        border: none;
+        padding: .3rem .5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            border-radius: 35px;
+            background-color: $golden;
+        }
+
+        &:active {
+            scale: .95;
+        }
+    }
+
+    &__icon {
+        width: 1.25rem;
+    }
+
+    &__message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        color: $wine-red;
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 2rem;
+    }
+}

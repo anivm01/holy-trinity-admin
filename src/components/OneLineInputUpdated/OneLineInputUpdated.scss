@@ -1,4 +1,4 @@
-@use "../../partials/colors"as*;
+@use "../../partials/colors" as*;
 
 .one-line-input {
     display: flex;
@@ -7,17 +7,20 @@
     text-align: left;
     padding-bottom: 1rem;
     border-bottom: 2px solid $wine-red;
+
     &__label {
         margin: 0 0 .5rem 0;
         font-size: 1.125rem;
         font-weight: 600;
     }
+
     &__input {
         padding: .5rem;
         border: 1px solid $wine-red;
         border-radius: 10px;
+
         &:focus {
-            outline: 2px solid $wine-red;        
+            outline: 2px solid $wine-red;
         }
     }
 }

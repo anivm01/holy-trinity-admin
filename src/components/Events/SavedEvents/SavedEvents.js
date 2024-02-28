@@ -1,8 +1,9 @@
+import useFetch from "../../../utilities/useFetch";
+import NoData from "../../NoData/NoData";
+import SingleEvent from "../SingleEvent/SingleEvent";
 import "./SavedEvents.scss";
 import { ThreeDots } from "react-loader-spinner";
-import NoData from "../NoData/NoData";
-import SingleEvent from "../SingleEvent/SingleEvent";
-import useFetch from "../../utilities/useFetch";
+
 
 function SavedEvents({ url }) {
   const { data, error, loading } = useFetch(url);

@@ -3,6 +3,7 @@ import { calendarDateConverter } from "../../../utilities/dateConverter";
 import "./SingleCalendarEntry.scss";
 import DeleteCaledarEntry from "../DeleteCalendarEntry/DeleteCalendarEntry";
 import EditCalendarEntry from "../EditCalendarEntry/EditCalendarEntry";
+import SingleCalendarEntryTitles from "../SingleCalendarEntryTitles/SingleCalendarEntryTitles";
 
 function SingleCalendarEntry({ single }) {
   const entry = {
@@ -24,21 +25,11 @@ function SingleCalendarEntry({ single }) {
         <div className={`calendar-single__date ${entry.red ? "calendar-single__red" : ""}`}>
           {`${entry.date.date} ${entry.date.dayEn}`}
         </div>
-        <div className={`calendar-single__entry ${entry.red ? "calendar-single__red" : ""}`}>
-          <p className="calendar-single__title">
-            <span className="calendar-single__prefix">{entry.cross ? "† " : ""}</span>
-            <span className="calendar-single__prefix">{entry.star ? "* " : ""}</span>
-            {entry.title}</p>
-        </div>
+        <SingleCalendarEntryTitles red={entry.red} cross={entry.cross} star={entry.star} title={entry.title} />
         <div className={`calendar-single__date ${entry.red ? "calendar-single__red" : ""}`}>
           {`${entry.date.date} ${entry.date.dayBg}`}
         </div>
-        <div className={`calendar-single__entry ${entry.red ? "calendar-single__red" : ""}`}>
-          <p className="calendar-single__title">
-            <span className="calendar-single__prefix">{entry.cross ? "† " : ""}</span>
-            <span className="calendar-single__prefix">{entry.star ? "* " : ""}</span>
-            {entry.titleBg}</p>
-        </div>
+        <SingleCalendarEntryTitles red={entry.red} cross={entry.cross} star={entry.star} title={entry.titleBg} />
       </div>
     </div>
   );
