@@ -1,26 +1,15 @@
 import { useState } from "react";
-import "./AddNewResource.scss";
 import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
-import ResourceEntryForm from "../ResourceEntryForm/ResourceEntryForm";
+import Modal from "../../Modal/Modal";
+import Button from "../../UI/Button/Button";
+import DragAndDropCategories from "../DragAndDropCategories/DragAndDropCategories";
 
-function AddNewResource() {
-
-    //regular inputs controlled and stored into one object
-    const [entry, setEntry] = useState({
-        text: "",
-        url: "",
-    });
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setEntry((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
+function ReorderCategories({ categories }) {
+    const [visible, setVisible] = useState()
+    const [draggableList, setDraggableList] = useState(categories)
 
     //success and error message states
     const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -28,38 +17,48 @@ function AddNewResource() {
     const [errorMessage, setErrorMessage] = useState("");
 
 
-    //function to handle uploading the new entry
     const onPublish = (e) => {
         e.preventDefault();
-
-        //publish
-        const post = {
-            text: entry.text,
-            url: entry.url,
-        };
-
-        const uploadEntry = async (post) => {
+        const orderedCategories = draggableList.map(category => category.id);
+        const uploadNewOrder = async (orderedCategories) => {
             const token = sessionStorage.getItem("authToken");
             try {
-                await axios.post(`${API_URL}/resources`, post, {
+                await axios.put(`${API_URL}/priest-resources/category/order`, orderedCategories, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
                 setUploadSuccess(true);
+                setVisible(false)
             } catch (err) {
                 console.log(err.response);
+                setVisible(false)
                 setUploadError(true);
                 setErrorMessage(
                     "There was a problem with the connection. Try again later."
                 );
             }
         };
-        uploadEntry(post);
+        uploadNewOrder(orderedCategories);
     };
 
+
     return (
-        <>
+        <div className="reorder-categories">
+            <Button
+                onClick={() => {
+                    setVisible(true);
+                }}
+                type="button"
+                text="Reorder Categories"
+            />
+            <Modal visible={visible} setVisible={setVisible} >
+                <DragAndDropCategories draggableList={draggableList} setDraggableList={setDraggableList} />
+                <Button
+                    type="button"
+                    text="Save"
+                    onClick={onPublish} />
+            </Modal>
             {uploadError && (
                 <ErrorModal
                     errorMessage={errorMessage}
@@ -68,9 +67,9 @@ function AddNewResource() {
                 />
             )}
             {uploadSuccess && <SuccessModal />}
-            <ResourceEntryForm formTitle={"Add New Useful Link"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
-        </>
+
+        </div>
     );
 }
 
-export default AddNewResource;
+export default ReorderCategories;

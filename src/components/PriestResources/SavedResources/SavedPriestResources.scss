@@ -1,0 +1,25 @@
+@use "../../../partials/colors" as*;
+
+.priest-resources {
+    padding: 0 2rem 4rem;
+    width: 100%;
+    max-width: 40rem;
+
+    &__category {
+        font-size: 1.5rem;
+        color: $wine-red;
+        width: 100%;
+        min-width: 500px;
+        // background-color: $golden;
+        padding: .25rem 1rem;
+    }
+
+    &__list {
+        list-style-type: none;
+        padding: 2rem .25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+}

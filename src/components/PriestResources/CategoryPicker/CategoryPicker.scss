@@ -1,0 +1,33 @@
+@use "../../../partials/colors" as*;
+
+.category-picker {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $beige;
+    text-align: left;
+
+    &__label {
+        margin: 0 0 .25rem 0;
+        font-size: 1.125rem;
+        line-height: 1;
+        font-weight: 600;
+    }
+
+    &__select {
+        padding: .5rem;
+        border: 1px solid $wine-red;
+        border-radius: 10px;
+        resize: none;
+
+        &:focus {
+            outline: 2px solid $wine-red;
+        }
+    }
+
+    &__option {
+        color: $wine-red;
+        font-size: inherit;
+        font-family: inherit;
+    }
+}

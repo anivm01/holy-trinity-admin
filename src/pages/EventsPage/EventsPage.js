@@ -1,7 +1,7 @@
 import './EventsPage.scss'
 import { Link } from "react-router-dom"
 import SavedEvents from '../../components/Events/SavedEvents/SavedEvents'
-import PageHeader from '../../components/PageHeader/PageHeader';
+import PageHeader from '../../components/UI/PageHeader/PageHeader';
 import { API_URL } from '../../utilities/api';
 
 function EventsPage() {

@@ -1,6 +1,7 @@
 import "./SavedCalendar.scss";
 import SingleCalendarEntry from "../SingleCalendarEntry/SingleCalendarEntry";
 import React, { useEffect, useRef } from "react";
+import Button from "../../UI/Button/Button";
 
 function SavedCalendar({ data }) {
   const monthRefs = useRef({});
@@ -15,31 +16,32 @@ function SavedCalendar({ data }) {
     }
   }, [data]);
 
-  const scrollToMonth = (month) => {
-    monthRefs.current[month]?.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToMonth = (month, index) => {
+    const element = document.getElementById(`month-${index}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
 
   return (
-    <>
-      <div className="month-navigation">
+    <div className="saved-entries">
+      <div className="saved-entries__navigation">
         {Object.keys(data).map((month, index) => (
-          <button key={index} onClick={() => scrollToMonth(month)} style={{ marginRight: '10px' }}>
-            {month}
-          </button>
+          <Button text={month} key={index} onClick={() => scrollToMonth(month, index)} />
         ))}
       </div>
-      <div className="saved-entries">
+      <div className="saved-entries__entries">
         {Object.entries(data).map(([month, entries], index) => (
-          <div key={index}>
-            <h3>{month}</h3> {/* Display the month */}
+          <div key={index} id={`month-${index}`}>
+            <h3>{month}</h3>
             {entries.map((single, entryIndex) => (
               <SingleCalendarEntry key={entryIndex} single={single} />
             ))}
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 
 }

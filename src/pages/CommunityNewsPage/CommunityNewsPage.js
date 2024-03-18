@@ -2,7 +2,7 @@ import './CommunityNewsPage.scss'
 import { Link } from "react-router-dom"
 import SavedCommuityNews from '../../components/SavedCommunityNews/SavedCommunityNews'
 import { useState } from 'react';
-import PageHeader from '../../components/PageHeader/PageHeader';
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 import DraftPublishToggle from '../../components/DraftPublishToggle/DraftPublishToggle';
 import { API_URL } from '../../utilities/api';
 

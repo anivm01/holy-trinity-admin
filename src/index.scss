@@ -13,11 +13,14 @@ body {
   font-family: 'El Messiri', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $beige;
 }
 
 input,
 textarea,
 span,
+select,
+option,
 button {
   font-family: 'El Messiri', sans-serif;
 }

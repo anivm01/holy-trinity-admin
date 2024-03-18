@@ -1,5 +1,5 @@
 import './CalendarPage.scss'
-import PageHeader from '../../components/PageHeader/PageHeader';
+import PageHeader from '../../components/UI/PageHeader/PageHeader';
 import { API_URL } from '../../utilities/api';
 import SavedCalendar from '../../components/Calendar/SavedCalendar/SavedCalendar';
 import AddNewCalendarEntry from '../../components/Calendar/AddNewCalendarEntry/AddNewCalendarEntry';

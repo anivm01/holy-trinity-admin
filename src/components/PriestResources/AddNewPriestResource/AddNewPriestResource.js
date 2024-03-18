@@ -1,17 +1,18 @@
 import { useState } from "react";
-import "./AddNewResource.scss";
 import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
-import ResourceEntryForm from "../ResourceEntryForm/ResourceEntryForm";
+import PriestResourceEntryForm from "../PriestResourceEntryForm/PriestResourceEntryForm";
 
-function AddNewResource() {
+function AddNewPriestResource() {
 
     //regular inputs controlled and stored into one object
     const [entry, setEntry] = useState({
-        text: "",
-        url: "",
+        title: "",
+        description: "",
+        link: "",
+        category_id: ""
     });
 
     const handleChange = (event) => {
@@ -34,14 +35,16 @@ function AddNewResource() {
 
         //publish
         const post = {
-            text: entry.text,
-            url: entry.url,
+            title: entry.title,
+            description: entry.description,
+            link: entry.link,
+            categoryId: entry.category_id
         };
 
         const uploadEntry = async (post) => {
             const token = sessionStorage.getItem("authToken");
             try {
-                await axios.post(`${API_URL}/resources`, post, {
+                await axios.post(`${API_URL}/priest-resources`, post, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -68,9 +71,9 @@ function AddNewResource() {
                 />
             )}
             {uploadSuccess && <SuccessModal />}
-            <ResourceEntryForm formTitle={"Add New Useful Link"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
+            <PriestResourceEntryForm formTitle={"Add New Resource"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
         </>
     );
 }
 
-export default AddNewResource;
+export default AddNewPriestResource;

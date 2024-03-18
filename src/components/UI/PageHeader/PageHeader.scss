@@ -1,11 +1,14 @@
-@use "../../partials/colors"as*;
+@use "../../../partials/colors" as*;
 
-.page-header{
+.page-header {
+    width: 100%;
+
     &__title {
         text-align: center;
         background-color: $wine-red;
         color: $beige;
     }
+
     &__navigation {
         padding: 1rem 0;
         display: flex;

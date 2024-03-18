@@ -1,0 +1,14 @@
+@use "../../../partials/colors" as*;
+
+.dnd-cat {
+    height: 25rem;
+    overflow-y: scroll;
+
+    &__category {
+        padding: .5rem 1rem;
+        background-color: $golden;
+        border-radius: 35px;
+        margin: .5rem 0;
+        font-size: 1.25rem;
+    }
+}
