@@ -1,47 +1,34 @@
 import { useState } from "react";
-import "./EditResource.scss";
 import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
-import editIcon from "../../../assets/edit.svg"
 import { API_URL } from "../../../utilities/api";
 import Modal from "../../Modal/Modal";
-import ResourceEntryForm from "../ResourceEntryForm/ResourceEntryForm";
+import Button from "../../UI/Button/Button";
+import DragAndDropResources from "../DragAndDropResources/DragAndDropResources";
 
-function EditResource({ single }) {
+function ReorderResources({ category, categoryId, resources }) {
     const [visible, setVisible] = useState()
+    const [draggableList, setDraggableList] = useState(resources)
 
     //success and error message states
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadError, setUploadError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const [entry, setEntry] = useState({
-        text: single.text,
-        url: single.url,
-    });
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setEntry((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    //function to handle uploading the new entry
     const onPublish = (e) => {
         e.preventDefault();
-
-        //publish
-        const post = {
-            text: entry.text,
-            url: entry.url,
-        };
-        const uploadEntry = async (post) => {
+        const reorderedResources = draggableList.map(resource => resource.id);
+        const update = {
+            order: reorderedResources,
+            categoryId: categoryId
+        }
+        console.log(update)
+        const uploadNewOrder = async (update) => {
             const token = sessionStorage.getItem("authToken");
             try {
-                await axios.put(`${API_URL}/resources/${single.id}`, post, {
+                await axios.put(`${API_URL}/priest-resources/resource-order`, update, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -57,27 +44,27 @@ function EditResource({ single }) {
                 );
             }
         };
-        uploadEntry(post);
+        uploadNewOrder(update);
     };
 
 
     return (
-        <div className="edit-resource">
-            <button
-                className="edit-resource__button"
+        <div>
+            <Button
                 onClick={() => {
                     setVisible(true);
                 }}
                 type="button"
-            >
-                <img
-                    className="edit-resource__icon"
-                    src={editIcon}
-                    alt="edit"
-                />
-            </button>
+                text="Reorder Resources"
+            />
             <Modal visible={visible} setVisible={setVisible} >
-                <ResourceEntryForm formTitle={"Edit Useful Link"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
+                <h3>{category}</h3>
+                <DragAndDropResources draggableList={draggableList} setDraggableList={setDraggableList} />
+                <Button
+                    type="button"
+                    text="Save"
+                    onClick={onPublish}
+                />
             </Modal>
             {uploadError && (
                 <ErrorModal
@@ -92,4 +79,4 @@ function EditResource({ single }) {
     );
 }
 
-export default EditResource;
+export default ReorderResources;

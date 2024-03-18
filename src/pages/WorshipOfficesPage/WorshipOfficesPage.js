@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DraftPublishToggle from "../../components/DraftPublishToggle/DraftPublishToggle";
-import PageHeader from "../../components/PageHeader/PageHeader";
 import SavedWorshipOffices from "../../components/SavedWorshipOffices/SavedWorshipOffices";
 import { API_URL } from "../../utilities/api";
 import "./WorshipOfficesPage.scss";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 function WorshipOfficesPage() {
   const [draft, setDraft] = useState(false);

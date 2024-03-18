@@ -1,14 +1,14 @@
 import { useState } from "react";
-import "./EditResource.scss";
 import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import editIcon from "../../../assets/edit.svg"
 import { API_URL } from "../../../utilities/api";
 import Modal from "../../Modal/Modal";
-import ResourceEntryForm from "../ResourceEntryForm/ResourceEntryForm";
+import PriestResourceEntryForm from "../PriestResourceEntryForm/PriestResourceEntryForm";
+import './EditPriestResource.scss'
 
-function EditResource({ single }) {
+function EditPriestResource({ single }) {
     const [visible, setVisible] = useState()
 
     //success and error message states
@@ -17,8 +17,10 @@ function EditResource({ single }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const [entry, setEntry] = useState({
-        text: single.text,
-        url: single.url,
+        title: single.title,
+        description: single.description,
+        link: single.link,
+        category_id: single.category_id
     });
 
     const handleChange = (event) => {
@@ -35,13 +37,15 @@ function EditResource({ single }) {
 
         //publish
         const post = {
-            text: entry.text,
-            url: entry.url,
+            title: entry.title,
+            description: entry.description,
+            link: entry.link,
+            categoryId: entry.category_id
         };
         const uploadEntry = async (post) => {
             const token = sessionStorage.getItem("authToken");
             try {
-                await axios.put(`${API_URL}/resources/${single.id}`, post, {
+                await axios.put(`${API_URL}/priest-resources/${single.id}`, post, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -62,22 +66,22 @@ function EditResource({ single }) {
 
 
     return (
-        <div className="edit-resource">
+        <div className="edit-priest-resource">
             <button
-                className="edit-resource__button"
+                className="edit-priest-resource__button"
                 onClick={() => {
                     setVisible(true);
                 }}
                 type="button"
             >
                 <img
-                    className="edit-resource__icon"
+                    className="edit-priest-resource__icon"
                     src={editIcon}
                     alt="edit"
                 />
             </button>
             <Modal visible={visible} setVisible={setVisible} >
-                <ResourceEntryForm formTitle={"Edit Useful Link"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
+                <PriestResourceEntryForm formTitle={"Edit Resource"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
             </Modal>
             {uploadError && (
                 <ErrorModal
@@ -92,4 +96,4 @@ function EditResource({ single }) {
     );
 }
 
-export default EditResource;
+export default EditPriestResource;

@@ -4,7 +4,7 @@ import SavedWeeklyAnnouncements from "../../components/SavedWeeklyAnnouncements/
 import { API_URL } from "../../utilities/api";
 import { useState } from "react";
 import DraftPublishToggle from "../../components/DraftPublishToggle/DraftPublishToggle";
-import PageHeader from "../../components/PageHeader/PageHeader";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 function WeeklyAnnouncementsPage() {
   const [draft, setDraft] = useState(false);

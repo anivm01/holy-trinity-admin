@@ -21,6 +21,7 @@ import { LoggedInProvider } from "./utilities/LoggedInContext";
 import CalendarPage from "./pages/CalendarPage/CalendarPage";
 import EditCalendarPage from "./pages/EditCalendarPage/EditCalendarPage";
 import ResourcesPage from "./pages/ResourcesPage/ResourcesPage";
+import PriestResourcesPage from "./pages/PriestResourcesPage/PriestResourcesPage";
 
 function App() {
   return (
@@ -71,7 +72,8 @@ function App() {
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/calendar/:id" element={<EditCalendarPage />} />
 
-              <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/useful-links" element={<ResourcesPage />} />
+              <Route path="/resources" element={<PriestResourcesPage />} />
             </Routes>
           </div>
         </div>

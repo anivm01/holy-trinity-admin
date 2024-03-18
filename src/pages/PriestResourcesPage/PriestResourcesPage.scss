@@ -1,0 +1,22 @@
+.priest-resources-page {
+    max-width: 100%;
+    margin: 0 auto;
+
+
+    &__content {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+        justify-content: space-around;
+        padding: 0 2rem;
+    }
+
+    &__editing {
+        width: 100%;
+        padding: 0 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

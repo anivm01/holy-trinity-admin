@@ -4,7 +4,7 @@ import SavedObituaries from '../../components/SavedObituaries/SavedObituaries'
 import { useState } from 'react';
 import { API_URL } from '../../utilities/api';
 import DraftPublishToggle from '../../components/DraftPublishToggle/DraftPublishToggle';
-import PageHeader from '../../components/PageHeader/PageHeader';
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 function ObituariesPage() {
   const [draft, setDraft] = useState(false);
