@@ -4,26 +4,31 @@ import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
 import Modal from "../../Modal/Modal";
+import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
-import DragAndDropCategories from "../DragAndDropCategories/DragAndDropCategories";
 
-function ReorderCategories({ categories }) {
+function EditCategory({ name, id }) {
     const [visible, setVisible] = useState()
-    const [draggableList, setDraggableList] = useState(categories)
 
     //success and error message states
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadError, setUploadError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [entry, setEntry] = useState(name);
 
+    //function to handle uploading the new entry
     const onPublish = (e) => {
         e.preventDefault();
-        const orderedCategories = draggableList.map(category => category.id);
-        const uploadNewOrder = async (orderedCategories) => {
+
+        //publish
+        const post = {
+            name: entry
+        };
+        const uploadEntry = async (post) => {
             const token = sessionStorage.getItem("authToken");
             try {
-                await axios.put(`${API_URL}/priest-resources/category/order`, orderedCategories, {
+                await axios.put(`${API_URL}/priest-resources/category/${id}`, post, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -39,25 +44,27 @@ function ReorderCategories({ categories }) {
                 );
             }
         };
-        uploadNewOrder(orderedCategories);
+        uploadEntry(post);
     };
 
 
     return (
         <div>
             <Button
+                text="Edit"
+                type="button"
                 onClick={() => {
                     setVisible(true);
                 }}
-                type="button"
-                text="Reorder Categories"
             />
             <Modal visible={visible} setVisible={setVisible} >
-                <DragAndDropCategories draggableList={draggableList} setDraggableList={setDraggableList} />
+                <h2 className="add-category__title">Edit A Category</h2>
+                <Input label="Change cateogry name" id="edit-category" name="edit-category" value={entry} onChange={(event) => setEntry(event.target.value)} type="text" inputComponent="input" />
                 <Button
-                    type="button"
                     text="Save"
-                    onClick={onPublish} />
+                    type="submit"
+                    onClick={onPublish}
+                />
             </Modal>
             {uploadError && (
                 <ErrorModal
@@ -72,4 +79,4 @@ function ReorderCategories({ categories }) {
     );
 }
 
-export default ReorderCategories;
+export default EditCategory;

@@ -1,0 +1,20 @@
+@use "../../../partials/colors" as*;
+
+.delete-category {
+
+    &__message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        color: $wine-red;
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 2rem;
+    }
+}

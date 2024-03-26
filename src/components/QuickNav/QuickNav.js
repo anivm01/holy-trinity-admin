@@ -79,7 +79,7 @@ function QuickNav() {
           </li>
           <li className="quick-nav__item">
             <NavLink className="quick-nav__link" to="/image-gallery">
-              <img className="quick-nav__icon" src={image} alt="image icon" />
+              <img className="quick-nav__icon" src={image} alt="icon" />
               <span className="quick-nav__text">Add New Image</span>
             </NavLink>
           </li>
