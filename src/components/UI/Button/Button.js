@@ -5,7 +5,7 @@ function Button({ text, onClick, className, href, type = "button", buttonCompone
     if (buttonComponent === "button") {
         return (
             <button
-                className={`button ${className}`}
+                className={`button ${className || ""}`}
                 type={type}
                 onClick={onClick || (() => { })} // No-op function as default
                 {...props}
@@ -18,7 +18,7 @@ function Button({ text, onClick, className, href, type = "button", buttonCompone
         const linkProps = href ? { href } : { href: "#", tabIndex: -1 }; // tabIndex -1 to avoid tab navigation to links that don't navigate
         return (
             <a
-                className={`button ${className}`}
+                className={`button ${className || ""}`}
                 onClick={onClick || (() => { })} // No-op function as default
                 role="button"
                 {...linkProps}

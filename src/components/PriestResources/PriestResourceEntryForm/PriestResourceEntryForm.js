@@ -1,11 +1,12 @@
 import "./PriestResourceEntryForm.scss";
 import Input from "../../UI/Input/Input";
 import CategoryPicker from "../CategoryPicker/CategoryPicker";
+import Button from "../../UI/Button/Button";
 
 function PriestResourceEntryForm({ formTitle, entry, handleChange, onPublish }) {
     return (
         <form className="priest-resources-form">
-            <h1 className="priest-resources-form__heading">{formTitle}</h1>
+            <h2 className="priest-resources-form__heading">{formTitle}</h2>
             <section className="priest-resources-form__main">
                 <CategoryPicker entry={entry} handleChange={handleChange} />
                 <Input
@@ -41,10 +42,9 @@ function PriestResourceEntryForm({ formTitle, entry, handleChange, onPublish }) 
 
             </section>
             <div className="priest-resources-form__end">
-                <input
-                    className="priest-resources-form__submit"
+                <Button
+                    text="Save"
                     type="submit"
-                    value="Save"
                     onClick={onPublish}
                 />
             </div>

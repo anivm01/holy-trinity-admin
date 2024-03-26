@@ -24,7 +24,6 @@ function ReorderResources({ category, categoryId, resources }) {
             order: reorderedResources,
             categoryId: categoryId
         }
-        console.log(update)
         const uploadNewOrder = async (update) => {
             const token = sessionStorage.getItem("authToken");
             try {

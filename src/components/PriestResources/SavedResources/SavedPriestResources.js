@@ -5,6 +5,8 @@ import useFetch from "../../../utilities/useFetch";
 import { API_URL } from "../../../utilities/api";
 import SinglePriestResource from "../SinglePriestResource/SinglePriestResrouce";
 import ReorderResources from "../ReorderResources/ReorderResources";
+import DeleteCategory from "../DeleteCategory/DeleteCategory";
+import EditCategory from "../EditCategory/EditCategory";
 
 
 function SavedPriestResources() {
@@ -31,8 +33,14 @@ function SavedPriestResources() {
       <div className="priest-resources">
         {data.map((category) => (
           <div key={category.category_id}>
+
             <h3 className="priest-resources__category">{category.category}</h3>
-            <ReorderResources category={category.category} categoryId={category.category_id} resources={category.resources} />
+            <div className="priest-resources__actions">
+              <DeleteCategory id={category.category_id} />
+              <EditCategory name={category.category} id={category.category_id} />
+              <ReorderResources category={category.category} categoryId={category.category_id} resources={category.resources} />
+            </div>
+
             <ul className="priest-resources__list">
               {category.resources.map((resource) => (
                 <SinglePriestResource key={resource.id} resource={resource} />
