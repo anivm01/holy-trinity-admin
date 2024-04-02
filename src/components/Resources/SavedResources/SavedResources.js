@@ -26,7 +26,6 @@ function SavedResources() {
         return <NoData />;
     }
     if (data) {
-        console.log(data)
         return (
             <div className="saved-resources">
                 {data.map((single, index) => {
