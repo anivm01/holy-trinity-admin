@@ -1,13 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Button.scss';
 
-function Button({ text, onClick, className, href, type = "button", buttonComponent = "button", ...props }) {
+const Button = ({ text, onClick, variant, href, type, buttonComponent, ...props }) => {
+    const baseClassName = `button button--${variant}`;
+
     if (buttonComponent === "button") {
         return (
             <button
-                className={`button ${className || ""}`}
+                className={baseClassName}
                 type={type}
-                onClick={onClick || (() => { })} // No-op function as default
+                onClick={onClick}
                 {...props}
             >
                 {text}
@@ -15,11 +18,11 @@ function Button({ text, onClick, className, href, type = "button", buttonCompone
         );
     } else {
         // Ensure 'href' is only applied to <a> tags and provide a default '#' if not provided
-        const linkProps = href ? { href } : { href: "#", tabIndex: -1 }; // tabIndex -1 to avoid tab navigation to links that don't navigate
+        const linkProps = { href, tabIndex: href ? undefined : -1 }; // tabIndex -1 to avoid tab navigation to links that don't navigate
         return (
             <a
-                className={`button ${className || ""}`}
-                onClick={onClick || (() => { })} // No-op function as default
+                className={baseClassName}
+                onClick={onClick}
                 role="button"
                 {...linkProps}
                 {...props}
@@ -29,4 +32,22 @@ function Button({ text, onClick, className, href, type = "button", buttonCompone
         );
     }
 }
+
+Button.propTypes = {
+    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+    variant: PropTypes.oneOf(['primary', 'secondary']),
+    href: PropTypes.string,
+    type: PropTypes.oneOf(['button', 'submit', 'reset']),
+    buttonComponent: PropTypes.oneOf(['button', 'a']),
+};
+
+Button.defaultProps = {
+    onClick: () => { }, // Provide a no-op function as the default for onClick
+    variant: 'primary', // Default to 'primary' variant
+    href: '#', // Default href to '#' to ensure <a> is navigable but doesn't lead anywhere unless specified
+    type: 'button', // Default type for <button>
+    buttonComponent: 'button', // Default to rendering a <button>
+};
+
 export default Button;

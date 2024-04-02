@@ -19,4 +19,15 @@
         color: $wine-red;
         background-color: $golden;
     }
+
+    &--secondary {
+        color: $wine-red;
+        background-color: $beige;
+        border: 1px solid $wine-red;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $golden;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import './Input.scss';
 
-function Input({ label, id, name, value, onChange, type = "text", inputComponent = "input", ...props }) {
+function Input({ className, label, id, name, value, onChange, type = "text", inputComponent = "input", ...props }) {
     // Determine which component to use, input or textarea
     const InputOrTextarea = inputComponent === "textarea" ? "textarea" : "input";
 
@@ -8,7 +8,7 @@ function Input({ label, id, name, value, onChange, type = "text", inputComponent
         <div className='input'>
             <label className="input__label" htmlFor={id}>{label}</label>
             <InputOrTextarea
-                className="input__field"
+                className={`input__field ${className || ""}`}
                 id={id}
                 type={type}
                 name={name}

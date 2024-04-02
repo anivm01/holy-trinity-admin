@@ -90,6 +90,12 @@ function Dashboard() {
           </NavLink>
         </li>
         <li className="dashboard__item">
+          <NavLink className="dashboard__link" to="/upload-pdf">
+            <img className="dashboard__icon" src={resources} alt="video icon" />
+            <span className="dashboard__text">Upload Pdf</span>
+          </NavLink>
+        </li>
+        <li className="dashboard__item">
           <NavLink className="dashboard__link" to="/image-gallery">
             <img className="dashboard__icon" src={gallery} alt="video icon" />
             <span className="dashboard__text">Image Gallery</span>
