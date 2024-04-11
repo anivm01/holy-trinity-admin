@@ -7,8 +7,6 @@ import DeleteIcon from '../../../assets/svg/DeleteIcon/DeleteIcon';
 const ModifyButton = ({ onClick, hasIcon, hasText, type, variant }) => {
     // Define button content based on type
     const buttonText = type === "edit" ? "Edit" : "Delete"
-
-
     return (
         <button
             className={`modify-button modify-button--${variant}`}

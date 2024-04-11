@@ -1,0 +1,25 @@
+@use "../../../partials/colors" as*;
+
+.link-with-icon {
+    display: flex;
+    align-items: baseline;
+    font-size: inherit;
+    color: $wine-red;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+
+    &__icon {
+        min-width: 1rem;
+        min-height: 1rem;
+        margin-right: .5rem;
+    }
+
+    &__icon>svg {
+        fill: $wine-red;
+    }
+}

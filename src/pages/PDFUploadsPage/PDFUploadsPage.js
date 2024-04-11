@@ -1,6 +1,6 @@
 
-import SavedPdfs from '../../components/PDFUploads/SavedPdfs/SavedPdfs'
-import UploadPdf from '../../components/PDFUploads/UploadPdf/UploadPdf'
+import SavedPdfs from '../../components/UploadedFiles/SavedPdfs/SavedPdfs'
+import UploadPdf from '../../components/UploadedFiles/UploadPdf/UploadPdf'
 import PageHeader from '../../components/UI/PageHeader/PageHeader'
 import './PDFUploadsPage.scss'
 

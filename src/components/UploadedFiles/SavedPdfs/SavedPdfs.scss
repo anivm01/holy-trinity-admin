@@ -3,17 +3,16 @@
 .saved-pdfs {
     padding: 0 2rem 4rem;
     width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
 
     &__single {
-        width: 80%;
         margin: 0 auto .5rem auto;
         color: $wine-red;
         font-size: 1.25rem;
         font-weight: 400;
-        display: grid;
-        grid-template-columns: 80% 10% 10%;
-        align-items: center;
-        justify-items: center;
+        display: flex;
+        justify-content: space-between;
     }
 
     &__icon {
@@ -41,6 +40,11 @@
         color: $wine-red;
         text-decoration: none;
         width: 100%;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 2rem;
     }
 
 }

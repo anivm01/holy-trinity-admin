@@ -1,37 +1,48 @@
 import { useState } from "react";
-import "./EditPdfCaption.scss";
 import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
-import Input from "../../UI/Input/Input";
-import Button from "../../UI/Button/Button";
+
+import BroadcastEntryFrom from "../BroadcastEntryForm/BroadcastEntryForm";
 import ModifyButton from "../../UI/ModifyButton/ModifyButton";
+import { toDatetimeLocalString } from "../../../utilities/dateConverter";
 import Modal from "../../UI/Modal/Modal";
 
-function EditPdfCaption({ id, caption }) {
+function EditBroadcast({ single }) {
     const [visible, setVisible] = useState()
+    const utcString = single.broadcast_time;
+    const date = new Date(utcString);
+    const localISOTime = toDatetimeLocalString(date);
 
     //success and error message states
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadError, setUploadError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const [newCaption, setNewCaption] = useState(caption);
+    const [entry, setEntry] = useState({
+        title: single.title,
+        title_bg: single.title_bg,
+        youtube_video_id: single.youtube_video_id,
+        featured_image_url: single.featured_image_url,
+        broadcast_time: localISOTime,
+    });
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setEntry((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
 
     //function to handle uploading the new entry
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const update = {
-            caption: newCaption
-        }
-
+    const onPublish = () => {
         //publish
-        const uploadEntry = async (update) => {
+        const uploadEntry = async (entry) => {
             const token = sessionStorage.getItem("authToken");
             try {
-                await axios.put(`${API_URL}/assets/${id}`, update, {
+                await axios.put(`${API_URL}/broadcasts/${single.id}`, entry, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -47,22 +58,19 @@ function EditPdfCaption({ id, caption }) {
                 );
             }
         };
-        uploadEntry(update);
+        uploadEntry(entry);
     };
 
 
     return (
-        <div className="edit-pdf">
+        <div>
             <ModifyButton
                 onClick={() => { setVisible(true) }}
                 hasText={true}
                 hasIcon={true}
                 type='edit' />
             <Modal visible={visible} setVisible={setVisible} >
-                <form className="edit-pdf__form">
-                    <Input label="Rewrite the caption for this file" id="pdf-caption" name="caption" value={newCaption} onChange={(event) => setNewCaption(event.target.value)} type="text" inputComponent="input" />
-                    <Button onClick={(e) => { handleSubmit(e) }} text="Save" type="submit" />
-                </form>
+                <BroadcastEntryFrom formTitle={"Edit Broadcast"} entry={entry} handleChange={handleChange} onPublish={onPublish} />
             </Modal>
             {uploadError && (
                 <ErrorModal
@@ -77,4 +85,4 @@ function EditPdfCaption({ id, caption }) {
     );
 }
 
-export default EditPdfCaption;
+export default EditBroadcast;

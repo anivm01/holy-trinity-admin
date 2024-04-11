@@ -70,3 +70,64 @@ export const calendarDateConverter = (date) => {
     }
 }
 
+
+
+export const wholeDateObjectConverter = (date) => {
+    const convertedDate = date.toDateString();
+    const dateArray = convertedDate.split(" ");
+    const monthsBg = {
+        Jan: "Януари",
+        Feb: "Февруари",
+        Mar: "Март",
+        Apr: "Април",
+        May: "Май",
+        Jun: "Юни",
+        Jul: "Юли",
+        Aug: "Август",
+        Sep: "Септември",
+        Oct: "Октомври",
+        Nov: "Ноември",
+        Dec: "Декември",
+    };
+
+    const daysBg = {
+        Sun: "Неделя",
+        Mon: "Понеделник",
+        Tue: "Вторник",
+        Wed: "Сряда",
+        Thu: "Четвъртък",
+        Fri: "Петък",
+        Sat: "Събота",
+    };
+
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const time = `${hours}:${minutes}`;
+
+    return {
+        year: dateArray[3],
+        month: dateArray[1],
+        date: dateArray[2],
+        day: dateArray[0],
+        monthBg: monthsBg[dateArray[1]],
+        dayBg: daysBg[dateArray[0]],
+        time: time,
+    };
+}
+
+export const getDefaultDateTime = (hours, mins) => {
+    const now = new Date();
+    now.setHours(hours, mins, 0); // Set time to 10:15 AM
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based, add 1 to get 1-12
+    const day = now.getDate().toString().padStart(2, '0');
+    const hour = now.getHours().toString().padStart(2, '0');
+    const minute = now.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T${hour}:${minute}`;
+};
+
+export const toDatetimeLocalString = (date) => {
+    const offset = date.getTimezoneOffset() * 60000; // Convert offset to milliseconds
+    const localISOTime = (new Date(date - offset)).toISOString().slice(0, 16);
+    return localISOTime;
+};

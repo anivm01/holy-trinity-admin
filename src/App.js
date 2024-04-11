@@ -23,6 +23,7 @@ import EditCalendarPage from "./pages/EditCalendarPage/EditCalendarPage";
 import ResourcesPage from "./pages/ResourcesPage/ResourcesPage";
 import PriestResourcesPage from "./pages/PriestResourcesPage/PriestResourcesPage";
 import PDFUploadsPage from "./pages/PDFUploadsPage/PDFUploadsPage";
+import BroadcastsPage from "./pages/BroadcastsPage/BroadcastsPage";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
               <Route path="/useful-links" element={<ResourcesPage />} />
               <Route path="/resources" element={<PriestResourcesPage />} />
               <Route path="/upload-pdf" element={<PDFUploadsPage />} />
+              <Route path="/broadcasts" element={<BroadcastsPage />} />
             </Routes>
           </div>
         </div>

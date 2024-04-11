@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './UploadPdf.scss'; // Assuming you have a SCSS file for styles
+import './UploadPdf.scss';
 import Input from '../../UI/Input/Input';
 import { API_URL } from '../../../utilities/api';
 import Button from '../../UI/Button/Button';
@@ -8,7 +8,6 @@ import Button from '../../UI/Button/Button';
 function UploadPdf() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploading, setUploading] = useState(false);
-    const [fileUrl, setFileUrl] = useState("")
     const [caption, setCaption] = useState("")
 
     const handleFileChange = (event) => {
@@ -26,8 +25,6 @@ function UploadPdf() {
         formData.append('caption', caption);
         const token = sessionStorage.getItem("authToken");
 
-        console.log(formData)
-
         try {
             const response = await axios.post(`${API_URL}/assets/upload`, formData, {
                 headers: {
@@ -37,7 +34,6 @@ function UploadPdf() {
             });
 
             if (response) {
-                setFileUrl(response.data.upload[0].url)
                 setSelectedFile(null)
             }
             setUploading(false);
@@ -63,14 +59,10 @@ function UploadPdf() {
                 onChange={handleFileChange}
                 id="pdf-upload"
                 name="file"
-                accept="application/pdf" // Only accept PDF files
+                accept="application/pdf"
             />
             <Input label="Write a caption or title for this file" id="pdf-caption" name="caption" value={caption} onChange={(event) => setCaption(event.target.value)} type="text" inputComponent="input" />
             <Button onClick={() => handleSubmit()} text={uploading ? 'Uploading...' : 'Upload'} type="submit" disabled={uploading} />
-            {
-                fileUrl &&
-                <a href={fileUrl}> New pdf</a>
-            }
         </form>
     );
 }

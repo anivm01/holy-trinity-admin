@@ -1,0 +1,52 @@
+@use "../../../partials/colors" as*;
+
+.single-broadcast {
+    border: 1px solid $wine-red;
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
+
+    &__header {
+        background-color: $wine-red;
+        color: $beige;
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem 1rem .25rem 1rem;
+
+        &>span {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+    }
+
+    &__main {
+        display: flex;
+        justify-content: space-between;
+        padding-right: 2rem;
+        gap: 2rem;
+    }
+
+    &__image {
+        width: 100%;
+        max-width: 15rem;
+    }
+
+    &__content {
+        color: $wine-red;
+        padding: 1rem;
+
+        &>h3 {
+            font-size: 1rem;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+
+}

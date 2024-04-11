@@ -1,0 +1,26 @@
+@use "../../../partials/colors" as*;
+@use "../../../partials/breakpoints" as*;
+
+.saved-images {
+    &>div {
+        padding: 0 2rem;
+        margin: 0 auto;
+
+        @include tablet {
+            max-width: 50rem;
+        }
+
+        @include desktop {
+            max-width: 80rem;
+        }
+    }
+
+    &__img {
+        width: 100%;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+}

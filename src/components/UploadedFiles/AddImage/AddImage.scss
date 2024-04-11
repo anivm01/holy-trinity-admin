@@ -1,0 +1,33 @@
+@use "../../../partials/colors" as*;
+
+.add-image {
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 4px solid $wine-red;
+    gap: 2rem;
+
+    &>div {
+        flex-basis: 50%;
+    }
+
+    &__preview {
+        background-color: white;
+        cursor: pointer;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    &__input {
+        width: 0;
+        height: 0;
+
+        &::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+    }
+}

@@ -9,6 +9,7 @@ import WysiwygEdit from "../../WysiwygEdit/WysiwygEdit";
 import OneLineInputUpdated from "../../OneLineInputUpdated/OneLineInputUpdated";
 import axios from "axios";
 import SingleCalendarEntryTitles from "../../Calendar/SingleCalendarEntryTitles/SingleCalendarEntryTitles";
+import FormHeading from "../../UI/FormHeading/FormHeading";
 
 
 function EventEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
@@ -62,12 +63,9 @@ function EventEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
         }));
     };
 
-
-    console.log(entry)
-
     return (
         <form className="event-form">
-            <h1 className="event-form__heading">{formTitle}</h1>
+            <FormHeading title={formTitle} />
             <section className="event-form__set-date">
                 <label className="event-form__subheading" htmlFor={`event-date-${formType}`}>
                     Input the date of the event

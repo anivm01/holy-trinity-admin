@@ -1,0 +1,24 @@
+@use "../../../partials/colors" as*;
+
+.delete-popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color: $wine-red;
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 40rem;
+    margin: 0 auto;
+
+    &__question {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 2rem;
+    }
+}
