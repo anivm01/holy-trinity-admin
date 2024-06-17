@@ -4,7 +4,7 @@ import OneLineInput from "../OneLineInput/OneLineInput";
 import "./EditObituary.scss";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import AddImage from "../AddImage/AddImage";
-import { API_URL, obituarySlug } from "../../utilities/api";
+import { API_URL } from "../../utilities/api";
 import axios from "axios";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
@@ -168,7 +168,7 @@ function EditObituary({ data, dataBg }) {
 
   const deleteItem = async (id) => {
     try {
-      await axios.delete(`${API_URL}${obituarySlug}/en/${id}`);
+      await axios.delete(`${API_URL}/obituary/en/${id}`);
       navigate(-1);
     } catch (error) {
       console.log(error);
@@ -250,7 +250,7 @@ function EditObituary({ data, dataBg }) {
                 >
                   Replace
                 </button>
-                <button className="button" type="button" onClick={()=>setImageId("")}>
+                <button className="button" type="button" onClick={() => setImageId("")}>
                   Remove
                 </button>
                 {!imageIdBg && (

@@ -1,0 +1,7 @@
+@use "../../../partials/colors" as*;
+
+.form-heading {
+    border-bottom: 2px solid $wine-red;
+    width: 100%;
+    text-align: center;
+}

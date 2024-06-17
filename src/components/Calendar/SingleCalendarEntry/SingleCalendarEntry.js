@@ -6,8 +6,13 @@ import EditCalendarEntry from "../EditCalendarEntry/EditCalendarEntry";
 import SingleCalendarEntryTitles from "../SingleCalendarEntryTitles/SingleCalendarEntryTitles";
 
 function SingleCalendarEntry({ single }) {
+  // const utcString = single.date;
+  // const date = new Date(utcString);
+  // const localISOTime = toDatetimeLocalString(date);
+
+  const localTime = new Date(single.date)
+  const date = calendarDateConverter(localTime)
   const entry = {
-    date: calendarDateConverter(single.date),
     title: single.title || "No English Title",
     titleBg: single.title_bg || "No Bulgrarian Title",
     cross: single.cross,
@@ -23,11 +28,11 @@ function SingleCalendarEntry({ single }) {
         <DeleteCaledarEntry id={single.id} />
         <EditCalendarEntry single={single} />
         <div className={`calendar-single__date ${entry.red ? "calendar-single__red" : ""}`}>
-          {`${entry.date.date} ${entry.date.dayEn}`}
+          {`${date.date} ${date.dayEn}`}
         </div>
         <SingleCalendarEntryTitles red={entry.red} cross={entry.cross} star={entry.star} title={entry.title} />
         <div className={`calendar-single__date ${entry.red ? "calendar-single__red" : ""}`}>
-          {`${entry.date.date} ${entry.date.dayBg}`}
+          {`${date.date} ${date.dayBg}`}
         </div>
         <SingleCalendarEntryTitles red={entry.red} cross={entry.cross} star={entry.star} title={entry.titleBg} />
       </div>
