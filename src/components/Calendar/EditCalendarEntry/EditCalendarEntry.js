@@ -5,12 +5,15 @@ import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import editIcon from "../../../assets/edit.svg"
 import { API_URL } from "../../../utilities/api";
-import { dateInputConverter, dateOutputConverter } from "../../../utilities/dateConverter";
+import { toDatetimeLocalString } from "../../../utilities/dateConverter";
 import Modal from "../../Modal/Modal";
 import CalendarEntryForm from "../CalendarEntryForm/CalendarEntryForm";
 
 function EditCalendarEntry({ single }) {
     const [visible, setVisible] = useState()
+    const utcString = single.date;
+    const date = new Date(utcString);
+    const localISOTime = toDatetimeLocalString(date);
 
     //success and error message states
     const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -18,7 +21,7 @@ function EditCalendarEntry({ single }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const [entry, setEntry] = useState({
-        date: dateOutputConverter(single.date),
+        date: localISOTime,
         title: single.title,
         title_bg: single.title_bg,
         cross: single.cross,
@@ -57,16 +60,6 @@ function EditCalendarEntry({ single }) {
             return;
         }
 
-        //publish
-        const post = {
-            date: dateInputConverter(entry.date),
-            title: entry.title,
-            title_bg: entry.title_bg,
-            cross: entry.cross,
-            bold: entry.bold,
-            red: entry.red,
-            star: entry.star
-        };
         const uploadEntry = async (post) => {
             const token = sessionStorage.getItem("authToken");
             try {
@@ -86,7 +79,7 @@ function EditCalendarEntry({ single }) {
                 );
             }
         };
-        uploadEntry(post);
+        uploadEntry(entry);
     };
 
 

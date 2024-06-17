@@ -12,6 +12,8 @@ function AddNewBroadcast() {
     const [entry, setEntry] = useState({
         title: "",
         title_bg: "",
+        heading: "",
+        heading_bg: "",
         youtube_video_id: "",
         featured_image_url: "",
         broadcast_time: getDefaultDateTime(10, 15),

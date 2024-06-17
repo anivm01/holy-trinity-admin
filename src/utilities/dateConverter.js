@@ -37,9 +37,8 @@ export const dateObjectConverter = (date) => {
 }
 
 export const calendarDateConverter = (date) => {
-    const timestamp = new Date(date * 1000)
-    const convertedDate = timestamp.toDateString()
-    const dateArray = convertedDate.split(" ")
+    const convertedDate = date.toDateString();
+    const dateArray = convertedDate.split(" ");
     const dayEn = dateArray[0].charAt(0).toLowerCase()
     let dayBg
     if (dateArray[0] === "Mon") {

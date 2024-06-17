@@ -21,7 +21,7 @@ function SingleBroadcast({ single }) {
             </div>
             <div className="single-broadcast__main">
                 <img className="single-broadcast__image"
-                    src={single.featured_image_url}
+                    src={`https://img.youtube.com/vi/${single.youtube_video_id}/maxresdefault.jpg`}
                     alt={single.title} />
                 <div className="single-broadcast__content">
                     <h3>{single.title}</h3>

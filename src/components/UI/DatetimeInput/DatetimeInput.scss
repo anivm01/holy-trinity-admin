@@ -1,0 +1,19 @@
+@use "../../../partials/colors" as*;
+
+.datetime {
+    color: $wine-red;
+    display: flex;
+    flex-direction: column;
+    padding: .5rem 0;
+
+    &__label {
+        font-size: 1.25rem;
+        width: 100%;
+        font-weight: bold;
+        padding: .5rem 0;
+    }
+
+    &__input {
+        padding: .5rem;
+    }
+}
