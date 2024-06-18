@@ -7,3 +7,4 @@ export { default as Links } from "./Links";
 export { default as Resources } from "./Resources";
 export { default as UploadFile } from "./UploadFile";
 export { default as ImageGallery } from "./ImageGallery";
+export { default as Announcement } from "./Announcement";

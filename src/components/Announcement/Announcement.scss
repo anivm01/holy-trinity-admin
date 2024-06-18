@@ -1,0 +1,31 @@
+@use "../../partials/colors" as*;
+
+.announcement {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+
+    &__previews {
+        flex-basis: 50%;
+    }
+
+    &__edit {
+        flex-basis: 50%;
+    }
+
+    &__preview {
+        margin: 1rem auto;
+        padding: 1.5rem;
+        background-color: $golden;
+        color: $wine-red;
+        font-style: italic;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        min-height: 300px;
+        align-items: center;
+        justify-content: center;
+        border: 4px solid $wine-red;
+    }
+}

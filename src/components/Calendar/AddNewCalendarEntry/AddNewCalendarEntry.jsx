@@ -72,7 +72,7 @@ function AddNewCalendarEntry() {
   };
 
   return (
-    <>
+    <div className="add-new-calendar-entry">
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -88,7 +88,7 @@ function AddNewCalendarEntry() {
         handleChange={handleChange}
         onPublish={onPublish}
       />
-    </>
+    </div>
   );
 }
 
