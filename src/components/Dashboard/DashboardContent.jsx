@@ -1,4 +1,5 @@
 import {
+  Announcement,
   Broadcasts,
   Calendar,
   // CommunityNews,
@@ -11,6 +12,11 @@ import {
 } from "./DashboardIcons";
 
 export const DashboardContnet = [
+  {
+    item: "Announcement",
+    slug: "/announcement",
+    svg: Announcement,
+  },
   {
     item: "Broadcasts",
     slug: "/broadcasts",
