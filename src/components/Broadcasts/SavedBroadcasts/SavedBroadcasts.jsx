@@ -25,7 +25,6 @@ function SavedBroadcasts() {
     return <NoData />;
   }
   if (data) {
-    console.log(data);
     return (
       <div className="saved-broadcasts">
         {data.map((single) => {
