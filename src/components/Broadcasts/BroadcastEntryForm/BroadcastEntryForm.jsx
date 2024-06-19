@@ -2,6 +2,7 @@ import DatetimeInput from "../../UI/DatetimeInput/DatetimeInput";
 import { FormBox } from "../../UI/FormBox/FormBox";
 import Input from "../../UI/Input/Input";
 import "./BroadcastEntryForm.scss";
+
 function BroadcastEntryFrom({ formTitle, entry, handleChange, onPublish }) {
   return (
     <FormBox formTitle={formTitle} onPublish={onPublish}>

@@ -28,14 +28,11 @@ function SavedBroadcasts() {
     return (
       <div className="saved-broadcasts">
         {data.map((single) => {
-          return (
-            <SingleBroadcast key={single.id} single={single} />
-          )
+          return <SingleBroadcast key={single.id} single={single} />;
         })}
       </div>
     );
   }
-
 }
 
 export default SavedBroadcasts;
