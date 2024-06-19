@@ -51,7 +51,7 @@ function AddNewFeast() {
   };
 
   return (
-    <>
+    <div className="new-feast">
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -67,7 +67,7 @@ function AddNewFeast() {
         setEntry={setEntry}
         onPublish={onPublish}
       />
-    </>
+    </div>
   );
 }
 
