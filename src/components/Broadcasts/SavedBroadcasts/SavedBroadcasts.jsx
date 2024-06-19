@@ -25,17 +25,15 @@ function SavedBroadcasts() {
     return <NoData />;
   }
   if (data) {
+    console.log(data);
     return (
       <div className="saved-broadcasts">
         {data.map((single) => {
-          return (
-            <SingleBroadcast key={single.id} single={single} />
-          )
+          return <SingleBroadcast key={single.id} single={single} />;
         })}
       </div>
     );
   }
-
 }
 
 export default SavedBroadcasts;
