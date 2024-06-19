@@ -28,6 +28,7 @@ function SavedImages() {
     }
     if (data) {
         const images = data.data
+        console.log(images)
         return (
             <div className="saved-images">
                 <ResponsiveMasonry
