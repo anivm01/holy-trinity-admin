@@ -3,9 +3,9 @@ import "./QuickNav.scss";
 import announcement from "../../assets/announcement.svg";
 import video from "../../assets/video.svg";
 import event from "../../assets/event.svg";
-import news from "../../assets/news.svg";
-import cross from "../../assets/cross-beige.svg";
-import image from "../../assets/image.svg";
+// import news from "../../assets/news.svg";
+// import cross from "../../assets/cross-beige.svg";
+import calendar from "../../assets/calendar.svg";
 import { useLoggedIn, LoggedInUpdate } from "../../utilities/LoggedInContext";
 import Login from "../Login/Login";
 
@@ -41,7 +41,7 @@ function QuickNav() {
           <li className="quick-nav__item">
             <NavLink
               className="quick-nav__link"
-              to="/weekly-announcements/add-new"
+              to="/announcement"
             >
               <img
                 className="quick-nav__icon"
@@ -49,23 +49,23 @@ function QuickNav() {
                 alt="announcement icon"
               />
               <span className="quick-nav__text">
-                Add New Weekly Announcement
+                Change the Announcement
               </span>
             </NavLink>
           </li>
           <li className="quick-nav__item">
-            <NavLink className="quick-nav__link" to="/worship-offices/add-new">
+            <NavLink className="quick-nav__link" to="/broadcasts">
               <img className="quick-nav__icon" src={video} alt="video icon" />
-              <span className="quick-nav__text">Add New Worship Office</span>
+              <span className="quick-nav__text">Add a new Broadcast</span>
             </NavLink>
           </li>
           <li className="quick-nav__item">
-            <NavLink className="quick-nav__link" to="/events/add-new">
+            <NavLink className="quick-nav__link" to="/feasts">
               <img className="quick-nav__icon" src={event} alt="event icon" />
-              <span className="quick-nav__text">Add New Event</span>
+              <span className="quick-nav__text">Add a new Feast</span>
             </NavLink>
           </li>
-          <li className="quick-nav__item">
+          {/* <li className="quick-nav__item">
             <NavLink className="quick-nav__link" to="/community-news/add-new">
               <img className="quick-nav__icon" src={news} alt="news icon" />
               <span className="quick-nav__text">Add New Community News</span>
@@ -76,11 +76,11 @@ function QuickNav() {
               <img className="quick-nav__icon" src={cross} alt="cross icon" />
               <span className="quick-nav__text">Add New Obituary</span>
             </NavLink>
-          </li>
+          </li> */}
           <li className="quick-nav__item">
-            <NavLink className="quick-nav__link" to="/image-gallery">
-              <img className="quick-nav__icon" src={image} alt="icon" />
-              <span className="quick-nav__text">Add New Image</span>
+            <NavLink className="quick-nav__link" to="/calendar">
+              <img className="quick-nav__icon" src={calendar} alt="icon" />
+              <span className="quick-nav__text">Update Calendar</span>
             </NavLink>
           </li>
         </ul>
