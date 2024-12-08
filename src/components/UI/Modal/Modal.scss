@@ -23,6 +23,21 @@
         max-width: 50rem;
         width: fit-content;
         position: relative;
+        max-height: 80vh;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 0.5rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $beige;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $golden;
+            border-radius: .25rem;
+        }
     }
 
     &__close {
