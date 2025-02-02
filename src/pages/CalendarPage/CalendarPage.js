@@ -6,6 +6,8 @@ import AddNewCalendarEntry from '../../components/Calendar/AddNewCalendarEntry/A
 import useFetch from '../../utilities/useFetch';
 import NoData from '../../components/NoData/NoData';
 import { ThreeDots } from "react-loader-spinner";
+import CalendarPreview from "../CalendarPreview/CalendarPreview";
+
 
 function CalendarPage() {
   const { data, error, loading } = useFetch(`${API_URL}/calendar`);
@@ -36,6 +38,7 @@ function CalendarPage() {
         <SavedCalendar
           data={data}
         />
+        <CalendarPreview />
       </section>
     )
   }
