@@ -3,7 +3,7 @@
 .saved-entries {
     padding: 0 2rem 4rem;
     width: 100%;
-    max-width: 80rem;
+    max-width: 60rem;
     margin: 0 auto;
 
     &__navigation {
@@ -13,5 +13,25 @@
         align-items: center;
         justify-content: center;
         gap: 2rem;
+    }
+
+    &__entries {
+        max-height: 600px;
+        overflow-y: auto; // Enable vertical scrolling for content
+
+        // Custom Scrollbar Styling
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $golden;
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $wine-red;
+            border-radius: 5px;
+        }
     }
 }

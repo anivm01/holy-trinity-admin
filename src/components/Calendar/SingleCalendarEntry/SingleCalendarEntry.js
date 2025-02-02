@@ -6,12 +6,8 @@ import EditCalendarEntry from "../EditCalendarEntry/EditCalendarEntry";
 import SingleCalendarEntryTitles from "../SingleCalendarEntryTitles/SingleCalendarEntryTitles";
 
 function SingleCalendarEntry({ single }) {
-  // const utcString = single.date;
-  // const date = new Date(utcString);
-  // const localISOTime = toDatetimeLocalString(date);
 
-  const localTime = new Date(single.date)
-  const date = calendarDateConverter(localTime)
+  const date = calendarDateConverter(single.date)
   const entry = {
     title: single.title || "No English Title",
     titleBg: single.title_bg || "No Bulgrarian Title",
