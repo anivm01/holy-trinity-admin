@@ -26,6 +26,7 @@ import PDFUploadsPage from "./pages/PDFUploadsPage/PDFUploadsPage";
 import BroadcastsPage from "./pages/BroadcastsPage/BroadcastsPage";
 import FeastsPage from "./pages/FeastsPage/FeastsPage";
 import AnnouncementPage from "./pages/AnnouncementPage/AnnouncementPage";
+import VideosPage from "./pages/VideosPage/VideosPage";
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
               <Route path="/broadcasts" element={<BroadcastsPage />} />
               <Route path="/feasts" element={<FeastsPage />} />
               <Route path="/announcement" element={<AnnouncementPage />} />
+              <Route path="/videos" element={<VideosPage />} />
             </Routes>
           </div>
         </div>

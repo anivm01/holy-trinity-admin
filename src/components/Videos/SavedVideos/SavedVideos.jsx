@@ -1,12 +1,12 @@
-import "./SavedBroadcasts.scss";
+import "./SavedVideos.scss";
 import { ThreeDots } from "react-loader-spinner";
 import useFetch from "../../../utilities/useFetch";
 import NoData from "../../NoData/NoData";
 import { API_URL } from "../../../utilities/api";
-import SingleBroadcast from "../SingleBroadcast/SingleBroadcast";
+import SingleVideo from "../SingleVideo/SingleVideo";
 
-function SavedBroadcasts() {
-  const { data, error, loading } = useFetch(`${API_URL}/broadcasts`);
+function SavedVideos() {
+  const { data, error, loading } = useFetch(`${API_URL}/videos`);
   if (loading) {
     return (
       <ThreeDots
@@ -25,13 +25,14 @@ function SavedBroadcasts() {
     return <NoData />;
   }
   if (data) {
-    const latest = data[0];
     return (
       <div className="saved-broadcasts">
-        <SingleBroadcast single={latest} />;
+        {data.map((single) => {
+          return <SingleVideo key={single.id} single={single} />;
+        })}
       </div>
     );
   }
 }
 
-export default SavedBroadcasts;
+export default SavedVideos;

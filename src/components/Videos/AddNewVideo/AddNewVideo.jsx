@@ -1,22 +1,22 @@
 import { useState } from "react";
-import "./AddNewBroadcast.scss";
+import "./AddNewVideo.scss";
 import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
-import { getDefaultDateTime } from "../../../utilities/dateConverter";
-import BroadcastEntryFrom from "../BroadcastEntryForm/BroadcastEntryForm";
+import VideoEntryFrom from "../VideoEntryForm/VideoEntryForm";
+import { getCurrentDateTimeLocal } from "../../../utilities/dateConverter";
 
-function AddNewBroadcast() {
+function AddNewVideo() {
+  const defaultDate = getCurrentDateTimeLocal();
+  const [commentary, setCommentary] = useState("");
   const [entry, setEntry] = useState({
     title: "",
-    title_bg: "",
-    heading: "",
-    heading_bg: "",
     youtube_video_id: "",
-    featured_image_url: "",
-    broadcast_time: getDefaultDateTime(10, 15),
+    upload_date: defaultDate,
+    commentary: commentary,
   });
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setEntry((prevState) => ({
@@ -34,13 +34,17 @@ function AddNewBroadcast() {
   const onPublish = (e) => {
     e.preventDefault();
     const post = {
-      ...entry,
+      title: entry.title,
+      youtube_video_id: entry.youtube_video_id,
+      upload_date: entry.upload_date,
+      commentary: commentary,
     };
 
     const uploadEntry = async (post) => {
+      console.log(post);
       const token = sessionStorage.getItem("authToken");
       try {
-        await axios.post(`${API_URL}/broadcasts`, post, {
+        await axios.post(`${API_URL}/videos`, post, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -58,7 +62,7 @@ function AddNewBroadcast() {
   };
 
   return (
-    <div className="add-broadcast">
+    <div className="add-video">
       {uploadError && (
         <ErrorModal
           errorMessage={errorMessage}
@@ -67,14 +71,16 @@ function AddNewBroadcast() {
         />
       )}
       {uploadSuccess && <SuccessModal />}
-      <BroadcastEntryFrom
-        formTitle={"New Live Stream Link"}
+      <VideoEntryFrom
+        formTitle={"Add New video"}
         entry={entry}
         handleChange={handleChange}
+        setCommentary={setCommentary}
+        commentary={commentary}
         onPublish={onPublish}
       />
     </div>
   );
 }
 
-export default AddNewBroadcast;
+export default AddNewVideo;

@@ -18,8 +18,13 @@ export const DashboardContnet = [
     svg: Announcement,
   },
   {
-    item: "Broadcasts",
+    item: "Live Streams",
     slug: "/broadcasts",
+    svg: Broadcasts,
+  },
+  {
+    item: "Videos",
+    slug: "/videos",
     svg: Broadcasts,
   },
   {

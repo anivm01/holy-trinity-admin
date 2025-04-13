@@ -3,30 +3,25 @@ import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
-import BroadcastEntryFrom from "../BroadcastEntryForm/BroadcastEntryForm";
+import VideoEntryFrom from "../VideoEntryForm/VideoEntryForm";
 import ModifyButton from "../../UI/ModifyButton/ModifyButton";
-import { toDatetimeLocalString } from "../../../utilities/dateConverter";
 import Modal from "../../UI/Modal/Modal";
+import { getCurrentDateTimeLocal } from "../../../utilities/dateConverter";
 
-function EditBroadcast({ single }) {
+function EditVideo({ single }) {
   const [visible, setVisible] = useState();
-  const utcString = single.broadcast_time;
-  const date = new Date(utcString);
-  const localISOTime = toDatetimeLocalString(date);
-
   //success and error message states
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [commentary, setCommentary] = useState(single.commentary);
+
   const [entry, setEntry] = useState({
     title: single.title,
-    title_bg: single.title_bg,
-    heading: single.heading,
-    heading_bg: single.heading_bg,
     youtube_video_id: single.youtube_video_id,
-    featured_image_url: single.featured_image_url,
-    broadcast_time: localISOTime,
+    upload_date: getCurrentDateTimeLocal(single.upload_date),
+    commentary: commentary,
   });
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,13 +32,18 @@ function EditBroadcast({ single }) {
   };
 
   //function to handle uploading the new entry
-  const onPublish = (e) => {
-    e.preventDefault();
+  const onPublish = () => {
+    const post = {
+      title: entry.title,
+      youtube_video_id: entry.youtube_video_id,
+      upload_date: entry.upload_date,
+      commentary: commentary,
+    };
     //publish
-    const uploadEntry = async (entry) => {
+    const uploadEntry = async (post) => {
       const token = sessionStorage.getItem("authToken");
       try {
-        await axios.put(`${API_URL}/broadcasts/${single.id}`, entry, {
+        await axios.put(`${API_URL}/videos/${single.id}`, post, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -59,7 +59,7 @@ function EditBroadcast({ single }) {
         );
       }
     };
-    uploadEntry(entry);
+    uploadEntry(post);
   };
 
   return (
@@ -73,10 +73,12 @@ function EditBroadcast({ single }) {
         type="edit"
       />
       <Modal visible={visible} setVisible={setVisible}>
-        <BroadcastEntryFrom
-          formTitle={"Edit Broadcast"}
+        <VideoEntryFrom
+          formTitle={"Edit Video"}
           entry={entry}
           handleChange={handleChange}
+          setCommentary={setCommentary}
+          commentary={commentary}
           onPublish={onPublish}
         />
       </Modal>
@@ -92,4 +94,4 @@ function EditBroadcast({ single }) {
   );
 }
 
-export default EditBroadcast;
+export default EditVideo;
