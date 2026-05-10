@@ -4,8 +4,9 @@ import CalendarDisplayEntry from "../CalendarDisplayEntry/CalendarDisplayEntry";
 import ArrowIcon from "../../../assets/svg/ArrowIcon/ArrowIcon";
 
 const CalendarDisplay = ({ data }) => {
+  console.log(data);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(
-    new Date().getMonth()
+    new Date().getMonth(),
   );
   const currentDateRef = useRef(null);
 
