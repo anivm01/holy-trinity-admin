@@ -6,7 +6,7 @@ import AddNewCalendarEntry from '../../components/Calendar/AddNewCalendarEntry/A
 import useFetch from '../../utilities/useFetch';
 import NoData from '../../components/NoData/NoData';
 import { ThreeDots } from "react-loader-spinner";
-import CalendarPreview from "../CalendarPreview/CalendarPreview";
+import CalendarPreview from "../../components/CalendarPreview/CalendarPreview";
 
 
 function CalendarPage() {

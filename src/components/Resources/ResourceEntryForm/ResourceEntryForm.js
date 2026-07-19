@@ -1,5 +1,5 @@
 import "./ResourceEntryForm.scss";
-import OneLineInputUpdated from "../../OneLineInputUpdated/OneLineInputUpdated";
+import Input from "../../UI/Input/Input";
 
 function ResourceEntryForm({ formTitle, entry, handleChange, onPublish }) {
     return (
@@ -7,19 +7,21 @@ function ResourceEntryForm({ formTitle, entry, handleChange, onPublish }) {
             <h1 className="resources-form__heading">{formTitle}</h1>
             <section className="resources-form__main">
                 <div className="resources-form__column">
-                    <OneLineInputUpdated
+                    <Input
                         label="Text"
+                        id="text"
                         name="text"
-                        oneLine={entry.text}
-                        setOneLine={handleChange}
+                        value={entry.text}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="resources-form__column">
-                    <OneLineInputUpdated
+                    <Input
                         label="url"
+                        id="url"
                         name="url"
-                        oneLine={entry.url}
-                        setOneLine={handleChange}
+                        value={entry.url}
+                        onChange={handleChange}
                     />
                 </div>
             </section>

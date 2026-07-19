@@ -3,7 +3,7 @@ import ErrorModal from "../../ErrorModal/ErrorModal";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import { API_URL } from "../../../utilities/api";
-import Modal from "../../Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
 

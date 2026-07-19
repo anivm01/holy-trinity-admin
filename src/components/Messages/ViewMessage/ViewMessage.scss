@@ -1,0 +1,74 @@
+@use "../../../partials/colors" as *;
+
+.view-priest-message {
+    display: flex;
+    justify-content: flex-end;
+
+    &__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: .25rem;
+        background-color: $golden;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            scale: 1.05;
+            background-color: $beige;
+        }
+
+        &:active {
+            scale: .95;
+        }
+    }
+
+    &__icon {
+        width: 1rem;
+    }
+
+    &__modal {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem;
+        max-height: 75vh;
+        overflow-y: auto;
+        padding: 1rem;
+        color: $wine-red;
+    }
+
+    &__column {
+        min-width: 0;
+    }
+
+    &__language {
+        margin: 0 0 .5rem;
+        color: #6f675c;
+        font-size: .8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        margin: 0 0 1rem;
+        font-size: 1.25rem;
+        line-height: 1.3;
+    }
+
+    &__content {
+        margin: 0;
+        color: #2d2923;
+        font-size: .95rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+    }
+}
+
+@media (max-width: 700px) {
+    .view-priest-message {
+        &__modal {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    }
+}

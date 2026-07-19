@@ -10,7 +10,7 @@ import { getDefaultDateTime } from "../../../utilities/dateConverter";
 function AddNewCalendarEntry() {
   //regular inputs controlled and stored into one object
   const [entry, setEntry] = useState({
-    title: "", 
+    title: "",
     title_bg: "",
     date: getDefaultDateTime(0, 0),
     cross: false,
@@ -64,7 +64,7 @@ function AddNewCalendarEntry() {
         console.log(err.response);
         setUploadError(true);
         setErrorMessage(
-          "There was a problem with the connection. Try again later."
+          "There was a problem with the connection. Try again later.",
         );
       }
     };
