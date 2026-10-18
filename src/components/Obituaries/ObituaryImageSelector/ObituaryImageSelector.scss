@@ -1,0 +1,228 @@
+@use "../../../partials/colors" as *;
+
+.obituary-image-selector {
+  width: 100%;
+
+  &__heading {
+    max-width: 50rem;
+    margin: 0 auto 0.75rem;
+    color: $wine-red;
+    font-size: 1.15rem;
+  }
+
+  &__uploader {
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    border-bottom: 4px solid $wine-red;
+  }
+
+  &__preview-column,
+  &__controls {
+    min-width: 0;
+    flex-basis: 50%;
+  }
+
+  &__preview-box {
+    display: block;
+    cursor: pointer;
+
+    span {
+      margin: 0.5rem;
+      display: block;
+      color: $wine-red;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+  }
+
+  &__preview {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: white;
+  }
+
+  &__file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+
+    >label {
+      font-weight: 600;
+    }
+
+    >a {
+      align-self: flex-start;
+      color: $wine-red;
+    }
+  }
+
+  &__instructions,
+  &__file-name {
+    margin: 0;
+    color: #5e564d;
+    line-height: 1.4;
+  }
+
+  &__file-name {
+    overflow-wrap: anywhere;
+    color: $wine-red;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  &__caption {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid $wine-red;
+    border-radius: 10px;
+
+    &:focus {
+      outline: 2px solid $wine-red;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  &__button {
+    padding: 0.5rem 0.85rem;
+    border: 2px solid $wine-red;
+    border-radius: 4px;
+    color: $beige;
+    font-weight: 700;
+    background: $wine-red;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      color: $wine-red;
+      background: $golden;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &--secondary {
+      color: $wine-red;
+      background: $beige;
+    }
+  }
+
+  &__library {
+    max-width: 60rem;
+    max-height: 28rem;
+    margin: 1rem auto 0;
+    padding: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+    overflow-y: auto;
+    background: #fff;
+  }
+
+  &__library-item {
+    min-width: 0;
+    padding: 0.35rem;
+    border: 2px solid transparent;
+    color: #4f4941;
+    background: $beige;
+    cursor: pointer;
+
+    &:hover,
+    &--selected {
+      border-color: $wine-red;
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1;
+      display: block;
+      object-fit: cover;
+    }
+
+    span {
+      margin-top: 0.35rem;
+      display: block;
+      overflow: hidden;
+      font-size: 0.75rem;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__library-status {
+    max-width: 50rem;
+    margin: 1rem auto 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    color: #6f675c;
+    background: #fff;
+  }
+
+  &__message {
+    margin: 0;
+    color: #34613d;
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    &--error {
+      color: $wine-red;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .obituary-image-selector {
+    &__uploader {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    &__preview-column,
+    &__controls {
+      width: 100%;
+    }
+
+    &__library {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .obituary-image-selector {
+    &__library {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__buttons {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+}

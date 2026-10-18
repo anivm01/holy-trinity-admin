@@ -1,0 +1,48 @@
+@use "../../../partials/colors" as *;
+
+.obituary-form {
+  width: 100%;
+  max-width: 70rem;
+  margin: 0 auto;
+
+  .form-box {
+    background-color: $beige;
+  }
+
+  &__details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+  }
+
+  &__editors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+
+    .wysiwyg {
+      min-width: 0;
+    }
+
+    .rsw-editor {
+      min-width: 0 !important;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .obituary-form {
+    &__details,
+    &__editors {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .obituary-form {
+    .form-box {
+      padding: 1rem;
+    }
+  }
+}

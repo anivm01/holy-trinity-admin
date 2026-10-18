@@ -13,6 +13,7 @@ import FeastsPage from "./pages/FeastsPage/FeastsPage";
 import AnnouncementPage from "./pages/AnnouncementPage/AnnouncementPage";
 import VideosPage from "./pages/VideosPage/VideosPage";
 import MessagesPage from "./pages/MessagesPage/MessagesPage";
+import ObituariesPage from "./pages/ObituariesPage/ObituariesPage";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
               <Route path="/calendar" element={<CalendarPage />} />
 
               <Route path="/messages" element={<MessagesPage />} />
+
+              <Route path="/obituaries" element={<ObituariesPage />} />
 
               <Route path="/useful-links" element={<ResourcesPage />} />
               <Route path="/resources" element={<PriestResourcesPage />} />

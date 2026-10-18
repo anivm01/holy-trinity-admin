@@ -12,6 +12,8 @@ const ModifyButton = ({ onClick, hasIcon, hasText, type, variant }) => {
             className={`modify-button modify-button--${variant}`}
             onClick={onClick}
             type="button"
+            aria-label={hasText ? undefined : buttonText}
+            title={hasText ? undefined : buttonText}
         >
             {hasText && <span className="modify-button__text">{buttonText}</span>}
 
