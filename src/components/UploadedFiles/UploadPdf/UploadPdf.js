@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import './UploadPdf.scss';
 import Input from '../../UI/Input/Input';
 import { API_URL } from '../../../utilities/api';
 import Button from '../../UI/Button/Button';
+import ErrorModal from '../../ErrorModal/ErrorModal';
+import SuccessModal from '../../SuccessModal/SuccessModal';
 
-function UploadPdf() {
+function UploadPdf({ onUploadSuccess }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [caption, setCaption] = useState("")
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [uploadError, setUploadError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const fileInput = useRef(null);
 
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
         if (!selectedFile) {
-            alert('Please select a PDF file first!');
+            setErrorMessage('Please select a PDF file first!');
+            setUploadError(true);
             return;
         }
 
@@ -26,44 +35,62 @@ function UploadPdf() {
         const token = sessionStorage.getItem("authToken");
 
         try {
-            const response = await axios.post(`${API_URL}/assets/upload`, formData, {
+            setUploading(true);
+
+            await axios.post(`${API_URL}/assets/upload`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${token}`,
                 },
             });
 
-            if (response) {
-                setSelectedFile(null)
+            setSelectedFile(null);
+            setCaption("");
+            if (fileInput.current) {
+                fileInput.current.value = "";
             }
-            setUploading(false);
-            alert('PDF uploaded successfully!');
-            console.log(response.data);
-
+            onUploadSuccess();
+            setUploadSuccess(true);
         } catch (error) {
-            setUploading(false);
             console.error('Upload error:', error);
-            alert('Error uploading PDF.');
+            setErrorMessage(
+                error.response?.data?.message ||
+                'There was an error with the PDF upload.'
+            );
+            setUploadError(true);
+        } finally {
+            setUploading(false);
         }
     }
 
 
     return (
-        <form className="pdf-upload">
-            <label htmlFor="pdf-upload" className="pdf-upload__label">
-                {selectedFile ? selectedFile.name : "Choose a file"}
-            </label>
-            <input
-                className='pdf-upload__input'
-                type="file"
-                onChange={handleFileChange}
-                id="pdf-upload"
-                name="file"
-                accept="application/pdf"
-            />
-            <Input label="Write a caption or title for this file" id="pdf-caption" name="caption" value={caption} onChange={(event) => setCaption(event.target.value)} type="text" inputComponent="input" />
-            <Button onClick={() => handleSubmit()} text={uploading ? 'Uploading...' : 'Upload'} type="submit" disabled={uploading} />
-        </form>
+        <>
+            {uploadError && (
+                <ErrorModal
+                    errorMessage={errorMessage}
+                    setErrorMessage={setErrorMessage}
+                    setUploadError={setUploadError}
+                />
+            )}
+            {uploadSuccess && <SuccessModal />}
+            <form className="pdf-upload" onSubmit={handleSubmit}>
+                <label htmlFor="pdf-upload" className="pdf-upload__label">
+                    {selectedFile ? selectedFile.name : "Choose a file"}
+                </label>
+                <input
+                    ref={fileInput}
+                    className='pdf-upload__input'
+                    type="file"
+                    onChange={handleFileChange}
+                    id="pdf-upload"
+                    name="file"
+                    accept="application/pdf"
+                />
+                <Input label="Write a caption or title for this file" id="pdf-caption" name="caption" value={caption} onChange={(event) => setCaption(event.target.value)} type="text" inputComponent="input" />
+                <Button text={uploading ? 'Uploading...' : 'Upload'} type="submit" disabled={uploading} />
+            </form>
+        </>
     );
 }
 
