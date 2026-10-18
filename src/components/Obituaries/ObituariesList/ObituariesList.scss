@@ -1,0 +1,219 @@
+@use "../../../partials/colors" as *;
+
+.obituaries-list {
+  width: min(64rem, calc(100% - 4rem));
+  margin: 0 auto;
+  display: grid;
+  gap: 1.4rem;
+
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.55rem;
+  }
+
+  &__card {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid #d8d0c3;
+    border-left: 3px solid rgba(111, 11, 32, 0.72);
+    background: #fdfbf7;
+    box-shadow: 0 0.2rem 0.75rem rgba(45, 41, 35, 0.07);
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    min-height: 15rem;
+    object-fit: cover;
+    filter: saturate(0.82);
+    background: #e9e4db;
+  }
+
+  &__content {
+    min-width: 0;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__memorial {
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #ddd5c8;
+  }
+
+  &__name,
+  &__name-bg,
+  &__years,
+  &__preview p,
+  &__preview div {
+    margin: 0;
+  }
+
+  &__name {
+    color: #302d29;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  &__name-bg {
+    margin-top: 0.2rem;
+    color: #554f48;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  &__years {
+    margin-top: 0.4rem;
+    color: #756d63;
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.35;
+  }
+
+  &__excerpts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  &__excerpt {
+    min-width: 0;
+  }
+
+  &__language {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #74685f;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  &__preview {
+    display: -webkit-box;
+    max-height: 4.35em;
+    overflow: hidden;
+    color: #4e4943;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+
+    &--empty {
+      color: #81786f;
+      font-style: italic;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .modify-button {
+      width: 2rem;
+      height: 2rem;
+      padding: 0.4rem;
+      border: 1px solid #b9afa2;
+      border-radius: 50%;
+      color: #6c655d;
+      background: transparent;
+
+      > span > svg {
+        fill: #6c655d;
+      }
+
+      &:hover {
+        border-color: $wine-red;
+        color: $beige;
+        background: $wine-red;
+
+        > span > svg {
+          fill: $beige;
+        }
+      }
+    }
+  }
+
+  &__status {
+    width: min(42rem, calc(100% - 4rem));
+    margin: 2rem auto 0;
+    padding: 2rem;
+    border: 1px dashed #cfc5b6;
+    color: #6f675c;
+    text-align: center;
+    background: rgba(253, 251, 247, 0.7);
+
+    h2 {
+      margin: 0 0 0.35rem;
+      color: #302d29;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    &--error {
+      border-color: rgba(111, 11, 32, 0.35);
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .obituaries-list {
+    width: min(100% - 2rem, 64rem);
+
+    &__card {
+      grid-template-columns: 8rem minmax(0, 1fr);
+    }
+
+    &__image {
+      min-height: 13rem;
+    }
+
+    &__content {
+      padding: 1rem;
+    }
+
+    &__excerpts {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    &__status {
+      width: min(100% - 2rem, 42rem);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .obituaries-list {
+    &__item {
+      grid-template-columns: 1fr;
+    }
+
+    &__card {
+      grid-template-columns: 1fr;
+    }
+
+    &__image {
+      height: 15rem;
+      min-height: 0;
+    }
+
+    &__actions {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+}

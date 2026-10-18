@@ -1,8 +1,11 @@
-@use "../../partials/colors"as*;
-@use "../../partials/button"as*;
 .obituaries-page {
-    width: 100%;
-    &__link {
-       @extend .button;
+  padding-bottom: 3rem;
+}
+
+@media (max-width: 600px) {
+  .obituaries-page {
+    &__intro {
+      width: min(100% - 2rem, 70rem);
     }
-    }
+  }
+}

@@ -1,0 +1,20 @@
+.messages-page {
+    padding: 2rem;
+
+    &__header {
+        margin-bottom: 1.5rem;
+
+        h1 {
+            margin: 0;
+            color: #2d2923;
+            font-size: 1.75rem;
+            line-height: 1.2;
+        }
+
+        p {
+            margin: 0.4rem 0 0;
+            color: #6f675c;
+            font-size: 0.95rem;
+        }
+    }
+}

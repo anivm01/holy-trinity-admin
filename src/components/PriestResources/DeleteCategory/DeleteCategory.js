@@ -1,6 +1,6 @@
 import "./DeleteCategory.scss";
 import useDelete from "../../../utilities/useDelete";
-import Modal from "../../Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 import { useState } from "react";
 import { API_URL } from "../../../utilities/api";
 import Button from "../../UI/Button/Button";

@@ -1,7 +1,7 @@
 import "./DeleteResource.scss";
 import deleteIcon from "../../../assets/delete.svg";
 import useDelete from "../../../utilities/useDelete";
-import Modal from "../../Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 import { useState } from "react";
 import { API_URL } from "../../../utilities/api";
 

@@ -54,7 +54,7 @@ function AddNewVideo() {
         console.log(err.response);
         setUploadError(true);
         setErrorMessage(
-          "There was a problem with the connection. Try again later."
+          "There was a problem with the connection. Try again later.",
         );
       }
     };

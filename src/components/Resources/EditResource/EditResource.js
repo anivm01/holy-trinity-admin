@@ -5,7 +5,7 @@ import SuccessModal from "../../SuccessModal/SuccessModal";
 import axios from "axios";
 import editIcon from "../../../assets/edit.svg"
 import { API_URL } from "../../../utilities/api";
-import Modal from "../../Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 import ResourceEntryForm from "../ResourceEntryForm/ResourceEntryForm";
 
 function EditResource({ single }) {

@@ -1,0 +1,198 @@
+{
+  "associatedFeasts": [
+    {
+      "id": "nativity-of-christ",
+      "name_en": "Nativity of Christ",
+      "name_bg": "Рождество Христово"
+    },
+    {
+      "id": "theophany",
+      "name_en": "Theophany",
+      "name_bg": "Богоявление"
+    },
+    {
+      "id": "meeting-of-the-lord",
+      "name_en": "Meeting of the Lord",
+      "name_bg": "Сретение Господне"
+    },
+    {
+      "id": "annunciation",
+      "name_en": "Annunciation",
+      "name_bg": "Благовещение"
+    },
+    {
+      "id": "palm-sunday",
+      "name_en": "Palm Sunday",
+      "name_bg": "Вход Господен в Йерусалим"
+    },
+    {
+      "id": "pascha",
+      "name_en": "Pascha",
+      "name_bg": "Възкресение Христово"
+    },
+    {
+      "id": "transfiguration",
+      "name_en": "Transfiguration of the Lord",
+      "name_bg": "Преображение Господне"
+    },
+    {
+      "id": "dormition",
+      "name_en": "Dormition of the Theotokos",
+      "name_bg": "Успение на Пресвета Богородица"
+    }
+  ],
+  "messageTags": [
+    {
+      "id": "tag-a7f3c2",
+      "label": "Hope"
+    },
+    {
+      "id": "tag-b91e08",
+      "label": "Prayer"
+    },
+    {
+      "id": "tag-c42d77",
+      "label": "Repentance"
+    },
+    {
+      "id": "tag-d6a5f1",
+      "label": "Семейство"
+    },
+    {
+      "id": "tag-e83b24",
+      "label": "Благодарност"
+    }
+  ],
+  "priestMessages": [
+    {
+      "id": 1,
+      "title_en": "A Christmas Greeting to the Parish",
+      "title_bg": "Рождественски поздрав към енорията",
+      "message_en": "Dear brothers and sisters in Christ, as we celebrate the Nativity of our Lord, let us remember that God comes to us not in power and noise, but in humility, silence, and love. The Child born in Bethlehem enters the world quietly, yet His light changes everything. May this holy feast renew our hope, strengthen our families, and remind us that Christ is near to all who seek Him with a sincere heart.",
+      "message_bg": "Скъпи братя и сестри в Христа, когато празнуваме Рождеството на нашия Господ, нека помним, че Бог идва при нас не със сила и шум, а със смирение, тишина и любов. Младенецът, роден във Витлеем, влиза в света тихо, но Неговата светлина променя всичко. Нека този свят празник обнови надеждата ни, укрепи семействата ни и ни напомни, че Христос е близо до всички, които Го търсят с искрено сърце.",
+      "date": "2026-12-20",
+      "associated_feast_id": "nativity-of-christ",
+      "tags": ["tag-a7f3c2", "tag-d6a5f1", "tag-e83b24"],
+      "isVisible": true,
+      "createdAt": "2026-12-10T14:30:00",
+      "updatedAt": "2026-12-15T09:20:00"
+    },
+    {
+      "id": 2,
+      "title_en": "The Light of Theophany",
+      "title_bg": "Светлината на Богоявление",
+      "message_en": "On the feast of Theophany, we behold Christ entering the waters of the Jordan and revealing the mystery of the Holy Trinity. This feast calls us to remember our own baptism and the grace by which we are renewed. May the blessing of the waters remind us that every part of our life can be sanctified when we turn toward God with faith, repentance, and thanksgiving.",
+      "message_bg": "На празника Богоявление виждаме Христос да влиза във водите на Йордан и да открива тайната на Светата Троица. Този празник ни призовава да си спомним собственото си кръщение и благодатта, чрез която се обновяваме. Нека освещаването на водите ни напомни, че всяка част от живота ни може да бъде осветена, когато се обръщаме към Бога с вяра, покаяние и благодарност.",
+      "date": "2026-01-06",
+      "associated_feast_id": "theophany",
+      "tags": ["tag-b91e08", "tag-c42d77", "tag-e83b24"],
+      "isVisible": false,
+      "createdAt": "2025-12-28T10:15:00",
+      "updatedAt": "2026-01-02T16:45:00"
+    },
+    {
+      "id": 3,
+      "title_en": "Receiving Christ with an Open Heart",
+      "title_bg": "Да посрещнем Христос с отворено сърце",
+      "message_en": "The Meeting of the Lord teaches us patience, faithfulness, and spiritual watchfulness. Simeon and Anna waited for many years, yet they did not lose hope. When Christ was brought into the temple, they recognized Him with joy. May we also learn to recognize the presence of God in our daily life, especially in quiet moments of prayer, service, and love for one another.",
+      "message_bg": "Сретение Господне ни учи на търпение, вярност и духовна бодрост. Симеон и Анна чакаха дълги години, но не изгубиха надежда. Когато Христос беше донесен в храма, те Го познаха с радост. Нека и ние се научим да разпознаваме Божието присъствие в ежедневния си живот, особено в тихите моменти на молитва, служение и любов един към друг.",
+      "date": "2026-02-02",
+      "associated_feast_id": "meeting-of-the-lord",
+      "tags": ["tag-a7f3c2", "tag-b91e08"],
+      "isVisible": false,
+      "createdAt": "2026-01-22T13:00:00",
+      "updatedAt": "2026-01-30T08:40:00"
+    },
+    {
+      "id": 4,
+      "title_en": "The Joy of Annunciation",
+      "title_bg": "Радостта на Благовещение",
+      "message_en": "The Annunciation is a feast of joyful obedience and trust in God. The Theotokos receives the word of the angel with humility and courage, saying yes to a mystery greater than human understanding. Her response teaches us that faith is not only belief, but also willingness to offer our life to God. May her example guide us toward deeper prayer and a more faithful Christian life.",
+      "message_bg": "Благовещение е празник на радостното послушание и доверието в Бога. Пресвета Богородица приема думите на ангела със смирение и смелост, като казва „да“ на тайна, по-голяма от човешкото разбиране. Нейният отговор ни учи, че вярата не е само убеждение, а и готовност да отдадем живота си на Бога. Нека нейният пример ни води към по-дълбока молитва и по-вярно християнско живеене.",
+      "date": "2026-03-25",
+      "associated_feast_id": "annunciation",
+      "tags": ["tag-b91e08", "tag-a7f3c2", "tag-e83b24"],
+      "isVisible": false,
+      "createdAt": "2026-03-12T09:30:00",
+      "updatedAt": "2026-03-20T12:10:00"
+    },
+    {
+      "id": 5,
+      "title_en": "Walking with Christ into Holy Week",
+      "title_bg": "Да вървим с Христос към Страстната седмица",
+      "message_en": "On Palm Sunday, we welcome Christ as King, yet we know that His royal path leads to the Cross. The branches we hold are not only signs of celebration, but also reminders of our calling to follow Him with humility and courage. As we enter Holy Week, let us set aside distractions and walk with Christ through prayer, repentance, and love, so that we may also share in the joy of His Resurrection.",
+      "message_bg": "На Цветница посрещаме Христос като Цар, но знаем, че Неговият царски път води към Кръста. Клонките, които държим, не са само знак на празник, а и напомняне за нашето призвание да Го следваме със смирение и смелост. Когато влизаме в Страстната седмица, нека оставим настрана разсейването и да вървим с Христос чрез молитва, покаяние и любов, за да участваме и в радостта на Неговото Възкресение.",
+      "date": "2026-04-05",
+      "associated_feast_id": "palm-sunday",
+      "tags": ["tag-c42d77", "tag-b91e08", "tag-a7f3c2"],
+      "isVisible": false,
+      "createdAt": "2026-03-28T11:20:00",
+      "updatedAt": "2026-04-01T15:35:00"
+    },
+    {
+      "id": 6,
+      "title_en": "Christ Is Risen",
+      "title_bg": "Христос Воскресе",
+      "message_en": "Christ is risen! On this radiant feast of Pascha, the Church proclaims the victory of life over death, light over darkness, and hope over despair. The Resurrection is not only an event from the past, but the living truth that transforms our present life. May the joy of the empty tomb fill our homes, heal our divisions, and give us courage to live as people of the Resurrection.",
+      "message_bg": "Христос Воскресе! На този светъл празник Пасха Църквата възвестява победата на живота над смъртта, на светлината над тъмнината и на надеждата над отчаянието. Възкресението не е само събитие от миналото, а жива истина, която преобразява настоящия ни живот. Нека радостта от празния гроб изпълни домовете ни, изцели разделенията ни и ни даде смелост да живеем като хора на Възкресението.",
+      "date": "2026-04-12",
+      "associated_feast_id": "pascha",
+      "tags": ["tag-a7f3c2", "tag-e83b24", "tag-d6a5f1"],
+      "isVisible": false,
+      "createdAt": "2026-04-02T17:00:00",
+      "updatedAt": "2026-04-10T10:50:00"
+    },
+    {
+      "id": 7,
+      "title_en": "The Glory Revealed on Mount Tabor",
+      "title_bg": "Славата, открита на планина Тавор",
+      "message_en": "At the Transfiguration, Christ reveals His divine glory to the disciples, not to overwhelm them, but to strengthen them before the suffering that is to come. This feast reminds us that beneath the struggles and burdens of life, God’s light is still present. May we seek that light through prayer, worship, and a purified heart, trusting that Christ can transfigure even the difficult places within us.",
+      "message_bg": "На Преображение Христос открива Своята божествена слава на учениците не за да ги уплаши, а за да ги укрепи пред страданията, които предстоят. Този празник ни напомня, че под трудностите и тежестите на живота Божията светлина остава присъстваща. Нека търсим тази светлина чрез молитва, богослужение и очистено сърце, като вярваме, че Христос може да преобрази дори трудните места в нас.",
+      "date": "2026-08-06",
+      "associated_feast_id": "transfiguration",
+      "tags": ["tag-b91e08", "tag-a7f3c2", "tag-c42d77"],
+      "isVisible": false,
+      "createdAt": "2026-07-25T12:00:00",
+      "updatedAt": "2026-08-01T14:25:00"
+    },
+    {
+      "id": 8,
+      "title_en": "The Mother of God and the Hope of the Faithful",
+      "title_bg": "Божията Майка и надеждата на вярващите",
+      "message_en": "The Dormition of the Theotokos is a feast filled with tenderness, hope, and the promise of life in Christ. In the Mother of God we see a life completely offered to the Lord, and in her falling asleep we see that death has been changed by the Resurrection of her Son. May we turn to her intercessions with trust and learn from her humility, faithfulness, and love.",
+      "message_bg": "Успението на Пресвета Богородица е празник, изпълнен с нежност, надежда и обещание за живот в Христа. В Божията Майка виждаме живот, напълно отдаден на Господа, а в нейното успение виждаме, че смъртта е променена чрез Възкресението на нейния Син. Нека се обръщаме към нейните молитви с доверие и да се учим от нейното смирение, вярност и любов.",
+      "date": "2026-08-15",
+      "associated_feast_id": "dormition",
+      "tags": ["tag-b91e08", "tag-a7f3c2", "tag-e83b24"],
+      "isVisible": false,
+      "createdAt": "2026-08-03T09:45:00",
+      "updatedAt": "2026-08-12T18:15:00"
+    },
+    {
+      "id": 9,
+      "title_en": "Preparing Our Homes for the Nativity Fast",
+      "title_bg": "Да подготвим домовете си за Рождественския пост",
+      "message_en": "As we begin the Nativity Fast, the Church invites us to prepare not only our meals, but also our hearts. This season is a quiet road toward Bethlehem, a time to simplify, forgive, pray, and remember those in need. Let our fasting be joined with kindness and generosity, so that when the feast arrives, we may welcome Christ not only with words, but with lives made more open to His love.",
+      "message_bg": "Когато започваме Рождественския пост, Църквата ни кани да подготвим не само трапезата си, но и сърцата си. Това време е тих път към Витлеем — време да се опростим, да простим, да се молим и да помним нуждаещите се. Нека постът ни бъде съединен с доброта и щедрост, за да посрещнем празника не само с думи, а с живот, по-отворен за Христовата любов.",
+      "date": "2026-11-15",
+      "associated_feast_id": "nativity-of-christ",
+      "tags": ["tag-c42d77", "tag-b91e08", "tag-d6a5f1"],
+      "isVisible": false,
+      "createdAt": "2026-11-05T16:10:00",
+      "updatedAt": "2026-11-12T09:55:00"
+    },
+    {
+      "id": 10,
+      "title_en": "The Paschal Joy That Continues",
+      "title_bg": "Пасхалната радост, която продължава",
+      "message_en": "In the days after Pascha, we are reminded that the joy of the Resurrection is not meant to disappear after the feast day passes. The risen Christ continues to meet us in the life of the Church, in the breaking of bread, in prayer, and in acts of mercy. Let us carry this joy into our homes and daily responsibilities, greeting one another with patience, kindness, and the living hope of Christ.",
+      "message_bg": "В дните след Пасха си спомняме, че радостта от Възкресението не е предназначена да изчезне след края на празничния ден. Възкръсналият Христос продължава да ни среща в живота на Църквата, в преломяването на хляба, в молитвата и в делата на милосърдие. Нека носим тази радост в домовете си и в ежедневните си отговорности, като се срещаме с търпение, доброта и живата надежда в Христа.",
+      "date": "2026-04-19",
+      "associated_feast_id": "pascha",
+      "tags": ["tag-a7f3c2", "tag-e83b24", "tag-d6a5f1"],
+      "isVisible": false,
+      "createdAt": "2026-04-14T10:30:00",
+      "updatedAt": "2026-04-18T13:05:00"
+    }
+  ]
+}

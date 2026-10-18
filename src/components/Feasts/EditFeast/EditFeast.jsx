@@ -47,7 +47,7 @@ function EditFeast({ single }) {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
         console.log(response);
         setUploadSuccess(true);
@@ -55,7 +55,7 @@ function EditFeast({ single }) {
         console.log(err.response);
         setUploadError(true);
         setErrorMessage(
-          "There was a problem with the connection. Try again later."
+          "There was a problem with the connection. Try again later.",
         );
       }
     };

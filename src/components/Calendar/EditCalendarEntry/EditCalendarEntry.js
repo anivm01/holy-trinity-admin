@@ -6,7 +6,7 @@ import axios from "axios";
 import editIcon from "../../../assets/edit.svg"
 import { API_URL } from "../../../utilities/api";
 import { toDatetimeLocalString } from "../../../utilities/dateConverter";
-import Modal from "../../Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 import CalendarEntryForm from "../CalendarEntryForm/CalendarEntryForm";
 
 function EditCalendarEntry({ single }) {

@@ -1,0 +1,85 @@
+.messages-table {
+    max-width: 50rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.75rem;
+
+    &__row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 1rem;
+        align-items: start;
+        padding: 1rem;
+        border: 1px solid #e6e1d8;
+        border-radius: 0.75rem;
+        background: #fff;
+    }
+
+    &__row-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: .5rem;
+        flex-shrink: 0;
+    }
+
+    &__title {
+        margin: 0;
+        color: #2d2923;
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    &__feast {
+        margin: .25rem 0 .45rem;
+        color: #8a6428;
+        font-size: .82rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    &__preview {
+        display: -webkit-box;
+        margin: 0;
+        overflow: hidden;
+        color: #4f4941;
+        font-size: 0.92rem;
+        line-height: 1.45;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    &--empty {
+        padding: 2rem;
+        border: 1px dashed #d8cfc1;
+        border-radius: 0.75rem;
+        text-align: center;
+        color: #6f675c;
+        background: #fbf8f2;
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .messages-table {
+        &__row {
+            grid-template-columns: 1fr;
+        }
+
+        &__actions {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+}

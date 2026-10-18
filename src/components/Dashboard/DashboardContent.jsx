@@ -6,7 +6,7 @@ import {
   Feasts,
   ImageGallery,
   Links,
-  // Obituaries,
+  Obituaries,
   Resources,
   UploadFile,
 } from "./DashboardIcons";
@@ -42,11 +42,11 @@ export const DashboardContnet = [
   //   slug: "/community-news",
   //   svg: CommunityNews,
   // },
-  // {
-  //   item: "Obituaries",
-  //   slug: "/obituaries",
-  //   svg: Obituaries,
-  // },
+  {
+    item: "Obituaries",
+    slug: "/obituaries",
+    svg: Obituaries,
+  },
   {
     item: "Useful Links",
     slug: "/useful-links",
