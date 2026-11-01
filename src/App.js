@@ -14,6 +14,7 @@ import AnnouncementPage from "./pages/AnnouncementPage/AnnouncementPage";
 import VideosPage from "./pages/VideosPage/VideosPage";
 import MessagesPage from "./pages/MessagesPage/MessagesPage";
 import ObituariesPage from "./pages/ObituariesPage/ObituariesPage";
+import NextRedFeastBanner from "./components/NextRedFeastBanner/NextRedFeastBanner";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
               <Route path="/announcement" element={<AnnouncementPage />} />
               <Route path="/videos" element={<VideosPage />} />
             </Routes>
+            <NextRedFeastBanner />
           </div>
         </div>
       </BrowserRouter>
