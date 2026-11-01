@@ -6,6 +6,7 @@ import {
   Feasts,
   ImageGallery,
   Links,
+  Messages,
   Obituaries,
   Resources,
   UploadFile,
@@ -16,6 +17,11 @@ export const DashboardContnet = [
     item: "Announcement",
     slug: "/announcement",
     svg: Announcement,
+  },
+  {
+    item: "Priest's Message",
+    slug: "/messages",
+    svg: Messages,
   },
   {
     item: "Live Streams",

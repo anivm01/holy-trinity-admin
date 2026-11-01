@@ -8,3 +8,4 @@ export { default as Resources } from "./Resources";
 export { default as UploadFile } from "./UploadFile";
 export { default as ImageGallery } from "./ImageGallery";
 export { default as Announcement } from "./Announcement";
+export { default as Messages } from "./Messages";
