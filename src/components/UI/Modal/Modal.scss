@@ -26,6 +26,10 @@
         max-height: 80vh;
         overflow-y: scroll;
 
+        &--wide {
+            width: min(80rem, calc(100vw - 2rem));
+        }
+
         &::-webkit-scrollbar {
             width: 0.5rem;
         }
