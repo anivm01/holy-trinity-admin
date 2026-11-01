@@ -1,0 +1,66 @@
+@use "../../../partials/colors" as *;
+
+.add-priest-message {
+    max-width: 80rem;
+    margin: 0 auto 2rem;
+    border: 1px solid #e6e1d8;
+    border-radius: .75rem;
+    background-color: #fff;
+    overflow: hidden;
+
+    &__heading {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    &__toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem 1.25rem;
+        border: none;
+        color: $wine-red;
+        background-color: #fff;
+        font: inherit;
+        font-weight: bold;
+        text-align: left;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #fbf8f2;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $wine-red;
+            outline-offset: -2px;
+        }
+
+        &[aria-expanded="true"] .add-priest-message__indicator {
+            transform: rotate(225deg);
+        }
+    }
+
+    &__indicator {
+        width: .65rem;
+        height: .65rem;
+        flex-shrink: 0;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+        transition: transform .2s ease;
+    }
+
+    &__panel {
+        padding: .25rem 1rem 1rem;
+        border-top: 1px solid #eee8de;
+    }
+
+    &__status {
+        margin: .75rem 1rem 1rem;
+        color: $wine-red;
+        font-weight: bold;
+        text-align: center;
+    }
+}

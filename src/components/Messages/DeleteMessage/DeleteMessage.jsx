@@ -1,13 +1,27 @@
 import "./DeleteMessage.scss";
 import deleteIcon from "../../../assets/delete.svg";
-import useDelete from "../../../utilities/useDelete";
+import ErrorModal from "../../ErrorModal/ErrorModal";
 import Modal from "../../UI/Modal/Modal";
 import { useState } from "react";
-import { API_URL } from "../../../utilities/api";
 
-function DeleteMessage({ id }) {
+function DeleteMessage({ id, onDeleteMessage }) {
   const [visible, setVisible] = useState();
-  const { deleteItem } = useDelete(`${API_URL}/messages/${id}`);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const deleteMessage = async () => {
+    try {
+      setIsDeleting(true);
+      await onDeleteMessage(id);
+      setVisible(false);
+    } catch (error) {
+      setErrorMessage(error.message || "Unable to delete the message.");
+      setDeleteError(true);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="delete-priest-message">
@@ -31,13 +45,12 @@ function DeleteMessage({ id }) {
           </h2>
           <div className="delete-priest-message__buttons">
             <button
-              onClick={() => {
-                deleteItem();
-              }}
+              onClick={deleteMessage}
               className="button"
               type="button"
+              disabled={isDeleting}
             >
-              Delete
+              {isDeleting ? "Deleting…" : "Delete"}
             </button>
             <button
               onClick={() => {
@@ -51,6 +64,12 @@ function DeleteMessage({ id }) {
           </div>
         </div>
       </Modal>
+      {deleteError && (
+        <ErrorModal
+          errorMessage={errorMessage}
+          setUploadError={setDeleteError}
+        />
+      )}
     </div>
   );
 }
