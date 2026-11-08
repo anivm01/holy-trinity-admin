@@ -91,8 +91,21 @@
         }
 
         .rsw-ce {
+            flex: 1 1 auto;
             min-height: 0;
             overflow-y: auto;
+        }
+    }
+
+    &__editor-surface {
+        .rsw-ce {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        &--standard {
+            height: 300px;
         }
     }
 
@@ -205,6 +218,16 @@
         margin: 1rem 0;
         border-collapse: collapse;
         table-layout: fixed;
+    }
+
+    iframe {
+        display: block;
+        width: 100% !important;
+        max-width: 56rem;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+        margin: 1rem auto;
+        border: 0;
     }
 
     th,
