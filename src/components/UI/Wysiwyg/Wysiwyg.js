@@ -2,6 +2,7 @@ import "./Wysiwyg.scss";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import DOMPurify from "dompurify";
+import { messageMarkupSanitizerConfig } from "../../../utilities/createMarkup";
 import {
   BtnBold,
   BtnBulletList,
@@ -176,7 +177,7 @@ function EditorSurface({ content, expanded = false, onChange, onPaste }) {
   );
 }
 
-function Wysiwyg({ editorLabel, setContent, content }) {
+function Wysiwyg({ editorLabel, setContent, content, allowIframes = false }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const dialogTitleId = useId();
   const expandButtonRef = useRef(null);
@@ -194,7 +195,8 @@ function Wysiwyg({ editorLabel, setContent, content }) {
 
     event.preventDefault();
     const cleanHtml = DOMPurify.sanitize(clipboardHtml, {
-      FORBID_ATTR: ["class", "style"],
+      ...(allowIframes ? messageMarkupSanitizerConfig : {}),
+      FORBID_ATTR: ["class", "style", "srcdoc"],
     });
     document.execCommand("insertHTML", false, cleanHtml);
   }

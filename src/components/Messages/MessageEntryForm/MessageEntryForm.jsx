@@ -178,6 +178,7 @@ function MessageEntryForm({
               editorLabel="Message"
               content={entry.message_en}
               setContent={setMessageContent("message_en")}
+              allowIframes
             />
           </div>
         </section>
@@ -226,6 +227,7 @@ function MessageEntryForm({
               editorLabel="Message"
               content={entry.message_bg}
               setContent={setMessageContent("message_bg")}
+              allowIframes
             />
           </div>
         </section>

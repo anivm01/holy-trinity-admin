@@ -123,6 +123,16 @@
             }
         }
 
+        iframe {
+            display: block;
+            width: 100% !important;
+            max-width: 56rem;
+            height: auto !important;
+            aspect-ratio: 16 / 9;
+            margin: 1rem auto;
+            border: 0;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;

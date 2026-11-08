@@ -1,5 +1,5 @@
 import { useId, useState } from "react";
-import { createMarkup } from "../../../utilities/createMarkup";
+import { createMessageMarkup } from "../../../utilities/createMarkup";
 import "./MessagePreview.scss";
 
 const languageOptions = [
@@ -59,7 +59,7 @@ function MessagePreview({ entry }) {
           {message.trim() ? (
             <div
               className="message-preview__content"
-              dangerouslySetInnerHTML={createMarkup(message)}
+              dangerouslySetInnerHTML={createMessageMarkup(message)}
             />
           ) : (
             <p className="message-preview__placeholder">
