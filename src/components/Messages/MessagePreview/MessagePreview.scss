@@ -112,6 +112,17 @@
             height: auto;
         }
 
+        a {
+            color: $wine-red;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+
+            &:visited {
+                color: $wine-red;
+            }
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;

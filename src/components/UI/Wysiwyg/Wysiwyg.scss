@@ -91,8 +91,21 @@
         }
 
         .rsw-ce {
+            flex: 1 1 auto;
             min-height: 0;
             overflow-y: auto;
+        }
+    }
+
+    &__editor-surface {
+        .rsw-ce {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        &--standard {
+            height: 300px;
         }
     }
 

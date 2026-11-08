@@ -153,6 +153,9 @@ function EditorSurface({ content, expanded = false, onChange, onPaste }) {
     <EditorProvider>
       <Editor
         containerProps={{
+          className: `rsw-editor wysiwyg__editor-surface${
+            expanded ? "" : " wysiwyg__editor-surface--standard"
+          }`,
           style: {
             resize: expanded ? "none" : "vertical",
             height: expanded ? "100%" : undefined,
