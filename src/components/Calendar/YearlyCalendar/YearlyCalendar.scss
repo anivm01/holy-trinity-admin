@@ -1,0 +1,339 @@
+@use "../../../partials/colors" as *;
+@use "../../../partials/breakpoints" as *;
+
+.yearly-calendar {
+  width: calc(100% - 2rem);
+  max-width: 78rem;
+  margin: 1.5rem auto 3rem;
+  color: #2d1b1f;
+
+  &__years {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  &__year {
+    overflow: hidden;
+    border: 1px solid rgba($wine-red, 0.28);
+    border-radius: 0.6rem;
+    background: #fffdf8;
+    box-shadow: 0 0.2rem 0.8rem rgba(45, 27, 31, 0.08);
+  }
+
+  &__year-heading {
+    margin: 0;
+  }
+
+  &__year-button {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 0;
+    background: $wine-red;
+    color: $beige;
+    font: inherit;
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background: #570819;
+    }
+  }
+
+  &__year-summary {
+    font-size: 0.8rem;
+    font-weight: 500;
+    opacity: 0.82;
+  }
+
+  &__chevron {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-right: 0.15rem solid currentColor;
+    border-bottom: 0.15rem solid currentColor;
+    transform: rotate(45deg) translateY(-0.15rem);
+    transition: transform 0.2s ease;
+  }
+
+  &__year-button[aria-expanded="true"] &__chevron {
+    transform: rotate(225deg) translate(-0.15rem, -0.15rem);
+  }
+
+  &__year-content {
+    padding: 1rem;
+    background: $beige;
+  }
+
+  &__month-navigation {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.55rem;
+    border-radius: 0.45rem;
+    background: $golden;
+  }
+
+  &__month-title {
+    margin: 0;
+    color: $wine-red;
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    text-align: center;
+  }
+
+  &__month-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.7rem;
+    border: 0;
+    border-radius: 50%;
+    background: $wine-red;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background: #570819;
+      outline: 0.15rem solid rgba($wine-red, 0.25);
+      outline-offset: 0.15rem;
+    }
+  }
+
+  &__arrow {
+    width: 100%;
+    fill: $beige;
+
+    &--previous {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__languages {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__bulk-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
+  &__bulk-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid $wine-red;
+    border-radius: 0.25rem;
+    background: $golden;
+    color: $wine-red;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &:hover:not(:disabled),
+    &:focus-visible:not(:disabled) {
+      background: $beige;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  &__language-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba($wine-red, 0.22);
+    border-radius: 0.45rem;
+    background: $golden;
+  }
+
+  &__language-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: $wine-red;
+    color: $beige;
+
+    span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.82;
+    }
+
+    h4 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+  }
+
+  &__days {
+    max-height: 36rem;
+    overflow-y: auto;
+    background: $golden;
+    scrollbar-color: $wine-red $golden;
+    scrollbar-width: thin;
+  }
+
+  &__day {
+    display: grid;
+    grid-template-columns: 3.25rem 3.15rem minmax(0, 1fr);
+    gap: 0.85rem;
+    padding: 0.45rem 1.5rem;
+    border-bottom: 1px solid $wine-red;
+    font-size: 0.9375rem;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &--bold {
+      font-weight: 700;
+    }
+
+    &--red {
+      color: #c1121f;
+    }
+  }
+
+  &__date {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    color: inherit;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+
+    span:last-child {
+      font-size: 0.72rem;
+      opacity: 0.75;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  &__entry-checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0.2rem 0.2rem 0 0;
+    accent-color: $wine-red;
+    cursor: pointer;
+  }
+
+  &__delete-confirmation {
+    width: min(28rem, calc(100vw - 4rem));
+    color: $wine-red;
+    text-align: center;
+
+    h2 {
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+  }
+
+  &__delete-error {
+    color: #c1121f;
+    font-weight: 700;
+  }
+
+  &__delete-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  &__confirm-delete,
+  &__cancel-delete {
+    min-width: 7rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid $wine-red;
+    border-radius: 0.25rem;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.6;
+    }
+  }
+
+  &__confirm-delete {
+    background: $wine-red;
+    color: $beige;
+  }
+
+  &__cancel-delete {
+    background: $beige;
+    color: $wine-red;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: inherit;
+    line-height: 1.55;
+  }
+
+  &__symbol {
+    margin-right: 0.25rem;
+  }
+
+  &__empty {
+    min-height: 8rem;
+    margin: 0;
+    padding: 2.5rem 1rem;
+    color: rgba(45, 27, 31, 0.68);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 449px) {
+    &__day {
+      grid-template-columns: 3.15rem 2.8rem minmax(0, 1fr);
+      gap: 0.55rem;
+      padding-right: 0.75rem;
+      padding-left: 0.75rem;
+    }
+  }
+
+  @include tablet {
+    width: calc(100% - 4rem);
+
+    &__year-content {
+      padding: 1.25rem;
+    }
+
+    &__languages {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

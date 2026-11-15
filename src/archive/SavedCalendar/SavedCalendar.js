@@ -1,7 +1,7 @@
 import "./SavedCalendar.scss";
-import SingleCalendarEntry from "../SingleCalendarEntry/SingleCalendarEntry";
+import SingleCalendarEntry from "../../components/Calendar/SingleCalendarEntry/SingleCalendarEntry";
 import React, { useEffect, useRef } from "react";
-import Button from "../../UI/Button/Button";
+import Button from "../../components/UI/Button/Button";
 
 const monthMap = {
   Jan: 0,

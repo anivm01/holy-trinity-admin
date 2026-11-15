@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./CalendarDisplay.scss";
 import CalendarDisplayEntry from "../CalendarDisplayEntry/CalendarDisplayEntry";
-import ArrowIcon from "../../../assets/svg/ArrowIcon/ArrowIcon";
+import ArrowIcon from "../../assets/svg/ArrowIcon/ArrowIcon";
 
 const CalendarDisplay = ({ data }) => {
   console.log(data);
