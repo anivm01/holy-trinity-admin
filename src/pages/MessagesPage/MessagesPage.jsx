@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import AddNewMessage from "../../components/Messages/AddNewMessage/AddNewMessage";
 import MessagesTable from "../../components/Messages/MessagesTable/MessagesTable";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 import { API_URL } from "../../utilities/api";
 
 import "./MessagesPage.scss";
@@ -245,33 +246,33 @@ function MessagesPage() {
 
   return (
     <main className="messages-page">
-      <div className="messages-page__header">
-        <h1>Home Page Messages</h1>
+      <PageHeader title="Priest's Messages" />
+
+      <div className="messages-page__content">
+        {loading && <p role="status">Loading messages…</p>}
+        {loadError && <p role="alert">{loadError}</p>}
+
+        {!loading && !loadError && (
+          <>
+            <AddNewMessage
+              associatedFeasts={associatedFeasts}
+              messageTags={messageTags}
+              onAddMessage={addMessage}
+              onAddTag={addMessageTag}
+            />
+
+            <MessagesTable
+              messages={messages}
+              associatedFeasts={associatedFeasts}
+              messageTags={messageTags}
+              onUpdateMessage={updateMessage}
+              onMakeMessageVisible={makeMessageVisible}
+              onDeleteMessage={deleteMessage}
+              onAddTag={addMessageTag}
+            />
+          </>
+        )}
       </div>
-
-      {loading && <p role="status">Loading messages…</p>}
-      {loadError && <p role="alert">{loadError}</p>}
-
-      {!loading && !loadError && (
-        <>
-          <AddNewMessage
-            associatedFeasts={associatedFeasts}
-            messageTags={messageTags}
-            onAddMessage={addMessage}
-            onAddTag={addMessageTag}
-          />
-
-          <MessagesTable
-            messages={messages}
-            associatedFeasts={associatedFeasts}
-            messageTags={messageTags}
-            onUpdateMessage={updateMessage}
-            onMakeMessageVisible={makeMessageVisible}
-            onDeleteMessage={deleteMessage}
-            onAddTag={addMessageTag}
-          />
-        </>
-      )}
     </main>
   );
 }
