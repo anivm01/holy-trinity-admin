@@ -1,9 +1,9 @@
 import "./CalendarPreview.scss";
-import PageHeader from "../UI/PageHeader/PageHeader";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 import { API_URL } from "../../utilities/api";
 import useFetch from "../../utilities/useFetch";
 import { ThreeDots } from "react-loader-spinner";
-import CalendarDisplay from "../Calendar/CalendarDisplay/CalendarDisplay";
+import CalendarDisplay from "../CalendarDisplay/CalendarDisplay";
 
 function CalendarPreview() {
   const { data, error, loading } = useFetch(`${API_URL}/calendar/byyear`);

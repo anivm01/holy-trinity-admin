@@ -1,7 +1,7 @@
 import React from "react";
-import { calendarDateConverter } from "../../../utilities/dateConverter";
+import { calendarDateConverter } from "../../utilities/dateConverter";
 import "./CalendarDisplayEntry.scss";
-import SingleCalendarEntryTitles from "../SingleCalendarEntryTitles/SingleCalendarEntryTitles";
+import SingleCalendarEntryTitles from "../../components/Calendar/SingleCalendarEntryTitles/SingleCalendarEntryTitles";
 
 function CalendarDisplayEntry({ single }) {
   const date = calendarDateConverter(single.date);

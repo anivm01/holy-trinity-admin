@@ -1,12 +1,11 @@
 import './CalendarPage.scss'
 import PageHeader from '../../components/UI/PageHeader/PageHeader';
 import { API_URL } from '../../utilities/api';
-import SavedCalendar from '../../components/Calendar/SavedCalendar/SavedCalendar';
 import AddNewCalendarEntry from '../../components/Calendar/AddNewCalendarEntry/AddNewCalendarEntry';
 import useFetch from '../../utilities/useFetch';
 import NoData from '../../components/NoData/NoData';
 import { ThreeDots } from "react-loader-spinner";
-import CalendarPreview from "../../components/CalendarPreview/CalendarPreview";
+import YearlyCalendar from "../../components/Calendar/YearlyCalendar/YearlyCalendar";
 
 
 function CalendarPage() {
@@ -34,11 +33,8 @@ function CalendarPage() {
     return (
       <section className='events-page'>
         <PageHeader title="Calendar"></PageHeader>
+        <YearlyCalendar data={data} />
         <AddNewCalendarEntry />
-        <SavedCalendar
-          data={data}
-        />
-        <CalendarPreview />
       </section>
     )
   }
