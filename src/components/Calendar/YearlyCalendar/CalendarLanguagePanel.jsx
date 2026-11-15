@@ -13,7 +13,9 @@ function CalendarLanguagePanel({
   entries,
   language,
   monthName,
+  onSelectEntry,
   onToggleEntry,
+  selectedDate,
   selectedEntryIds,
   year,
 }) {
@@ -39,12 +41,16 @@ function CalendarLanguagePanel({
             const isRed = hasCalendarFlag(entry.red);
             const hasCross = hasCalendarFlag(entry.cross);
             const hasStar = hasCalendarFlag(entry.star);
+            const entryDate = String(entry.date || "").split(/[T ]/)[0];
+            const isSelectedDate = selectedDate === entryDate;
 
             return (
               <article
                 className={`yearly-calendar__day${
                   isBold ? " yearly-calendar__day--bold" : ""
-                }${isRed ? " yearly-calendar__day--red" : ""}`}
+                }${isRed ? " yearly-calendar__day--red" : ""}${
+                  isSelectedDate ? " yearly-calendar__day--selected" : ""
+                }`}
                 key={entry.id || `${entry.date}-${language}`}
               >
                 <div className="yearly-calendar__actions">
@@ -59,10 +65,30 @@ function CalendarLanguagePanel({
                   />
                   <EditCalendarEntry single={entry} />
                 </div>
-                <time className="yearly-calendar__date" dateTime={entry.date}>
-                  <span>{date.day}</span>
-                  <span>{isBulgarian ? date.weekdayBg : date.weekdayEn}</span>
-                </time>
+                {onSelectEntry ? (
+                  <button
+                    className="yearly-calendar__date-button"
+                    type="button"
+                    onClick={() => onSelectEntry(entry)}
+                    aria-label={`Use ${monthName} ${date.day}, ${year} for the new feast date and titles`}
+                    aria-pressed={isSelectedDate}
+                  >
+                    <time
+                      className="yearly-calendar__date"
+                      dateTime={entryDate}
+                    >
+                      <span>{date.day}</span>
+                      <span>
+                        {isBulgarian ? date.weekdayBg : date.weekdayEn}
+                      </span>
+                    </time>
+                  </button>
+                ) : (
+                  <time className="yearly-calendar__date" dateTime={entryDate}>
+                    <span>{date.day}</span>
+                    <span>{isBulgarian ? date.weekdayBg : date.weekdayEn}</span>
+                  </time>
+                )}
                 <p className="yearly-calendar__title">
                   {hasCross && (
                     <span className="yearly-calendar__symbol" aria-hidden="true">

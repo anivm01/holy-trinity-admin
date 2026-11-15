@@ -72,7 +72,7 @@ function EditFeast({ single }) {
         hasIcon={true}
         type="edit"
       />
-      <Modal visible={visible} setVisible={setVisible}>
+      <Modal visible={visible} setVisible={setVisible} size="wide">
         <FeastEntryForm
           formType="edit"
           formTitle="Edit Feast"

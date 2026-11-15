@@ -7,9 +7,9 @@ import SuccessModal from "../../SuccessModal/SuccessModal";
 import { getDefaultDateTime } from "../../../utilities/dateConverter";
 import FeastEntryForm from "../FeastEntryForm/FeastEntryForm";
 
-function AddNewFeast() {
+function AddNewFeast({ selectedCalendarEntry }) {
   const [entry, setEntry] = useState({
-    event_date: getDefaultDateTime(10, 15),
+    event_date: getDefaultDateTime(10, 30),
     title: "",
     title_bg: "",
     is_default: true,
@@ -65,6 +65,7 @@ function AddNewFeast() {
         formTitle="Add New Feast"
         entry={entry}
         setEntry={setEntry}
+        selectedCalendarEntry={selectedCalendarEntry}
         onPublish={onPublish}
       />
     </div>

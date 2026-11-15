@@ -33,7 +33,13 @@ const MONTHS_BG = [
   "Декември",
 ];
 
-function BilingualMonthCarousel({ months, year, initialMonthIndex }) {
+function BilingualMonthCarousel({
+  months,
+  year,
+  initialMonthIndex,
+  onSelectEntry,
+  selectedDate,
+}) {
   const [monthIndex, setMonthIndex] = useState(initialMonthIndex);
   const [selectedEntryIds, setSelectedEntryIds] = useState(new Set());
 
@@ -98,6 +104,8 @@ function BilingualMonthCarousel({ months, year, initialMonthIndex }) {
           language="en"
           monthName={MONTHS_EN[monthIndex]}
           onToggleEntry={toggleEntrySelection}
+          onSelectEntry={onSelectEntry}
+          selectedDate={selectedDate}
           selectedEntryIds={selectedEntryIds}
           year={year}
         />
@@ -106,6 +114,8 @@ function BilingualMonthCarousel({ months, year, initialMonthIndex }) {
           language="bg"
           monthName={MONTHS_BG[monthIndex]}
           onToggleEntry={toggleEntrySelection}
+          onSelectEntry={onSelectEntry}
+          selectedDate={selectedDate}
           selectedEntryIds={selectedEntryIds}
           year={year}
         />
