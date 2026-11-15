@@ -112,7 +112,7 @@ function FeastEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
           label="Enter the Event Title in English"
           id={`${formType}-title-en`}
           name="title"
-          value={entry.title}
+          value={inputs.title}
           onChange={handleChangeInputs}
           type="text"
           inputComponent="input"
@@ -121,7 +121,7 @@ function FeastEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
           label="Въведете заглавието на Български"
           id={`${formType}-title-bg`}
           name="title_bg"
-          value={entry.title_bg}
+          value={inputs.title_bg}
           onChange={handleChangeInputs}
           type="text"
           inputComponent="input"
