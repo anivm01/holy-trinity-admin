@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import "./FeastEntryForm.scss";
-import { API_URL } from "../../../utilities/api";
 import WysiwygEdit from "../../WysiwygEdit/WysiwygEdit";
-import axios from "axios";
-import SingleCalendarEntryTitles from "../../Calendar/SingleCalendarEntryTitles/SingleCalendarEntryTitles";
 import { FormBox } from "../../UI/FormBox/FormBox";
 import Input from "../../UI/Input/Input";
-import moment from "moment";
 import DatetimeInput from "../../UI/DatetimeInput/DatetimeInput";
+import { getCalendarTitleExcerpt } from "./calendarTitle";
 
-function FeastEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
-  //   const [date, setDate] = useState(entry.event_date);
-  const [calendarEntry, setCalendarEntry] = useState(null);
+function FeastEntryForm({
+  formType,
+  formTitle,
+  entry,
+  setEntry,
+  selectedCalendarEntry,
+  onPublish,
+}) {
   const [inputs, setInputs] = useState({
     event_date: entry.event_date,
     title: entry.title,
@@ -22,20 +24,40 @@ function FeastEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
   const [eventDetailsBg, setEventDetailsBg] = useState(entry.event_details_bg);
 
   useEffect(() => {
-    (async function () {
-      const datetime = moment(inputs.event_date).format("YYYY-MM-DD");
-      try {
-        const response = await axios.get(`${API_URL}/calendar/bydate`, {
-          params: {
-            datetime: datetime,
-          },
-        });
-        setCalendarEntry(response.data);
-      } catch (err) {
-        console.log(err);
+    if (!selectedCalendarEntry) {
+      return;
+    }
+
+    setInputs((currentInputs) => {
+      const selectedDate = String(selectedCalendarEntry.date || "").split(
+        /[T ]/,
+      )[0];
+
+      if (!selectedDate) {
+        return currentInputs;
       }
-    })();
-  }, [inputs.event_date]);
+
+      const currentTime = currentInputs.event_date?.split("T")[1] || "10:30";
+      const eventDate = `${selectedDate}T${currentTime}`;
+      const title = getCalendarTitleExcerpt(selectedCalendarEntry.title);
+      const titleBg = getCalendarTitleExcerpt(selectedCalendarEntry.title_bg);
+
+      if (
+        currentInputs.event_date === eventDate &&
+        currentInputs.title === title &&
+        currentInputs.title_bg === titleBg
+      ) {
+        return currentInputs;
+      }
+
+      return {
+        ...currentInputs,
+        event_date: eventDate,
+        title,
+        title_bg: titleBg,
+      };
+    });
+  }, [selectedCalendarEntry]);
 
   useEffect(() => {
     setEntry({
@@ -63,22 +85,6 @@ function FeastEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
 
   return (
     <FormBox formTitle={formTitle} onPublish={onPublish}>
-      {/* <section className="feast-form__set-date">
-        <label
-          className="feast-form__subheading"
-          htmlFor={`event-date-${formType}`}
-        >
-          Input the date of the event
-        </label>
-        <input
-          className="feast-form__date-input"
-          type="datetime-local"
-          id={`feast-date-${formType}`}
-          name="event_date"
-          value={inputs.event_date}
-          onChange={handleChangeInputs}
-        />
-      </section> */}
       <DatetimeInput
         label="Input the date of the event"
         id={`feast-date-${formType}`}
@@ -86,27 +92,6 @@ function FeastEntryForm({ formType, formTitle, entry, setEntry, onPublish }) {
         value={inputs.event_date}
         onChange={handleChangeInputs}
       />
-      {calendarEntry && (
-        <section className="feast-form__calendar-entry">
-          <h2 className="feast-form__subheading">
-            Calendar entry for this date
-          </h2>
-          <div className="feast-form__single-calendar-entry">
-            <SingleCalendarEntryTitles
-              red={calendarEntry.red}
-              cross={calendarEntry.cross}
-              star={calendarEntry.star}
-              title={calendarEntry.title}
-            />
-            <SingleCalendarEntryTitles
-              red={calendarEntry.red}
-              cross={calendarEntry.cross}
-              star={calendarEntry.star}
-              title={calendarEntry.title_bg}
-            />
-          </div>
-        </section>
-      )}
       <section className="feast-form__titles">
         <Input
           label="Enter the Event Title in English"

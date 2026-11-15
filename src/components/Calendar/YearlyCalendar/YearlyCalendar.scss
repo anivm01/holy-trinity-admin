@@ -216,6 +216,11 @@
     &--red {
       color: #c1121f;
     }
+
+    &--selected {
+      background: rgba($beige, 0.8);
+      box-shadow: inset 0.25rem 0 $wine-red;
+    }
   }
 
   &__date {
@@ -229,6 +234,29 @@
     span:last-child {
       font-size: 0.72rem;
       opacity: 0.75;
+    }
+  }
+
+  &__date-button {
+    align-self: start;
+    justify-self: start;
+    padding: 0.15rem 0.3rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      border-color: $wine-red;
+      outline: none;
+    }
+
+    &[aria-pressed="true"] {
+      background: $wine-red;
+      color: $beige;
     }
   }
 

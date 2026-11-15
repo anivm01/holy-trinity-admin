@@ -1,6 +1,7 @@
 @use "../../../partials/colors" as*;
 
 .new-feast {
+    min-width: min(800px, calc(100% - 2rem));
     max-width: 50rem;
     margin: 0 auto;
 }
