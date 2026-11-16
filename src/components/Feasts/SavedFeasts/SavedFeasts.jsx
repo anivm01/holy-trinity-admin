@@ -1,12 +1,19 @@
+import { useMemo } from "react";
 import { API_URL } from "../../../utilities/api";
 import useFetch from "../../../utilities/useFetch";
 import NoData from "../../NoData/NoData";
-import SingleFeast from "../SingleFeast/SingleFeast";
 import "./SavedFeasts.scss";
 import { ThreeDots } from "react-loader-spinner";
+import FeastMonthAccordion from "./FeastMonthAccordion";
+import { groupUpcomingFeastsByMonth } from "./feastListData";
 
 function SavedFeasts() {
   const { data, error, loading } = useFetch(`${API_URL}/feasts`);
+  const upcomingMonths = useMemo(
+    () => groupUpcomingFeastsByMonth(data || []),
+    [data],
+  );
+
   if (loading) {
     return (
       <ThreeDots
@@ -26,11 +33,25 @@ function SavedFeasts() {
   }
   if (data) {
     return (
-      <div className="saved-feasts">
-        {data.map((single, index) => {
-          return <SingleFeast key={index} item={single} />;
-        })}
-      </div>
+      <section className="saved-feasts" aria-labelledby="saved-feasts-title">
+        <h2 className="saved-feasts__title" id="saved-feasts-title">
+          Upcoming Feasts
+        </h2>
+
+        {upcomingMonths.length > 0 ? (
+          <div className="saved-feasts__months">
+            {upcomingMonths.map((month, index) => (
+              <FeastMonthAccordion
+                defaultOpen={index === 0}
+                key={month.key}
+                month={month}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="saved-feasts__empty">No upcoming feasts found.</p>
+        )}
+      </section>
     );
   }
 }
