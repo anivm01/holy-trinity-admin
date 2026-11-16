@@ -4,7 +4,7 @@ import WysiwygEdit from "../../WysiwygEdit/WysiwygEdit";
 import { FormBox } from "../../UI/FormBox/FormBox";
 import Input from "../../UI/Input/Input";
 import DatetimeInput from "../../UI/DatetimeInput/DatetimeInput";
-import { getCalendarTitleExcerpt } from "./calendarTitle";
+import { getCalendarTitle } from "./calendarTitle";
 
 function FeastEntryForm({
   formType,
@@ -39,8 +39,8 @@ function FeastEntryForm({
 
       const currentTime = currentInputs.event_date?.split("T")[1] || "10:30";
       const eventDate = `${selectedDate}T${currentTime}`;
-      const title = getCalendarTitleExcerpt(selectedCalendarEntry.title);
-      const titleBg = getCalendarTitleExcerpt(selectedCalendarEntry.title_bg);
+      const title = getCalendarTitle(selectedCalendarEntry.title);
+      const titleBg = getCalendarTitle(selectedCalendarEntry.title_bg);
 
       if (
         currentInputs.event_date === eventDate &&

@@ -1,15 +1,15 @@
-import { getCalendarTitleExcerpt } from "./calendarTitle";
+import { getCalendarTitle } from "./calendarTitle";
 
-describe("getCalendarTitleExcerpt", () => {
-  it("returns only the text before the first period", () => {
+describe("getCalendarTitle", () => {
+  it("returns the complete calendar title", () => {
     expect(
-      getCalendarTitleExcerpt("The first feast title. More calendar text."),
-    ).toBe("The first feast title");
+      getCalendarTitle("The first feast title. More calendar text."),
+    ).toBe("The first feast title. More calendar text.");
   });
 
-  it("returns the complete title when it has no period", () => {
-    expect(getCalendarTitleExcerpt("A complete title without punctuation")).toBe(
-      "A complete title without punctuation",
+  it("trims surrounding whitespace", () => {
+    expect(getCalendarTitle("  A complete calendar title  ")).toBe(
+      "A complete calendar title",
     );
   });
 });
