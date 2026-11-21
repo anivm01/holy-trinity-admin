@@ -28,6 +28,7 @@ function FeastsPage() {
         <CurrentYearCalendar
           onSelectEntry={toggleCalendarEntry}
           selectedDate={selectedCalendarDate}
+          year={2027}
         />
         <SavedFeasts />
       </section>
