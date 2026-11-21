@@ -1,15 +1,21 @@
+import { useMemo } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { API_URL } from "../../../utilities/api";
 import useFetch from "../../../utilities/useFetch";
 import BilingualMonthCarousel from "../../Calendar/YearlyCalendar/BilingualMonthCarousel";
+import { groupCalendarEntriesByYear } from "../../Calendar/YearlyCalendar/calendarData";
 import "../../Calendar/YearlyCalendar/YearlyCalendar.scss";
 import "./CurrentYearCalendar.scss";
 
-function CurrentYearCalendar({ onSelectEntry, selectedDate }) {
+function CurrentYearCalendar({ onSelectEntry, selectedDate, year }) {
   const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonthIndex = currentDate.getMonth();
-  const { data, error, loading } = useFetch(`${API_URL}/calendar/byyear`);
+  const initialMonthIndex =
+    year === currentDate.getFullYear() ? currentDate.getMonth() : 0;
+  const { data, error, loading } = useFetch(`${API_URL}/calendar`);
+  const months = useMemo(
+    () => groupCalendarEntriesByYear(data)[year] || null,
+    [data, year],
+  );
 
   return (
     <section
@@ -20,7 +26,7 @@ function CurrentYearCalendar({ onSelectEntry, selectedDate }) {
         className="current-year-calendar__title"
         id="current-year-calendar-title"
       >
-        Calendar {currentYear}
+        Calendar {year}
       </h2>
       <p className="current-year-calendar__hint">
         Select a calendar date to fill the date and titles in the Add New Feast
@@ -39,17 +45,17 @@ function CurrentYearCalendar({ onSelectEntry, selectedDate }) {
         />
       )}
 
-      {error && (
+      {(error || (data && !months)) && (
         <p className="current-year-calendar__status" role="alert">
-          The calendar for {currentYear} is not available yet.
+          The calendar for {year} is not available yet.
         </p>
       )}
 
-      {data && (
+      {months && (
         <BilingualMonthCarousel
-          months={data}
-          year={currentYear}
-          initialMonthIndex={currentMonthIndex}
+          months={months}
+          year={year}
+          initialMonthIndex={initialMonthIndex}
           onSelectEntry={onSelectEntry}
           selectedDate={selectedDate}
         />
