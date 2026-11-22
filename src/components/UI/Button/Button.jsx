@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Button.scss';
 
-const Button = ({ text, onClick, variant, href, type, buttonComponent, ...props }) => {
-    const baseClassName = `button button--${variant}`;
+const Button = ({ text, onClick, variant, href, type, buttonComponent, className, ...props }) => {
+    const baseClassName = `button button--${variant}${className ? ` ${className}` : ""}`;
 
     if (buttonComponent === "button") {
         return (
@@ -40,6 +40,7 @@ Button.propTypes = {
     href: PropTypes.string,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
     buttonComponent: PropTypes.oneOf(['button', 'a']),
+    className: PropTypes.string,
 };
 
 Button.defaultProps = {

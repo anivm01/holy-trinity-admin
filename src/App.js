@@ -15,6 +15,7 @@ import VideosPage from "./pages/VideosPage/VideosPage";
 import MessagesPage from "./pages/MessagesPage/MessagesPage";
 import ObituariesPage from "./pages/ObituariesPage/ObituariesPage";
 import NextRedFeastBanner from "./components/NextRedFeastBanner/NextRedFeastBanner";
+import CommunityNewsPage from "./pages/CommunityNewsPage/CommunityNewsPage";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
               <Route path="/feasts" element={<FeastsPage />} />
               <Route path="/announcement" element={<AnnouncementPage />} />
               <Route path="/videos" element={<VideosPage />} />
+              <Route path="/community-news" element={<CommunityNewsPage />} />
             </Routes>
             <NextRedFeastBanner />
           </div>

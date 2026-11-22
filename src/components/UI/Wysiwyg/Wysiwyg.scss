@@ -48,7 +48,7 @@
         align-items: center;
         justify-content: center;
         padding: 1rem;
-        background-color: rgba(0, 0, 0, .65);
+        background-color: rgba($wine-red, 0.65);
     }
 
     &__expanded-modal {
@@ -60,7 +60,7 @@
         padding: 1rem;
         border-radius: 10px;
         background-color: $beige;
-        box-shadow: 0 0 1.5rem rgba(0, 0, 0, .35);
+        box-shadow: 0 0 1.5rem rgba($wine-red, 0.35);
     }
 
     &__expanded-header {
@@ -144,6 +144,30 @@
     }
 }
 
+.wysiwyg--square-corners .wysiwyg__expand,
+.wysiwyg--square-corners .wysiwyg__expanded-close,
+.wysiwyg__expanded-modal--square-corners {
+    border-radius: 0;
+}
+
+.wysiwyg--square-corners .wysiwyg__expand,
+.wysiwyg__expanded-modal--square-corners .wysiwyg__expanded-close {
+    border: 0;
+}
+
+.wysiwyg--square-corners .rsw-editor,
+.wysiwyg__expanded-modal--square-corners .rsw-editor {
+    border: 0;
+}
+
+.wysiwyg--square-corners .wysiwyg__editor-box {
+    border: 0;
+}
+
+.wysiwyg--square-corners .wysiwyg__editor-box:focus-within {
+    outline-color: $golden;
+}
+
 @media (max-width: 600px) {
     .wysiwyg {
         &__header {
@@ -165,6 +189,12 @@
 
 .rsw-editor {
     min-height: 300px;
+    border: 1px solid $wine-red;
+    color: $wine-red;
+    background-color: white;
+}
+
+.rsw-ce {
     background-color: white;
 }
 
@@ -173,6 +203,8 @@
 }
 
 .rsw-ce {
+    color: $wine-red;
+
     h1,
     h2 {
         color: $wine-red;
@@ -204,7 +236,7 @@
         margin: .75rem 0;
         padding-left: .75rem;
         border-left: 3px solid $golden;
-        color: #4f4941;
+        color: $wine-red;
     }
 
     hr {

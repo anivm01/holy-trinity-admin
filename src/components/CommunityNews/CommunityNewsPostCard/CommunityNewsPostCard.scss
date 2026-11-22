@@ -1,0 +1,102 @@
+@use "../../../partials/colors" as *;
+
+.community-post-card {
+  background: transparent;
+
+  &__admin-toolbar {
+    width: min(60rem, calc(100% - 2rem));
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &__admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0 0.75rem;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    .button {
+      margin: 0;
+    }
+
+    .modify-button {
+      border-radius: 0;
+    }
+  }
+
+  &__actions &__status {
+    flex: 0 0 auto;
+    padding: 0.35rem 0.65rem;
+    border: 0;
+    border-radius: 0;
+    color: $wine-red;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &--published {
+      color: $beige;
+      background: $wine-red;
+
+      &:hover {
+        color: $wine-red;
+        background: $golden;
+      }
+    }
+
+    &--draft {
+      background: $golden;
+
+      &:hover {
+        color: $beige;
+        background: $wine-red;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $golden;
+      outline-offset: 2px;
+    }
+  }
+
+  &__preview-button {
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &:hover {
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $golden;
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .community-post-card {
+    &__admin-toolbar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}

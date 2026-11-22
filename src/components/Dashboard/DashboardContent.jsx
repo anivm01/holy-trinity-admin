@@ -2,6 +2,7 @@ import {
   Announcement,
   Broadcasts,
   Calendar,
+  CommunityNews,
   Feasts,
   ImageGallery,
   Links,
@@ -41,6 +42,11 @@ export const DashboardContnet = [
     item: "Calendar",
     slug: "/calendar",
     svg: Calendar,
+  },
+  {
+    item: "Community News",
+    slug: "/community-news",
+    svg: CommunityNews,
   },
   {
     item: "Obituaries",

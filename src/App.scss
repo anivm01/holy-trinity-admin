@@ -6,6 +6,7 @@
 
   &__main {
     flex-grow: 1;
+    min-width: 0;
     background-color: $beige;
     min-height: 100vh;
   }
