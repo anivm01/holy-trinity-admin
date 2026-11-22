@@ -28,16 +28,6 @@ function DeleteImageModal({ imageId, setVisible }) {
     try {
       const response = await axios.get(`${API_URL}/posted-images/${imageId}`);
 
-      const articlePostsBgIds = response.data.articles_bg.map(
-        (single) => single.id
-      );
-      const articlePostsEnIds = response.data.articles_en.map(
-        (single) => single.id
-      );
-      const articlePosts = [
-        ...new Set([...articlePostsBgIds, ...articlePostsEnIds]),
-      ];
-
       const obituaryPostsBgIds = response.data.obituaries_bg.map(
         (single) => single.id
       );
@@ -58,27 +48,21 @@ function DeleteImageModal({ imageId, setVisible }) {
         ...new Set([...worshipOfficePostsBgIds, ...worshipOfficePostsEnIds]),
       ];
 
-      const communityNewsPosts = [];
-
-      if (articlePosts.length !== 0) {
-        for (let i = 0; i < articlePosts.length; i++) {
-          communityNewsPosts.push(`/community-news/${articlePosts[i]}`);
-        }
-      }
+      const posts = [];
 
       if (obituaryPosts.length !== 0) {
         for (let i = 0; i < obituaryPosts.length; i++) {
-          communityNewsPosts.push(`/obituaries/${obituaryPosts[i]}`);
+          posts.push(`/obituaries/${obituaryPosts[i]}`);
         }
       }
 
       if (worshipOfficePosts.length !== 0) {
         for (let i = 0; i < worshipOfficePosts.length; i++) {
-          communityNewsPosts.push(`/worship-offices/${worshipOfficePosts[i]}`);
+          posts.push(`/worship-offices/${worshipOfficePosts[i]}`);
         }
       }
 
-      setPostsList(...postsList, communityNewsPosts);
+      setPostsList(posts);
     } catch (error) {
       console.log(error);
     }

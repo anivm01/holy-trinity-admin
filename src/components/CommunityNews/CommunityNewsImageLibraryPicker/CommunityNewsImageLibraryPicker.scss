@@ -1,0 +1,106 @@
+@use "../../../partials/colors" as *;
+
+.community-image-library {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: 0;
+  background: $beige;
+
+  &__header {
+    h4,
+    p {
+      margin: 0;
+    }
+
+    h4 {
+      color: $wine-red;
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin-top: 0.25rem;
+      color: rgba($wine-red, 0.75);
+      font-size: 0.9rem;
+    }
+  }
+
+  &__grid {
+    max-height: 30rem;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+    overflow-y: auto;
+  }
+
+  &__item {
+    min-width: 0;
+    padding: 0.35rem;
+    border: 2px solid transparent;
+    border-radius: 0;
+    color: $wine-red;
+    background: $beige;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible,
+    &--selected {
+      background: $golden;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $golden;
+      outline-offset: 2px;
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1;
+      display: block;
+      border-radius: 0;
+      object-fit: cover;
+      background: $golden;
+    }
+  }
+
+  &__item-label,
+  &__selection {
+    margin-top: 0.35rem;
+    display: block;
+    overflow: hidden;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__selection {
+    color: $wine-red;
+    font-weight: 700;
+  }
+
+  &__status {
+    margin: 0;
+    padding: 1rem;
+    color: rgba($wine-red, 0.75);
+    text-align: center;
+    background: $golden;
+
+    &--error {
+      color: $wine-red;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .community-image-library__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .community-image-library__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

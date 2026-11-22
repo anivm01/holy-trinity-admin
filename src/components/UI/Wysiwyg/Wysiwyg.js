@@ -163,8 +163,6 @@ function EditorSurface({ content, expanded = false, onChange, onPaste }) {
             minHeight: expanded ? 0 : "200px",
             minWidth: 0,
             width: "100%",
-            backgroundColor: "white",
-            border: "1px solid #6F0B20",
           },
         }}
         value={content}
@@ -177,7 +175,13 @@ function EditorSurface({ content, expanded = false, onChange, onPaste }) {
   );
 }
 
-function Wysiwyg({ editorLabel, setContent, content, allowIframes = false }) {
+function Wysiwyg({
+  editorLabel,
+  setContent,
+  content,
+  allowIframes = false,
+  squareCorners = false,
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const dialogTitleId = useId();
   const expandButtonRef = useRef(null);
@@ -238,7 +242,7 @@ function Wysiwyg({ editorLabel, setContent, content, allowIframes = false }) {
           }}
         >
           <section
-            className="wysiwyg__expanded-modal"
+            className={`wysiwyg__expanded-modal${squareCorners ? " wysiwyg__expanded-modal--square-corners" : ""}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby={dialogTitleId}
@@ -269,7 +273,7 @@ function Wysiwyg({ editorLabel, setContent, content, allowIframes = false }) {
     : null;
 
   return (
-    <div className="wysiwyg">
+    <div className={`wysiwyg${squareCorners ? " wysiwyg--square-corners" : ""}`}>
       <div className="wysiwyg__header">
         <span className="wysiwyg__label">{editorLabel}</span>
         <button
